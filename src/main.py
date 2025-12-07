@@ -1,19 +1,28 @@
-from langchain_openai import ChatOpenAI
-from dotenv import load_dotenv
 import os
+from dotenv import load_dotenv
 
+# Load environment variables
 load_dotenv()
 
-from langsmith import Client
-client = Client()
+# Keep optional LangSmith tracing aligned with project name
+os.environ.setdefault("LANGCHAIN_TRACING_V2", "true")
+os.environ.setdefault("LANGCHAIN_PROJECT", "langgraph-email-assistant")
+if os.getenv("LANGSMITH_API_KEY") and not os.getenv("LANGCHAIN_API_KEY"):
+    langsmith_key = os.getenv("LANGSMITH_API_KEY")
+    if langsmith_key:
+        os.environ["LANGCHAIN_API_KEY"] = langsmith_key
 
-llm = ChatOpenAI(
-    model="gpt-4o-mini",
-)
+from agents.hello_agent import hello_agent
 
-def hello_agent():
-    response = llm.invoke("Hello, I am testing my agent setup.")
-    print("Agent response:", response)
+
+def main():
+    try:
+        response = hello_agent()
+        print("Agent response:", response)
+    except Exception as e:
+        # Provide a concise error message for missing configuration or runtime issues
+        print("Error running agent:", e)
+
 
 if __name__ == "__main__":
-    hello_agent()
+    main()
