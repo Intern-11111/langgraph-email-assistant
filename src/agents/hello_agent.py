@@ -6,7 +6,7 @@ from pydantic import SecretStr
 # Load environment variables from .env if present
 load_dotenv()
 
-# Optional: LangSmith tracing setup (uses env vars if available)
+# LangSmith tracing setup (uses env vars if available)
 os.environ.setdefault("LANGCHAIN_TRACING_V2", "true")
 os.environ.setdefault("LANGCHAIN_PROJECT", "langgraph-email-assistant")
 if os.getenv("LANGSMITH_API_KEY") and not os.getenv("LANGCHAIN_API_KEY"):

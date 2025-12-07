@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-# Keep optional LangSmith tracing aligned with project name
 os.environ.setdefault("LANGCHAIN_TRACING_V2", "true")
 os.environ.setdefault("LANGCHAIN_PROJECT", "langgraph-email-assistant")
 if os.getenv("LANGSMITH_API_KEY") and not os.getenv("LANGCHAIN_API_KEY"):
