@@ -1,10 +1,19 @@
-from src.agents.hello_agent import hello_agent_demo
+from langchain_openai import ChatOpenAI
+from dotenv import load_dotenv
+import os
 
-def run():
-    print("Running Hello Agent demo...")
-    reply = hello_agent_demo("Hello! Can you introduce yourself briefly for our team project?")
-    print("\n----- LLM Response -----\n")
-    print(reply)
+load_dotenv()
+
+from langsmith import Client
+client = Client()
+
+llm = ChatOpenAI(
+    model="gpt-4o-mini",
+)
+
+def hello_agent():
+    response = llm.invoke("Hello, I am testing my agent setup.")
+    print("Agent response:", response)
 
 if __name__ == "__main__":
-    run()
+    hello_agent()

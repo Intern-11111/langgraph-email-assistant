@@ -1,12 +1,15 @@
-from langchain.chat_models import ChatOpenAI
-from langchain.schema import HumanMessage
+from langchain_openai import ChatOpenAI
+from langchain_core.messages import HumanMessage
 from dotenv import load_dotenv
 import os
 
 load_dotenv()
 OPENAI_KEY = os.getenv("OPENAI_API_KEY")
 
-chat = ChatOpenAI(openai_api_key=OPENAI_KEY, temperature=0.5)
+if not OPENAI_KEY:
+	raise ValueError("OPENAI_API_KEY environment variable is not set")
 
-response = chat([HumanMessage(content="Hello! Can you introduce yourself?")])
+chat = ChatOpenAI(temperature=0.5)
+
+response = chat.invoke([HumanMessage(content="Hello! Can you introduce yourself?")])
 print(response.content)
