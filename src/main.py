@@ -1,4 +1,5 @@
 import os
+import argparse
 from dotenv import load_dotenv
 
 # Load environment variables
@@ -15,8 +16,13 @@ from agents.hello_agent import hello_agent
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Run the hello agent")
+    parser.add_argument("--prompt", type=str, help="Custom prompt to send to the agent", default=None)
+    args = parser.parse_args()
+
     try:
-        response = hello_agent()
+        print("Running agent...")
+        response = hello_agent(prompt=args.prompt)
         print("Agent response:", response)
     except Exception as e:
         # Provide a concise error message for missing configuration or runtime issues

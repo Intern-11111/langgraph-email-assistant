@@ -23,9 +23,10 @@ def _get_llm() -> ChatOpenAI:
     return ChatOpenAI(model="gpt-4o-mini", api_key=SecretStr(api_key))
 
 
-def hello_agent() -> str:
+def hello_agent(prompt: str | None = None) -> str:
     llm = _get_llm()
-    msg = llm.invoke("Hello, I am testing my agent setup.")
+    query = prompt or "Hello, I am testing my agent setup."
+    msg = llm.invoke(query)
     # `invoke` returns an AIMessage; extract the text content
     return getattr(msg, "content", str(msg))
 
