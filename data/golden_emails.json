@@ -58,6 +58,127 @@
     "subject": "Newsletter - October Edition",
     "body": "Here are our top stories and updates for October. You may unsubscribe anytime.",
     "human_label": "promotion"
-
+  },
+  {
+    "id": 11,
+    "subject": "Limited Time Offer — Buy Now",
+    "body": "Exclusive discount for you. Buy now and save big!",
+    "human_label": "promotion"
+  },
+  {
+    "id": 12,
+    "subject": "Holiday Sale — Up to 70% Off",
+    "body": "This sale won't last long. Amazing deals and discount on all items!",
+    "human_label": "promotion"
+  },
+  {
+    "id": 13,
+    "subject": "Urgent Prize Winner — Click Here",
+    "body": "You won a prize! Claim now, click here to receive your reward.",
+    "human_label": "spam"
+  },
+  {
+    "id": 14,
+    "subject": "Lottery Notification — Win Money",
+    "body": "Win money instantly in our lottery. Claim now!",
+    "human_label": "spam"
+  },
+  {
+    "id": 15,
+    "subject": "Invoice #45678 Attached",
+    "body": "Please find the invoice attached. Payment due this week.",
+    "human_label": "finance"
+  },
+  {
+    "id": 16,
+    "subject": "Payment Receipt for Your Transaction",
+    "body": "Your payment receipt is attached for the recent transaction.",
+    "human_label": "finance"
+  },
+  {
+    "id": 17,
+    "subject": "Calendar Invite: Project Meeting",
+    "body": "You are invited to a project meeting. Check your calendar invite.",
+    "human_label": "meeting"
+  },
+  {
+    "id": 18,
+    "subject": "Reschedule Appointment Call",
+    "body": "Can we reschedule the appointment and have a call tomorrow?",
+    "human_label": "meeting"
+  },
+  {
+    "id": 19,
+    "subject": "Shortlisted for Internship Position",
+    "body": "You have been shortlisted for the internship position. Please share your resume.",
+    "human_label": "job_related"
+  },
+  {
+    "id": 20,
+    "subject": "Hiring Opportunity — Resume Requested",
+    "body": "We are hiring for multiple roles. Share your resume for this opportunity.",
+    "human_label": "job_related"
+  },
+  {
+    "id": 21,
+    "subject": "Your Order Delivered",
+    "body": "Your order has been delivered. Package left at doorstep.",
+    "human_label": "transactional"
+  },
+  {
+    "id": 22,
+    "subject": "Tracking Number Update",
+    "body": "Your package tracking number has been updated. Check delivery status.",
+    "human_label": "transactional"
+  },
+  {
+    "id": 23,
+    "subject": "Lunch Plan Tomorrow?",
+    "body": "Are you free for lunch tomorrow? Let me know.",
+    "human_label": "personal"
+  },
+  {
+    "id": 24,
+    "subject": "Congrats on Your New Role!",
+    "body": "Congratulations on your new role—wishing you great success!",
+    "human_label": "personal"
+  },
+  {
+    "id": 25,
+    "subject": "Do Not Reply: System Notification",
+    "body": "This is an automated message from the system.",
+    "sender": "noreply@service.com",
+    "human_label": "automated"
+  },
+  {
+    "id": 26,
+    "subject": "Password Reset Link",
+    "body": "Use the password reset link to update your credentials.",
+    "sender": "noreply@accounts.com",
+    "human_label": "automated"
+  },
+  {
+    "id": 27,
+    "subject": "Exclusive Deal Offer",
+    "body": "Special offer and deal just for you. Limited promotion period.",
+    "human_label": "promotion"
+  },
+  {
+    "id": 28,
+    "subject": "Bank Account Update Required",
+    "body": "Your bank account requires an update. Please review the account update details.",
+    "human_label": "finance"
+  },
+  {
+    "id": 29,
+    "subject": "Teams Meeting Reminder",
+    "body": "Reminder: Teams meeting scheduled today at 4 PM.",
+    "human_label": "meeting"
+  },
+  {
+    "id": 30,
+    "subject": "100% Free Gift — Claim Now",
+    "body": "Get your 100% free gift today. Claim now and click here.",
+    "human_label": "spam"
   }
 ]

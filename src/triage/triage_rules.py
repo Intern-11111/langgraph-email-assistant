@@ -37,6 +37,18 @@ class TriageRules:
         text = text.lower()
         return any(kw in text for kw in keywords)
 
+    def _keyword_confidence(email, text, keywords):
+        """Return a simple confidence score based on keyword matches.
+
+        Confidence = (# matched keywords) / (total keywords), rounded to 2 decimals.
+        """
+        text = text.lower()
+        total = len(keywords) if keywords else 0
+        if total == 0:
+            return 0.0
+        matches = sum(1 for kw in keywords if kw in text)
+        return round(matches / total, 2)
+
     def classify(email, subject, body, sender=""):
 
         full_text = f"{subject} {body}".lower()
@@ -44,48 +56,56 @@ class TriageRules:
         if email.contains_keyword(full_text, email.spam_keywords):
             return {
                 "label": "spam",
-                "source": "rule"
+                "source": "rule",
+                "confidence": email._keyword_confidence(full_text, email.spam_keywords)
             }
 
         if email.contains_keyword(full_text, email.promotion_keywords):
             return {
                 "label": "promotion",
-                "source": "rule"
+                "source": "rule",
+                "confidence": email._keyword_confidence(full_text, email.promotion_keywords)
             }
 
         if email.contains_keyword(full_text, email.finance_keywords):
             return {
                 "label": "finance",
-                "source": "rule"
+                "source": "rule",
+                "confidence": email._keyword_confidence(full_text, email.finance_keywords)
             }
 
         if email.contains_keyword(full_text, email.meeting_keywords):
             return {
                 "label": "meeting",
-                "source": "rule"
+                "source": "rule",
+                "confidence": email._keyword_confidence(full_text, email.meeting_keywords)
             }
         
         if email.contains_keyword(full_text, email.job_keywords):
             return {
                 "label": "job_related",
-                "source": "rule"
+                "source": "rule",
+                "confidence": email._keyword_confidence(full_text, email.job_keywords)
             }
 
         if email.contains_keyword(full_text, email.transactional_keywords):
             return {
                 "label": "transactional",
-                "source": "rule"
+                "source": "rule",
+                "confidence": email._keyword_confidence(full_text, email.transactional_keywords)
             }
 
         if "noreply" in sender.lower():
             return {
                 "label": "automated",
-                "source": "rule"
+                "source": "rule",
+                "confidence": 1.0
             }
 
         return {
             "label": "uncertain",
-            "source": "rule"
+            "source": "rule",
+            "confidence": 0.0
         }
 
 if __name__ == "__main__":
@@ -97,3 +117,6 @@ if __name__ == "__main__":
 
     result = triage.classify(email_subject, email_body, sender)
     print("Rule-based result:", result)
+
+# Backward-compatible alias to match evaluator import
+RuleBasedTriage = TriageRules
