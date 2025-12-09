@@ -1,0 +1,548 @@
+id,text,label
+email_notify_001,"Subject: Production deployment completed successfully
+
+Hi Catherine,
+
+The Q4.2.1 production deployment has completed successfully across all regions.
+
+- All services are healthy
+- No rollback required
+- Monitoring shows normal traffic patterns
+
+Deployment details: https://deploy.company.com/build/4567
+
+System Admin Team",notify_human
+email_notify_002,"Subject: New employee orientation - tomorrow
+
+Hello Catherine,
+
+Reminder: New employee orientation is scheduled for tomorrow at 9AM in Conference Room A.
+
+Your presence is requested as a technical team representative.
+
+Agenda and materials: https://intranet.company.com/orientation
+
+Best,
+HR Team",notify_human
+email_notify_003,"Subject: Security awareness training due
+
+Catherine,
+
+Your annual security awareness training is due.
+
+Please complete the 30-minute module by end of week:
+https://training.company.com/security/2025
+
+Training certificate required for compliance.
+
+Security Team",notify_human
+email_notify_004,"Subject: Q4 budget utilization report
+
+Hi Catherine,
+
+Monthly budget utilization report for Engineering team is available.
+
+Your department: 78% utilized ($234,567 of $300,000)
+
+View report: https://finance.company.com/reports/Q4
+
+Questions? Contact finance@company.com
+
+Finance Team",notify_human
+email_notify_005,"Subject: VPN certificate renewal required
+
+Catherine,
+
+Your VPN certificate expires in 3 days.
+
+Please renew before Friday:
+1. Visit https://vpn.company.com/renew
+2. Follow self-service instructions
+3. Test connection after renewal
+
+IT Support",notify_human
+email_notify_006,"Subject: New mention in #ai-research channel
+
+Catherine was mentioned by @data-team in #ai-research
+
+""@Catherine Any updates on the transformer ablation study results?""
+
+View thread: https://company.slack.com/archives/ai-research/p1234567890
+
+---
+Slack Notifications",notify_human
+email_notify_007,"Subject: Incident resolved - API latency issue
+
+INCIDENT RESOLVED
+
+Service: Auth API
+Status: Resolved
+Duration: 47 minutes
+Root cause: Database connection pool exhaustion
+
+Postmortem: https://incidents.company.com/123
+
+PagerDuty Alerts",notify_human
+email_notify_008,"Subject: Office closure - December 24th
+
+Hi team,
+
+Office will be closed on December 24th for year-end holiday.
+
+- Remote work authorized
+- On-call rotations continue as scheduled
+- Emergency support: facilities-oncall@company.com
+
+Happy holidays!
+Facilities Team",notify_human
+email_notify_009,"Subject: Pipeline #234 failed - vision-transformer branch
+
+Pipeline #234 failed for branch 'vision-transformer'
+
+Stage: integration-tests
+Job: test_segmentation_metrics
+Duration: 00:12:34
+
+Logs: https://gitlab.company.com/project/pipelines/234
+
+Fix and retry the pipeline.
+
+GitLab CI/CD",notify_human
+email_notify_010,"Subject: Self-assessment form available
+
+Hello Catherine,
+
+Your Q4 performance self-assessment form is now available.
+
+Due: December 15th
+Access: https://performance.company.com/self-assessment/2025Q4
+
+Your manager will complete peer review after submission.
+
+HR Performance Team",notify_human
+email_notify_011,"Subject: Daily backup completed - /home/cqiao
+
+Daily backup report
+
+User: cqiao
+Path: /home/cqiao
+Status: SUCCESS
+Size: 2.3 GB
+Time: 02:15-02:47 AM
+
+Verify: https://backup.company.com/reports/2025-12-07
+
+Backup Service",notify_human
+email_notify_012,"Subject: Data retention policy update
+
+ATTENTION: Policy Update
+
+New data retention policy effective January 1, 2026:
+
+- Customer PII: 7 years → 10 years
+- ML training data: 2 years → indefinite
+- Log files: 90 days → 180 days
+
+Full policy: https://compliance.company.com/policy/retention-2026
+
+Compliance Team",notify_human
+email_notify_013,"Subject: Weekly AI sync rescheduled to Thursday
+
+Meeting Updated: Weekly AI Research Sync
+
+New time: Thursday, Dec 11th, 2:00 PM - 3:00 PM
+
+Updated calendar invite attached.
+
+Join Zoom: https://zoom.us/j/123456789
+
+---
+Zoom Notifications",notify_human
+email_notify_014,"Subject: Your HAM10000 notebook got 3 upvotes
+
+Activity on your notebook: HAM10000 Segmentation with Vision Transformers
+
+3 upvotes received this week!
+
+View notebook: https://kaggle.com/cqiao/ham10000-vit-segmentation
+
+---
+Kaggle Notifications",notify_human
+email_notify_015,"Subject: Your on-call shift starts in 2 hours
+
+On-call Alert
+
+Engineer: Catherine Qiao
+Shift: Primary (00:00-08:00 EST)
+Starts: 2025-12-08 22:00 EST (2 hours from now)
+
+PagerDuty: https://company.pagerduty.com
+Dashboard: https://status.company.com
+
+On-call System",notify_human
+email_notify_016,"Subject: Your PR #89 needs 1 more approval
+
+Pull Request Status Update
+
+PR #89: 'Add RoPE positional encoding to ViT'
+Status: 3/4 approvals received
+Needs: @senior-architect approval
+
+View PR: https://github.com/company/ml-platform/pull/89
+
+---
+Code Review Bot",notify_human
+email_ignore_017,"Subject: Latest AI funding news: $500M Series B
+
+Hi Catherine,
+
+Top AI funding stories this week:
+• OpenAI raises $6.6B at $157B valuation
+• Anthropic gets $4B from Amazon
+• xAI launches new model
+
+Read more: https://techcrunch.com/ai-funding
+
+TechCrunch Daily",ignore
+email_ignore_018,"Subject: 80% OFF: Complete PyTorch Bootcamp
+
+FLASH SALE: 80% OFF 
+
+Master PyTorch for Deep Learning
+• Vision Transformers
+• Medical Imaging Projects
+• From Beginner to Expert
+
+Original: $199 → TODAY ONLY $39.80
+
+Enroll now: https://udemy.com/pytorch-dl
+
+Udemy",ignore
+email_ignore_019,"Subject: Sarah Chen and 12 others viewed your profile
+
+People viewing your profile:
+• Sarah Chen, ML Engineer at Google
+• 12 connections from CVPR
+• Recruiters from Meta AI
+
+Your profile gets 5x more views with Premium!
+
+---
+LinkedIn",ignore
+email_ignore_020,"Subject: PyTorch Conference 2026 - Early Bird SOLD OUT
+
+PyTorch Conference 2026 - Santa Clara, CA
+
+Early bird tickets SOLD OUT!
+Regular tickets: $799 (save $200 if you register today)
+
+Vision Transformer track SOLD OUT!
+
+Register: https://pytorchconf.com/2026
+
+Eventbrite",ignore
+email_ignore_021,"Subject: RTX 4090 - Only 3 left in stock
+
+NVIDIA RTX 4090 24GB - Perfect for ML Training
+
+ Only 3 left in stock!
+ $1,599 (lowest price this year)
+ Prime FREE delivery tomorrow
+
+Add to cart: https://amazon.com/rtx4090
+
+Amazon Deals",ignore
+email_ignore_022,"Subject: 
+
+Top HN stories today:
+1. ""LLM agents are overhyped"" (892 points)
+2. ""Open-sourcing our 70B medical model"" (743 pts)
+3. ""Why Vision Transformers fail on medical data"" (612 pts)
+
+Read now: https://news.ycombinator.com
+
+Hacker News Daily",ignore
+email_ignore_023,"Subject: Your tweet on ViT got 47 likes
+
+""ViT + curriculum learning = SOTA medical segmentation"" - 47 likes, 12 retweets
+
+Top replies:
+@ml_enthusiast: ""Paper link?""
+@deeplearningguru: ""Tried on HAM10000?""
+
+View: https://twitter.com/cqiao_ml/status/123
+
+X Notifications",ignore
+email_ignore_024,"Subject: Stanford CS231n: Convolutional Neural Networks - 50% OFF
+
+BESTSELLER: CS231n by Stanford
+
+Deep Learning Specialization
+• CNNs for Medical Imaging
+• PyTorch Implementation
+• Assignment: Segment HAM10000
+
+$49/mo → START FREE 7-DAY TRIAL
+
+Enroll: https://coursera.org/cs231n
+
+Coursera",ignore
+email_ignore_025,"Subject: Sponsor your HAM10000-ViT repo - $25/mo
+
+23 people starred your HAM10000-ViT repo!
+
+Sponsor to unlock:
+• Private repo discussions
+• Priority support
+• Custom badges
+
+$5, $25 or $100/month tiers available
+
+Start now: https://github.com/sponsors/cqiao
+
+GitHub Sponsors",ignore
+email_ignore_026,"Subject: Transformers in PyTorch - New Course!
+
+NEW: Transformers from Scratch in PyTorch
+
+ Positional Encoding
+ Multi-Head Attention
+ Medical Imaging Examples
+
+First 1000 students get certificate FREE!
+
+Start learning: https://datacamp.com/transformers
+
+DataCamp",ignore
+email_ignore_027,"Subject: r/MachineLearning: Your post got 156 upvotes
+
+r/MachineLearning • 156 upvotes • 2hr ago
+
+""Curriculum Learning dramatically improves ViT convergence on HAM10000""
+
+Top comments:
+• u/cvpr_reviewer: ""MICCAI-worthy results""
+• u/ml_engineer: ""Code when?!""
+
+View post: https://reddit.com/r/ml/comments/abc
+
+Reddit",ignore
+email_ignore_028,"Subject: MedSegGPT just launched! #1 Product of the Day
+
+#1 Product of the Day: MedSegGPT
+
+""GPT-powered medical image segmentation""
+• No training required
+• Upload DICOM → instant segmentation
+• 95% Dice on HAM10000
+
+Upvote now: https://producthunt.com/medseg-gpt
+
+Product Hunt",ignore
+email_ignore_029,"Subject: 7 New ML Articles You Haven't Read
+
+Fresh ML content on TDS:
+1. ""Why RoPE > Sinusoidal for ViTs""
+2. ""SAM2 for Medical Segmentation""
+3. ""LoRA Fine-tuning Guide""
+
++ Exclusive: 50% off Medium membership
+
+Read now: https://tds.medium.com
+
+Towards Data Science",ignore
+email_ignore_030,"Subject: New Competition: Medical Image Segmentation $50K
+
+NEW: RSNA Pneumonia Detection
+ $50,000 prize pool
+ Deadline: Feb 28, 2026
+ Leaderboard #1: 0.945 F1
+
+Join 12K teams: https://kaggle.com/competitions/rsna-2026
+
+Kaggle Competitions",ignore
+email_ignore_031,"Subject: 3 Minute Papers: Vision Transformers Explained
+
+Top videos for you:
+• ""Vision Transformers in 100 seconds"" (2.1M views)
+• ""Why ViTs crush CNNs on medical data""
+• ""Curriculum Learning tutorial""
+
+Recommended channel: Yannic Kilcher
+
+Watch now → YouTube",ignore
+email_ignore_032,"Subject: 24h digest: 127 new medical imaging papers
+
+Fresh arXiv papers (cs.CV + eess.IV):
+1. ""ViT-SAM: Segmentation Anything for Medical""
+2. ""Curriculum Learning for 3D MRI""
+3. ""RoPE in Medical Vision Transformers""
+
++ Your top authors published 3 papers
+
+Browse: https://arxivsanity.com
+
+arXiv Sanity",ignore
+email_respond_033,"Subject: Need ETA on ViT ablation results
+
+Hi Catherine,
+
+Product wants to know when we can share preliminary ViT ablation results for the HAM10000 study.
+Can you confirm whether we’ll have something by Friday EOD, and what metrics we can commit to?
+
+Thanks,
+Alex",respond_act
+email_respond_034,"Subject: Clarification on ViT inference latency numbers
+
+Hi Catherine,
+
+In the latest deck you shared, ViT inference latency on A100 is listed as 45ms per image.
+Is that batch size 1 or 16, and does it include preprocessing?
+
+We need to update the customer-facing SLA document today.
+
+Best,
+Priya",respond_act
+email_respond_035,"Subject: Interview panel availability next week
+
+Hi Catherine,
+
+We’re scheduling an onsite loop for a Senior ML Engineer candidate focused on medical imaging.
+Could you share your 60-minute availability next week (Mon–Thu, 10am–5pm) so we can finalize the panel?
+
+Thanks,
+Recruiting Team",respond_act
+email_respond_036,"Subject: Action required: benefits enrollment confirmation
+
+Hello Catherine,
+
+Our records show that you started editing your 2026 benefits enrollment but did not submit.
+Please confirm if you intend to keep last year’s plan or finalize changes by replying to this email.
+
+If we don’t hear from you by Friday, defaults will apply.
+
+Best,
+HR Benefits",respond_act
+email_respond_037,"Subject: Approval needed: additional GPU budget
+
+Hi Catherine,
+
+Your team requested an increase of $12,000 for additional A100 GPU hours for Q1.
+Please confirm approval or suggest a revised amount so we can update the budget forecast.
+
+Regards,
+Finance Business Partner",respond_act
+email_respond_038,"Subject: Ticket #98231: Need more details on slow Jupyter sessions
+
+Hi Catherine,
+
+We’re looking into your ticket about slow JupyterLab sessions on the GPU cluster.
+Could you send us 2–3 example notebook URLs and approximate timestamps when you saw the issue?
+
+This will help us correlate with cluster metrics.
+
+Thanks,
+IT Support",respond_act
+email_respond_039,"Subject: Invite to review for MICCAI 2026
+
+Dear Dr. Qiao,
+
+We would like to invite you to serve as a reviewer for MICCAI 2026.
+You would be assigned 4–6 papers in medical image segmentation.
+
+Please accept or decline this invitation by replying to this email by January 5.
+
+Sincerely,
+MICCAI 2026 Program Chair",respond_act
+email_respond_040,"Subject: HAM10000 ViT code release timeline?
+
+Hi Catherine,
+
+Several people from the workshop asked when your HAM10000 ViT curriculum learning code will be public.
+Do you have an approximate date for releasing the repo, and can we link to it from the workshop website?
+
+Best,
+Sarah",respond_act
+email_respond_041,"Subject: Review required: data sharing agreement for HAM10000
+
+Hi Catherine,
+
+Attached is a draft data sharing agreement for an external collaborator who wants access to the processed HAM10000 features.
+Please confirm whether the described fields (especially derived embeddings) align with our data retention and anonymization constraints.
+
+A quick yes/no with comments is sufficient.
+
+Thanks,
+Legal Team",respond_act
+email_respond_042,"Subject: Action: Approve or request changes for ""Med ViT Inference Service"" design
+
+Hi Catherine,
+
+You are assigned as the final approver for design doc: ""Med ViT Inference Service"".
+Please approve or request changes using this link, and optionally add a brief comment:
+https://design.company.com/docs/med-vit-inference
+
+Thanks,
+Design System",respond_act
+email_respond_043,"Subject: Customer question: training data mix for demo model
+
+Hi Catherine,
+
+A hospital evaluating our platform asked what proportion of HAM10000 vs. internal data we used to train the demo melanoma model.
+Can you provide a high-level breakdown (percentages only, no PHI) by tomorrow?
+
+CS will translate your answer for the customer.
+
+Thanks,
+Customer Success",respond_act
+email_respond_044,"Subject: Sprint planning: confirm ViT tasks
+
+Hi Catherine,
+
+For the next sprint, we tentatively assigned you:
+- Refactor ViT training pipeline for mixed precision
+- Run curriculum vs. non-curriculum ablations on HAM10000
+
+Please confirm if this is realistic or suggest adjustments before tomorrow’s planning meeting.
+
+Thanks,
+Jin",respond_act
+email_respond_045,"Subject: Monitor stand request follow-up
+
+Hi Catherine,
+
+We saw your earlier request about an adjustable monitor stand for your workstation.
+We can provide either a single-arm gas spring stand or a fixed-height riser.
+
+Please reply with your preferred option.
+
+Best,
+Facilities",respond_act
+email_respond_046,"Subject: Clarification: external HAM10000 data transfer
+
+Catherine,
+
+We noticed an outgoing transfer of HAM10000-derived features to an external S3 bucket last week.
+Can you confirm if this was part of an approved collaboration and share the Jira ticket ID?
+
+This will help us close a compliance review.
+
+Security Team",respond_act
+email_respond_047,"Subject: Panel discussion invite: ViTs in Healthcare
+
+Hi Catherine,
+
+You’ve been nominated to join a virtual panel on ""Vision Transformers in Healthcare"" next month.
+If you’re interested, please reply with your preferred time zone and a 2–3 sentence bio for the event page.
+
+Best,
+Events Team",respond_act
+email_respond_048,"Subject: Request to feature your HAM10000 notebook
+
+Hi Catherine,
+
+Kaggle would like to feature your ""HAM10000 Segmentation with Vision Transformers"" notebook on the front page.
+Please reply confirming that you agree to the feature and that there is no confidential information in the notebook.
+
+Thanks,
+Kaggle Editorial",respond_act
