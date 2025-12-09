@@ -1,0 +1,63 @@
+[
+  {
+    "id": 1,
+    "subject": "Mega Sale - Flat 50% Off!",
+    "body": "Hurry up! Grab your favorite items before the sale ends. Click here to shop.",
+    "human_label": "promotion"
+  },
+  {
+    "id": 2,
+    "subject": "Your Package Has Been Shipped",
+    "body": "Your order #91232 has been shipped. Track your delivery here.",
+    "human_label": "transactional"
+  },
+  {
+    "id": 3,
+    "subject": "Interview Scheduled for Software Engineer Role",
+    "body": "We are pleased to inform you that your interview is scheduled for Monday at 10 AM.",
+    "human_label": "job_related"
+  },
+  {
+    "id": 4,
+    "subject": "Payment Due Reminder",
+    "body": "Your bill for Rs. 1,299 is due tomorrow. Please make the payment to avoid late charges.",
+    "human_label": "finance"
+  },
+  {
+    "id": 5,
+    "subject": "Zoom Call Tomorrow Morning",
+    "body": "Hi, can we have a quick Zoom call tomorrow morning? Let me know your availability.",
+    "human_label": "meeting"
+  },
+  {
+    "id": 6,
+    "subject": "You Won $10,000 Claim Now!",
+    "body": "Congratulations! Claim your reward immediately by clicking the link.",
+    "human_label": "spam"
+  },
+  {
+    "id": 7,
+    "subject": "Weekly Team Updates",
+    "body": "Here are this week's updates. Please read through for important notes.",
+    "human_label": "personal"
+  },
+  {
+    "id": 8,
+    "subject": "Account Security Alert",
+    "body": "Your account had a suspicious login attempt. Review immediately.",
+    "human_label": "finance"
+  },
+  {
+    "id": 9,
+    "subject": "Friendly Reminder",
+    "body": "Hey, don't forget the college alumni meetup this Sunday!",
+    "human_label": "personal"
+  },
+  {
+    "id": 10,
+    "subject": "Newsletter - October Edition",
+    "body": "Here are our top stories and updates for October. You may unsubscribe anytime.",
+    "human_label": "promotion"
+
+  }
+]
