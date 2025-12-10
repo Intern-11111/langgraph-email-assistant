@@ -5,6 +5,17 @@ from typing import Any, Dict, List
 from tools.calendar import read_calendar
 from tools.contact import lookup_contact
 from langchain_openai import ChatOpenAI
+from utils.config import OPENAI_API_KEY
+
+
+def _get_llm():
+    """Return a ChatOpenAI instance if OPENAI_API_KEY is available, else None."""
+    try:
+        if not OPENAI_API_KEY:
+            return None
+        return ChatOpenAI(model="gpt-4o-mini", temperature=0, api_key=OPENAI_API_KEY)
+    except Exception:
+        return None
 
 
 class ReactAgent:
@@ -125,7 +136,7 @@ class ReactAgent:
             "trace": trace,
             "final": final_summary,
         }
-    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+    
 
 # Register tools
 TOOLS = {
@@ -162,9 +173,26 @@ Response format JSON:
 }}
 """
 
-    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
-    result = llm.invoke(prompt)
-    state["reasoning_output"] = result
+    llm = _get_llm()
+    if llm is None:
+        # Fallback simple decision without LLM
+        text = str(email).lower()
+        if any(k in text for k in ["schedule", "meeting", "call"]):
+            state["reasoning_output"] = {"thought": "Check calendar for availability.", "action": "read_calendar", "action_input": {"user_id": "me", "date_hint": "next available"}}
+        elif any(k in text for k in ["who is", "contact", "email"]):
+            state["reasoning_output"] = {"thought": "Lookup contact details.", "action": "lookup_contact", "action_input": {"query": state.get("sender") or "alice"}}
+        else:
+            state["reasoning_output"] = {"thought": "Reply directly with helpful guidance.", "action": "reply", "action_input": "Let me know preferred times."}
+    else:
+        result = llm.invoke(prompt)
+        # Try to parse model output into dict
+        parsed = None
+        try:
+            content = getattr(result, "content", None) or str(result)
+            parsed = json.loads(content)
+        except Exception:
+            parsed = {"thought": content, "action": "reply", "action_input": "Let me know preferred times."}
+        state["reasoning_output"] = parsed
 
     return state
 
@@ -177,8 +205,21 @@ def tool_executor_node(state: Dict[str, Any]) -> Dict[str, Any]:
     action = decision.get("action")
     action_input = decision.get("action_input")
 
-    if action in TOOLS:
-        state["tool_result"] = TOOLS[action](action_input)
+    if action == "read_calendar":
+        if isinstance(action_input, dict):
+            state["tool_result"] = read_calendar(**action_input)
+        elif isinstance(action_input, str):
+            state["tool_result"] = read_calendar(user_id="me", date_hint=action_input)
+        else:
+            state["tool_result"] = read_calendar(user_id="me", date_hint=None)
+    elif action == "lookup_contact":
+        if isinstance(action_input, dict):
+            q = action_input.get("query")
+        elif isinstance(action_input, str):
+            q = action_input
+        else:
+            q = state.get("sender") or "alice"
+        state["tool_result"] = lookup_contact(query=q)
     else:
         state["tool_result"] = None  # direct reply mode
 
