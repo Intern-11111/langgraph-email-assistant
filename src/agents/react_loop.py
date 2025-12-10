@@ -2,10 +2,9 @@ import json
 import time
 import uuid
 from typing import Any, Dict, List
-
-# Import mock tools
 from tools.calendar import read_calendar
 from tools.contact import lookup_contact
+from langchain_openai import ChatOpenAI
 
 
 class ReactAgent:
@@ -126,6 +125,63 @@ class ReactAgent:
             "trace": trace,
             "final": final_summary,
         }
+    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
+
+# Register tools
+TOOLS = {
+    "read_calendar": read_calendar,
+    "lookup_contact": lookup_contact,
+}
+
+def reason_node(state: Dict[str, Any]) -> Dict[str, Any]:
+    """
+    ReAct reasoning step:
+    LLM thinks and decides next action.
+    """
+
+    triage = state.get("triage_result", {})
+    email = state.get("email_text", "")
+
+    prompt = f"""
+You are an email assistant.
+
+Email:
+{email}
+
+Triage Result:
+{triage}
+
+Think step-by-step in ReAct style.
+Decide: Should you call a tool or reply directly?
+
+Response format JSON:
+{{
+  "thought": "...",
+  "action": "read_calendar" | "lookup_contact" | "reply",
+  "action_input": "string"
+}}
+"""
+
+    result = llm.invoke(prompt)
+    state["reasoning_output"] = result
+
+    return state
+
+
+def tool_executor_node(state: Dict[str, Any]) -> Dict[str, Any]:
+    #Executes tools selected by the ReAct agent.
+   
+    decision = state.get("reasoning_output", {})
+
+    action = decision.get("action")
+    action_input = decision.get("action_input")
+
+    if action in TOOLS:
+        state["tool_result"] = TOOLS[action](action_input)
+    else:
+        state["tool_result"] = None  # direct reply mode
+
+    return state
 
 
 if __name__ == "__main__":

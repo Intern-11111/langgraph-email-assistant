@@ -1,6 +1,7 @@
 from triage.triage_rules import RuleBasedTriage
 from triage.triage_llm import LLMFallbackTriage
-
+from langsmith import trace
+from typing import Dict, Any
 
 class TriageNode:
 
@@ -55,6 +56,17 @@ class TriageNode:
             "final_confidence": llm_result["confidence"],
             "source": "llm"
         }
+    
+    def triage_node(self, state: Dict[str, Any]) -> Dict[str, Any]:
+        email = state.get("email_text", "")
+
+        # Run the triage logic (rules → llm fallback)
+        triage_result = self.run(email)
+
+        # Add results to state so next nodes can use it
+        state["triage_result"] = triage_result
+
+        return state
 
 
 if __name__ == "__main__":
