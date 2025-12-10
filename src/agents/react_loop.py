@@ -162,6 +162,7 @@ Response format JSON:
 }}
 """
 
+    llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
     result = llm.invoke(prompt)
     state["reasoning_output"] = result
 
