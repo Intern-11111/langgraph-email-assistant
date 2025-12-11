@@ -1,14 +1,9 @@
 import sys
 import os
 import uuid
-
-# ✅ Add project folder to Python path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-
 from agent.react_loop import build_graph
-
 if __name__ == "__main__":
-
     app = build_graph()
 
     while True:
