@@ -27,4 +27,4 @@ black>=24.10.0
 ruff>=0.6.5
 pre-commit>=3.7.1
 
-dotenv
+python-dotenv

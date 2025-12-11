@@ -35,7 +35,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="D:\Aayush\College\Interships\Infosys-Building an Ambient Agent with LangGraph for an Email Assistant\langgraph-email-assistant\venv"
+VIRTUAL_ENV="D:\Aayush\College\Interships\Infosys-Building an Ambient Agent\langgraph-email-assistant\venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=D:\Aayush\College\Interships\Infosys-Building an Ambient Agent with LangGraph for an Email Assistant\langgraph-email-assistant\venv
+set VIRTUAL_ENV=D:\Aayush\College\Interships\Infosys-Building an Ambient Agent\langgraph-email-assistant\venv
 
 if not defined PROMPT set PROMPT=$P$G
 
