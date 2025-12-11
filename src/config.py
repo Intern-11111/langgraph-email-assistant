@@ -9,6 +9,7 @@ env_path = Path(__file__).parent.parent / ".env"
 
 load_dotenv(dotenv_path=env_path)
 
+print("hello")
 llm = HuggingFaceEndpoint(
     repo_id="mistralai/Mistral-7B-Instruct-v0.2",  # Specify the HuggingFace model repo
     task="text-generation"  
