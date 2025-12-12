@@ -3,7 +3,7 @@
 <br>
 Intelligent ambient agent leveraging LangGraph to process, analyze, and automate email workflows with real-time assistance and proactive insights.
 
-Milestone 1 Goal<br>
+**Milestone 1 Goal**<br>
 
 Establish a solid foundation for the email assistant by:
 
@@ -17,8 +17,8 @@ Implementing "HelloAgent" (Initial LangGraph Proof-of-Concept)
 
 Demonstrating the system end-to-end
 
-What Was Done in Milestone 1<br>
-🔧 Environment & Infrastructure (Lead Responsibility)
+What Was Done in Milestone 1<br><br>
+**Environment & Infrastructure (Lead Responsibility)**
 Created and validated Python virtual environment
 
 Installed and locked all required dependencies
@@ -46,19 +46,19 @@ fastapi
 
 uvicorn
 
-Core Functionality – HelloAgent 
+Core Functionality – HelloAgent <br>
 Implemented "HelloAgent", a foundational LangGraph-based agent powered by Gemini to validate graph state and LLM connectivity. This evolved into the core triage functionality:
 
 HelloAgent Validation: Confirmed successful API handshakes with Google's Gemini models via LangChain.
 
 
-Project Structure
+**Project Structure**
 
 langgraph-email-assistant/
-├── src/                  # Core application and agent logic
-│   ├── agents/           # Contains hello_agent.py and triage logic
-├── run_server.py         # FastAPI server entry point
-├── requirements.txt      # Python dependencies
-├── README.md             # Project overview
+├── src/                  # Core application and agent logic<br>
+│   ├── agents/           # Contains hello_agent.py and triage logic<br>
+├── run_server.py         # FastAPI server entry point<br>
+├── requirements.txt      # Python dependencies<br>
+├── README.md             # Project overview<br>
 ├── env_setup.md          # Environment setup guide
 └── .gitignore            # Ignore venv, .env, cache files
