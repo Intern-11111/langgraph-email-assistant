@@ -17,7 +17,7 @@ Implementing "HelloAgent" (Initial LangGraph Proof-of-Concept)
 
 Demonstrating the system end-to-end
 
-What Was Done in Milestone 1<br><br>
+What Was Done in Milestone 1<br><br><br>
 **Environment & Infrastructure (Lead Responsibility)**
 Created and validated Python virtual environment
 
@@ -56,9 +56,9 @@ HelloAgent Validation: Confirmed successful API handshakes with Google's Gemini 
 
 langgraph-email-assistant/
 ├── src/                  # Core application and agent logic<br>
-│   ├── agents/           # Contains hello_agent.py and triage logic<br>
+├── agents/               # Contains hello_agent.py and triage logic<br>
 ├── run_server.py         # FastAPI server entry point<br>
 ├── requirements.txt      # Python dependencies<br>
 ├── README.md             # Project overview<br>
-├── env_setup.md          # Environment setup guide
+├── env_setup.md          # Environment setup guide<br>
 └── .gitignore            # Ignore venv, .env, cache files
