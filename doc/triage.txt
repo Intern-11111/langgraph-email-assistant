@@ -1,0 +1,148 @@
+<-----------------------TRIAGE----------------------------->
+
+ ----------1. What is Triage?
+
+Triage means "sorting or categorizing items based on priority".
+the main goal of triage here is: To decide the right action for each email in a smart and efficient way. 
+
+In this project, triage is used to automatically classify incoming emails  so the system can decide:
+- which emails can be ignored,
+- which emails need a human’s attention,
+- and which emails an AI agent can handle by reasoning and taking action.
+
+----------2. Why Triage is Needed in This System
+
+When many emails arrive:
+* Humans cannot read all emails manually.
+* Some emails are spam or promotions.
+* Some emails are urgent and risky.
+* Some emails are simple and can be handled by an AI agent.
+Triage acts like a gatekeeper  that checks every email first and routes it correctly.
+
+----------3. Triage Categories Used in This Project
+
+Every email is classified into   one of three categories  :
+
+1. `ignore`
+
+* Spam emails
+* Promotions
+* Newsletters
+* Low‑value messages
+Action:   Do nothing, safely ignore.
+
+2. `notify_human`
+
+* Urgent emails
+* Complaints
+* Refund or problem messages
+* Angry or sensitive content
+Action:   Notify a human immediately.
+
+3. `reason_act`
+* Meeting scheduling
+* Asking availability
+* Requests that AI can answer
+* Normal business communication
+Action:   AI agent can think (reason) and perform actions (reply, schedule, lookup, etc.).
+
+
+-------------4.Working of the Triage System
+The triage system works in two layers  :
+1.   Rule‑Based Triage  
+2.   LLM‑Based Triage   
+The system always tries rules first. If rules are not confident enough, it uses an LLM.
+
+
+------------5. Step‑by‑Step Triage Flow
+Step 1: Email Input
+Each email contains:
+
+```json
+{
+  "subject": "...",
+  "body": "...",
+  "sender": "..."
+}
+```
+-----------------------------------------
+Step 2: Rule‑Based Triage 
+The system checks predefined keywords in the email text.
+
+Examples:
+* Words like `spam`, `unsubscribe` →   ignore  
+* Words like `urgent`, `complaint`, `refund` →   notify_human  
+* Words like `meeting`, `schedule`, `call` →   reason_act  
+
+Each rule returns:
+```json
+{
+  "label": "reason_act",
+  "confidence": 0.85
+}
+```
+-----------------------------------------------------
+Step 3: Confidence Check
+A   confidence threshold (0.80)   is used.
+* If rule confidence ≥ 0.80 → decision is accepted
+* If rule confidence < 0.80 → fallback to LLM
+This avoids weak or uncertain rule decision.
+
+------------------------------------------------------
+Step 4: LLM Fallback Triage
+If rules are unsure, an LLM is used.
+
+The LLM:
+* Reads subject and body
+* Understands meaning and intent
+* Returns structured JSON output
+
+Example:
+
+```json
+{
+  "label": "notify_human",
+  "confidence": 0.92,
+  "source": "llm"
+}
+```
+-----------------------------------------
+Step 5: Final Triage Decision
+
+Final output includes:
+
+* Selected label
+* Confidence score
+* Decision source (rules or LLM)
+
+```json
+{
+  "final_label": "notify_human",
+  "final_confidence": 0.92,
+  "source": "llm"
+}
+```
+
+---
+
+-------------6. Triage Node Role
+
+The Triage Node acts as the controller:
+
+1. Receives email input
+2. Calls rule‑based classifier
+3. Checks confidence threshold
+4. Calls LLM if required
+5. Returns final triage decision
+This makes the system modular and easy to plug into LangGraph workflows.
+
+---
+
+---------------7. Triage Evaluation (Accuracy Check)
+
+To measure performance:
+* A dataset of emails with   human labels   is used
+* Each email is passed through the triage system
+* Agent output is compared with human label
+This helps validate how well the triage logic works.
+
