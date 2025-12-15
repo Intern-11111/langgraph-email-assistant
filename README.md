@@ -3,7 +3,7 @@
 <br>
 Intelligent ambient agent leveraging LangGraph to process, analyze, and automate email workflows with real-time assistance and proactive insights.
 
-**Milestone 1 Goal**<br>
+<b>**Milestone 1 Goal**<b><br><br>
 
 Establish a solid foundation for the email assistant by:
 
@@ -17,7 +17,7 @@ Implementing "HelloAgent" (Initial LangGraph Proof-of-Concept)
 
 Demonstrating the system end-to-end
 
-What Was Done in Milestone 1<br><br><br>
+What Was Done in Milestone 1 : <br><br><br>
 **Environment & Infrastructure (Lead Responsibility)**
 Created and validated Python virtual environment
 
@@ -29,7 +29,7 @@ API Configuration: Configured .env to securely manage the Gemini API Key (GOOGLE
 
 Structured the repository for scalability
 
-Dependency Validation
+**Dependency Validation**<br><br>
 The following libraries were installed and confirmed working:
 
 langchain
@@ -47,7 +47,7 @@ fastapi
 uvicorn
 
 Core Functionality – HelloAgent <br>
-Implemented "HelloAgent", a foundational LangGraph-based agent powered by Gemini to validate graph state and LLM connectivity. This evolved into the core triage functionality:
+Implemented "HelloAgent", a foundational LangGraph-based agent powered by Gemini to validate graph state and LLM connectivity.
 
 HelloAgent Validation: Confirmed successful API handshakes with Google's Gemini models via LangChain.
 
