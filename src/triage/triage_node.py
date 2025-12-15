@@ -1,5 +1,5 @@
-from triage.triage_rules import RuleBasedTriage
-from triage.triage_llm import LLMFallbackTriage
+from triage_rules import RuleBasedTriage
+from triage_llm import LLMFallbackTriage
 from langsmith import trace
 from typing import Dict, Any
 

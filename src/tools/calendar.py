@@ -5,7 +5,7 @@ from typing import Dict, Any, List
 def read_calendar(user_id: str = "me", date_hint: str = None) -> Dict[str, Any]:
 
     now = datetime.datetime.now()
-    # Simple deterministic "available slots" list
+    # available slots list
     base_hour = 9
     available_slots: List[str] = []
     for i in range(4):

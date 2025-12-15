@@ -101,7 +101,7 @@ def main():
 
     print(json.dumps(trace, indent=2))
 
-    # Optional Excel export (interactive prompt)
+    #Excel export (interactive prompt)
     try:
         default_out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "data", "agent_outputs.xlsx")
         choice = input("\nExport outputs to Excel? (y=save to default, c=choose path, N=skip) [y/N/c]: ").strip().lower()
