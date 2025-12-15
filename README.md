@@ -1,64 +1,75 @@
-# langgraph-email-assistant
-"Building an Ambient Agent with LangGraph for an Email Assistant"
-<br>
-Intelligent ambient agent leveraging LangGraph to process, analyze, and automate email workflows with real-time assistance and proactive insights.
+# 🚀 LangGraph Email Assistant  
+### *Building an Ambient Agent with LangGraph for Intelligent Email Automation*
 
-<b>**Milestone 1 Goal**<b><br><br>
+An **intelligent ambient agent** built using **LangGraph** to process, analyze, and automate email workflows with **real-time assistance** and **proactive AI-driven insights**.
 
-Establish a solid foundation for the email assistant by:
+---
 
-Setting up the development environment
+## 🎯 Milestone 1 Goal
 
-Defining the project structure
+The primary objective of **Milestone 1** was to establish a **strong technical foundation** for the email assistant system by:
 
-Validating core AI frameworks
+- ⚙️ Setting up a robust development environment  
+- 🗂️ Defining a scalable project structure  
+- 🤖 Validating core AI and LLM frameworks  
+- 🧪 Implementing **HelloAgent** (Initial LangGraph Proof-of-Concept)  
+- 🔄 Demonstrating an end-to-end working pipeline  
 
-Implementing "HelloAgent" (Initial LangGraph Proof-of-Concept)
+---
 
-Demonstrating the system end-to-end
+## ✅ What Was Done in Milestone 1
 
-What Was Done in Milestone 1 : <br><br><br>
-**Environment & Infrastructure (Lead Responsibility)**
-Created and validated Python virtual environment
+### 🔧 Environment & Infrastructure *(Lead Responsibility)*
 
-Installed and locked all required dependencies
+- Created and validated a **Python virtual environment**
+- Installed and locked all required dependencies
+- Configured `.gitignore` to exclude:
+  - `venv/`
+  - `.env`
+  - cache and temporary files
+- 🔐 **API Configuration**:
+  - Configured `.env` to securely manage the **Gemini API Key**  
+  - Environment variable used: `GOOGLE_API_KEY`
+- Designed a **clean and scalable repository structure** for future milestones
 
-Configured .gitignore to exclude venv/ and .env
+---
 
-API Configuration: Configured .env to securely manage the Gemini API Key (GOOGLE_API_KEY)
+### 📦 Dependency Validation
 
-Structured the repository for scalability
+The following libraries were installed, tested, and confirmed working successfully:
 
-**Dependency Validation**<br><br>
-The following libraries were installed and confirmed working:
+- `langchain`
+- `langgraph`
+- `langchain-google-genai` *(Gemini integration)*
+- `transformers`
+- `datasets`
+- `fastapi`
+- `uvicorn`
 
-langchain
+---
 
-langgraph
+### 🤖 Core Functionality – HelloAgent
 
-langchain-google-genai (For Gemini Integration)
+- Implemented **HelloAgent**, a foundational **LangGraph-based agent**
+- Integrated **Google Gemini** via LangChain
+- Validated:
+  - Graph state execution
+  - LLM connectivity
+  - Proper API communication flow
 
- transformers
+✅ **HelloAgent Validation Result**:  
+Successful API handshake and response generation using Google’s Gemini models.
 
-datasets
+---
 
-fastapi
+## 🗂️ Project Structure
 
-uvicorn
-
-Core Functionality – HelloAgent <br>
-Implemented "HelloAgent", a foundational LangGraph-based agent powered by Gemini to validate graph state and LLM connectivity.
-
-HelloAgent Validation: Confirmed successful API handshakes with Google's Gemini models via LangChain.
-
-
-**Project Structure**
-
+```plaintext
 langgraph-email-assistant/
-├── src/                  # Core application and agent logic<br>
-├── agents/               # Contains hello_agent.py and triage logic<br>
-├── run_server.py         # FastAPI server entry point<br>
-├── requirements.txt      # Python dependencies<br>
-├── README.md             # Project overview<br>
-├── env_setup.md          # Environment setup guide<br>
-└── .gitignore            # Ignore venv, .env, cache files
+├── src/                  # Core application and agent logic
+├── agents/               # Contains hello_agent.py and triage logic
+├── run_server.py         # FastAPI server entry point
+├── requirements.txt      # Python dependencies
+├── README.md             # Project overview and documentation
+├── env_setup.md          # Environment setup guide
+└── .gitignore            # Ignore venv, .env, and cache files
