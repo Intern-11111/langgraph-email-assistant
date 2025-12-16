@@ -33,12 +33,12 @@ class TriageEvaluator:
         body = email["body"]
         sender = email.get("sender", "")
 
-        # 1. Rule-based
+        #  Rule-based
         rule_result = self.rules.classify(subject, body, sender)
         label = rule_result["label"]
         conf = rule_result["confidence"]
 
-        # 2. If low confidence → fallback to LLM (optional)
+        #  If low confidence → fallback to LLM
         if self.use_llm and conf < self.llm_threshold:
             try:
                 llm_result = self.llm.classify(subject, body)
@@ -131,7 +131,6 @@ class TriageEvaluator:
         wb.save(output_path)
 
     def print_summary_counts(self, accuracy: float):
-        """Print category counts and final accuracy to the terminal."""
         summary_map = {
             "Spam": ["spam"],
             "Promotion": ["promotion"],
