@@ -1,5 +1,21 @@
 import json
-from triage.triage_node import triage_email
+# try robust imports for triage_email
+try:
+    from triage.triage_node import triage_email
+except Exception:
+    try:
+        # try importing by module name (useful if running from project root)
+        from triage_node import triage_email
+    except Exception:
+        # add project root to sys.path and retry
+        import os, sys
+        project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+        if project_root not in sys.path:
+            sys.path.insert(0, project_root)
+        try:
+            from triage.triage_node import triage_email
+        except Exception as e:
+            raise ImportError("Could not import triage_email. Ensure triage package or triage_node.py exists.") from e
 from sklearn.metrics import confusion_matrix
 
 def load_dataset():
@@ -38,7 +54,7 @@ def evaluate():
 
     # accuracy
     accuracy = sum([1 for a, b in zip(y_true, y_pred) if a == b]) / len(y_true)
-    print("\nFinal Accuracy:", round(accuracy, 2))
+    print(f"\nFinal Accuracy: {accuracy*100:.1f}%")
 
     # confusion matrix
     print("\nCONFUSION MATRIX (simple)")
