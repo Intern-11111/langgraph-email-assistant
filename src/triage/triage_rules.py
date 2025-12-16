@@ -19,13 +19,13 @@ class TriageRules:
             "security alert", "suspicious login", "login attempt"
         ]
 
-        # Removed generic 'reminder' to avoid false positives like 'Friendly Reminder'
+        
         email.meeting_keywords = [
             "meeting", "zoom", "call", "appointment", "calendar", "invite",
             "reschedule", "teams"
         ]
 
-        # Removed overly generic 'role' to reduce false positives
+       
         email.job_keywords = [
             "interview", "hiring", "opportunity", "resume", "shortlisted", "internship",
             "job application", "position", "career", "vacancy"
@@ -57,7 +57,7 @@ class TriageRules:
 
         full_text = f"{subject} {body}".lower()
 
-        # Prefer automated if sender is clearly no-reply
+        #Automated if sender is clearly no-reply
         if "noreply" in sender.lower():
             return {
                 "label": "automated",
@@ -129,4 +129,4 @@ if __name__ == "__main__":
 
     result = triage.classify(email_subject, email_body, sender)
     print("Rule-based result:", result)
-RuleBasedTriage = TriageRules
+    RuleBasedTriage = TriageRules
