@@ -129,4 +129,5 @@ if __name__ == "__main__":
 
     result = triage.classify(email_subject, email_body, sender)
     print("Rule-based result:", result)
-    RuleBasedTriage = TriageRules
+    
+RuleBasedTriage = TriageRules
