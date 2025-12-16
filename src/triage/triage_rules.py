@@ -5,7 +5,7 @@ class TriageRules:
     def __init__(email):
         email.spam_keywords = [
             "win money", "you won", "lottery", "claim now", "urgent",
-            "100% free", "click here", "urgent prize"
+            "100% free", "urgent prize"
         ]
 
         email.promotion_keywords = [
@@ -15,22 +15,30 @@ class TriageRules:
 
         email.finance_keywords = [
             "invoice", "payment due", "bill", "receipt",
-            "transaction", "bank", "account update"
+            "transaction", "bank", "account update", "account",
+            "security alert", "suspicious login", "login attempt"
         ]
 
+        # Removed generic 'reminder' to avoid false positives like 'Friendly Reminder'
         email.meeting_keywords = [
-            "meeting", "schedule", "zoom", "call", "appointment" , "calendar", "invite", 
-            "reminder" , "reschedule" , "Teams"
+            "meeting", "zoom", "call", "appointment", "calendar", "invite",
+            "reschedule", "teams"
         ]
 
+        # Removed overly generic 'role' to reduce false positives
         email.job_keywords = [
             "interview", "hiring", "opportunity", "resume", "shortlisted", "internship",
-            "job application" , "position" , "career" , "vacancy" , "role"
+            "job application", "position", "career", "vacancy"
         ]
 
         email.transactional_keywords = [
-            "your order", "shipped", "tracking number",
-            "delivery", "package"
+            "your order", "order ", "shipped", "tracking number",
+            "delivery", "delivered", "package"
+        ]
+
+        email.personal_keywords = [
+            "hey", "congrats", "congratulations", "alumni", "meetup",
+            "lunch", "are you free", "wishing you", "tomorrow?", "friendly reminder"
         ]
 
     def contains_keyword(email, text, keywords):
@@ -38,20 +46,24 @@ class TriageRules:
         return any(kw in text for kw in keywords)
 
     def _keyword_confidence(email, text, keywords):
-        """Return a simple confidence score based on keyword matches.
-
-        Confidence = (# matched keywords) / (total keywords), rounded to 2 decimals.
-        """
         text = text.lower()
-        total = len(keywords) if keywords else 0
-        if total == 0:
-            return 0.0
         matches = sum(1 for kw in keywords if kw in text)
-        return round(matches / total, 2)
+        if matches == 0:
+            return 0.0
+        # Discrete, interpretable confidence
+        return 1.0 if matches >= 3 else (0.8 if matches == 2 else 0.6)
 
     def classify(email, subject, body, sender=""):
 
         full_text = f"{subject} {body}".lower()
+
+        # Prefer automated if sender is clearly no-reply
+        if "noreply" in sender.lower():
+            return {
+                "label": "automated",
+                "source": "rule",
+                "confidence": 1.0
+            }
 
         if email.contains_keyword(full_text, email.spam_keywords):
             return {
@@ -95,11 +107,11 @@ class TriageRules:
                 "confidence": email._keyword_confidence(full_text, email.transactional_keywords)
             }
 
-        if "noreply" in sender.lower():
+        if email.contains_keyword(full_text, email.personal_keywords):
             return {
-                "label": "automated",
+                "label": "personal",
                 "source": "rule",
-                "confidence": 1.0
+                "confidence": email._keyword_confidence(full_text, email.personal_keywords)
             }
 
         return {
@@ -117,6 +129,4 @@ if __name__ == "__main__":
 
     result = triage.classify(email_subject, email_body, sender)
     print("Rule-based result:", result)
-
-# Backward-compatible alias to match evaluator import
 RuleBasedTriage = TriageRules

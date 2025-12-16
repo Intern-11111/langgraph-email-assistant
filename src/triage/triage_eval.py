@@ -188,7 +188,7 @@ if __name__ == "__main__":
 
     evaluator.print_confusion_matrix()
     evaluator.print_summary_counts(accuracy)
-    # Always interactive prompt for Excel export
+    # Interactive prompt for Excel export
     try:
         default_out = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "data", "triage_results.xlsx")
         choice = input("\nExport results to Excel? (y=save to default, c=choose path, N=skip) [y/N/c]: ").strip().lower()
