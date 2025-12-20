@@ -1,0 +1,101 @@
+id,subject,body,ideal_response
+1,Meeting Request,Can we schedule a meeting tomorrow at 10 AM to discuss the Q4 roadmap?,Yes, I am available tomorrow at 10 AM. Please send a calendar invite with the agenda so we can prepare effectively.
+2,Meeting Reschedule,Something urgent came up. Can we move today’s meeting to next week?,No problem. Please suggest a suitable date and time next week, and I will confirm my availability.
+3,Ambiguous Meeting Request,Let’s catch up sometime soon.,Sure. Could you please share your preferred date, time, and topic so we can schedule it properly?
+4,Project Update,Sharing the latest build update. Some features are still pending.,Thank you for the update. Please let me know which features are pending and if there are any blockers requiring attention.
+5,Urgent Server Outage,Production server is down since 2 AM. Customers are impacted.,Thank you for the alert. This has been escalated as a high-priority incident. Please keep us informed with status updates and ETA for resolution.
+6,Invoice Submission,Attached is the invoice for April services.,Thank you for sharing the invoice. We will verify the details and update you once the payment is scheduled.
+7,Invoice Discrepancy,The invoice amount seems higher than agreed.,Thank you for raising this. We will review the invoice against the agreement and get back to you with clarification.
+8,Payment Reminder,This is a reminder that payment is still pending.,Thank you for the reminder. We are checking the payment status internally and will update you shortly.
+9,Polite Phishing Alert,Dear user, please confirm your payroll details to avoid salary delay.,This email appears suspicious. Please do not share any personal or payroll information and report this message to the security team.
+10,Security Alert,We detected a login attempt from an unknown device.,Thank you for notifying us. Please avoid clicking any links and verify this alert through the official security portal.
+11,Password Reset Request,I forgot my password and cannot log in.,You can reset your password using the official password recovery option. Please contact support if the issue persists.
+12,Account Locked,My account is locked after multiple attempts.,Sorry for the inconvenience. Please contact official support to securely verify your identity and restore access.
+13,HR Leave Request,I would like to take leave on Monday for personal reasons.,Your leave request has been received. Please ensure handover is completed and wait for approval confirmation.
+14,Leave Policy Clarification,Can you explain how casual leave works?,Sure. I will share the casual leave policy details and eligibility criteria with you shortly.
+15,Interview Confirmation,Confirming my availability for the interview tomorrow at 11 AM.,Thank you for confirming. We look forward to speaking with you tomorrow at the scheduled time.
+16,Interview Reschedule,Due to a conflict, can we reschedule the interview?,Certainly. Please suggest an alternative date and time that works for you.
+17,Job Application Follow-up,I wanted to check the status of my application.,Thank you for your interest. We will update you once the review process is complete.
+18,Training Enrollment,Please enroll me in the upcoming security training.,Your request has been received. Enrollment confirmation and schedule details will be shared soon.
+19,Training Reminder,Reminder: Training session starts tomorrow at 9 AM.,Thank you for the reminder. I have noted the schedule.
+20,Ambiguous Urgent Email,Please handle this ASAP.,Could you please provide more details on the issue so we can address it appropriately?
+21,Client Escalation,The client is unhappy and asking for immediate resolution.,Thank you for flagging this. We are reviewing the issue urgently and will prioritize client communication.
+22,Client Feedback,The client appreciated the quick turnaround.,That’s great to hear. Thank you for sharing the feedback with the team.
+23,Service Outage Notification,The application will be unavailable tonight for maintenance.,Thank you for informing us. We have noted the maintenance window.
+24,Delayed Delivery,Delivery will be delayed due to external dependencies.,Thank you for the update. Please share the revised timeline once available.
+25,Access Request,Please grant access to the shared drive.,Your access request has been received and is under review. You will be notified once processed.
+26,Access Denied,Unable to access the shared document link.,Please ensure you are using the correct account. If the issue persists, contact IT support.
+27,Phishing Look-alike,Your email storage is full. Click here to upgrade.,This message appears suspicious. Please do not click the link and report it to the security team.
+28,Spam Promotion,You have won a gift voucher. Act now!,This appears to be a promotional or spam email. No action is required.
+29,Finance Approval Request,Requesting approval for the attached expense report.,Thank you for submitting the report. It is under review and approval status will be shared soon.
+30,Expense Clarification,Some expense receipts are missing.,Please provide the missing receipts so we can complete the review process.
+31,Meeting Agenda,Sharing the agenda for tomorrow’s discussion.,Thank you for sharing the agenda. Looking forward to the meeting.
+32,Meeting Cancellation,I won’t be able to attend due to an emergency.,Thank you for informing us. We hope everything is okay and will share meeting notes afterward.
+33,Meeting Delay,Running late by about 15 minutes.,Thanks for the update. We will wait and begin once you join.
+34,Follow-up Email,Just checking if you saw my previous message.,Thank you for the follow-up. We are reviewing it and will respond shortly.
+35,Project Delay Notice,Project delivery may slip by one week.,Thank you for the update. Please share the revised plan and impact analysis.
+36,Task Assignment,Assigning a new task with high priority.,Thank you for assigning this task. I will start working on it and share updates.
+37,Task Completion,The assigned task has been completed.,Great work. Thank you for completing the task and keeping us informed.
+38,General Inquiry,I would like to know more about your services.,Sure. Please let us know your specific requirements so we can assist you better.
+39,Demo Request,Can you arrange a product demo this week?,Certainly. Please share your availability and preferred time slots.
+40,Demo Feedback,The demo was helpful but had some gaps.,Thank you for the feedback. We will review the gaps and improve future demos.
+41,Account Verification,Please verify your email to keep the account active.,Please complete verification only through the official platform. Contact support if you face issues.
+42,Data Request,Please share last quarter’s performance metrics.,Sure. I will compile the requested data and share it with you.
+43,Data Delay,The requested data will take more time.,Thank you for informing us. Please share an updated ETA when possible.
+44,System Update Reminder,Please update your system to avoid vulnerabilities.,Thank you for the reminder. We will ensure the update is completed.
+45,Policy Update Notification,The company policy has been updated.,Thank you for sharing the update. Noted.
+46,Newsletter,Here is our monthly company newsletter.,Thank you for sharing the newsletter.
+47,Out of Office,I will be out of office today.,Thank you for the update. Wishing you well.
+48,Support Ticket Raised,A support ticket has been created for your issue.,Thank you. We will track the ticket and follow up as needed.
+49,Support Resolution,Your issue has been resolved.,Thank you for the update. Please let us know if further assistance is required.
+50,Account Deactivation,Please deactivate my account permanently.,Your request has been received. We will process it as per policy and confirm once completed.
+51,Payment Confirmation,Payment has been successfully processed.,Thank you for confirming the payment.
+52,Payment Failure,The payment transaction failed.,Thank you for informing us. Please retry or contact support for assistance.
+53,Security Patch Alert,A critical security patch is available.,Thank you for the alert. We will apply the patch promptly.
+54,Ambiguous Finance Email,Please take care of the invoice.,Could you please clarify what action is required regarding the invoice?
+55,HR Document Submission,Submitting the requested HR documents.,Thank you for submitting the documents. We will review and confirm.
+56,Role Change Notification,You have been assigned a new role.,Thank you for the update. I look forward to taking on the new responsibilities.
+57,Team Introduction,Please welcome the new team member.,Welcome aboard. Looking forward to collaborating.
+58,Reminder Deadline,The deadline is approaching.,Thank you for the reminder. We will ensure timely completion.
+59,General Announcement,Company-wide announcement attached.,Thank you for sharing the update.
+60,Meeting Follow-up,Following up on action items discussed.,Thank you. We will proceed with the next steps and keep you updated.
+61,Service Renewal Reminder,Your service is due for renewal.,Thank you for the information. We will review and respond.
+62,Service Cancellation,Please cancel my subscription.,Your cancellation request has been received and will be processed as per policy.
+63,Website Issue,The website is not loading correctly.,Thank you for reporting the issue. Our technical team is investigating.
+64,Website Feedback,The website UI looks clean and intuitive.,Thank you for your positive feedback.
+65,Client Query,Can you explain the pricing model?,Sure. I will share a detailed explanation of the pricing structure.
+66,Escalation Follow-up,Any update on the escalated issue?,We are actively working on it and will provide an update shortly.
+67,Account Update Notice,Your account details were updated.,Thank you for informing us. Noted.
+68,Meeting Summary,Sharing the summary of today’s meeting.,Thank you for sharing the summary.
+69,Training Completion,Training has been successfully completed.,Congratulations on completing the training.
+70,Offer Letter,Please find your offer letter attached.,Thank you for sharing the offer letter. I will review and respond shortly.
+71,Offer Reminder,Reminder about the pending offer acceptance.,Thank you for the reminder. I am reviewing it and will respond soon.
+72,Rejected Application,We regret to inform you that…,Thank you for informing me. I appreciate the consideration.
+73,Account Verification Failed,Verification attempt was unsuccessful.,Please retry using the official verification process or contact support.
+74,Meeting Link Update,Updated meeting link for today’s call.,Thank you for sharing the updated link.
+75,Service Downtime,Service will be temporarily unavailable.,Thank you for the notification. Noted.
+76,Client Appreciation,Thanks for the excellent support.,You’re welcome. Happy to assist.
+77,Reminder Follow-up,Just checking again.,Thank you for following up. We will respond shortly.
+78,Task Clarification,Need clarification on the assigned task.,Sure. Please let me know what needs clarification.
+79,Policy Clarification,Can you clarify the travel policy?,Certainly. I will share the relevant policy details.
+80,Access Revoked,Your system access has been revoked.,Thank you for informing us. Noted.
+81,Invoice Approval,The invoice has been approved.,Thank you for the confirmation.
+82,Invoice Rejection,The invoice was rejected due to errors.,Thank you for informing us. We will correct and resubmit it.
+83,Ambiguous Complaint,This process is very frustrating.,Sorry to hear that. Could you please share more details so we can assist effectively?
+84,Client Escalation Warning,Client may terminate contract if unresolved.,Thank you for flagging this. We are prioritizing the issue and will address it urgently.
+85,Meeting Confirmation,Confirming my presence for the meeting.,Thank you for confirming.
+86,Support Delay,Resolution may take longer than expected.,Thank you for the update. Please keep us informed of progress.
+87,Security Awareness,Reminder to avoid suspicious emails.,Thank you for the reminder. Noted.
+88,Password Expiry Notice,Your password will expire in 2 days.,Thank you for the alert. We will update it promptly.
+89,Account Recovery,Requesting help to recover my account.,Please contact official support for secure account recovery.
+90,General Feedback,Overall experience has been good.,Thank you for your feedback.
+91,Meeting Closure,Meeting concluded successfully.,Thank you for the update.
+92,Service Request,Requesting additional support services.,Sure. Please share more details about your requirements.
+93,Client Delay Apology,Apologies for the delayed response.,Thank you for the update. Noted.
+94,Data Privacy Update,We updated our data privacy policy.,Thank you for sharing the update.
+95,Demo Cancellation,Need to cancel today’s demo.,Thank you for informing us. Please let us know if you wish to reschedule.
+96,Task Reminder,Reminder to complete the pending task.,Thank you for the reminder. I will complete it shortly.
+97,Escalation Resolution,The escalated issue is now resolved.,Thank you for the update.
+98,Phishing Alert,Verify your identity immediately to avoid suspension.,This message appears suspicious. Please do not click any links and report it to security.
+99,Final Notice,Final reminder before account closure.,Thank you for informing us. We will take the necessary action.
+100,Completion Confirmation,All requested actions are completed.,Thank you for the confirmation.
