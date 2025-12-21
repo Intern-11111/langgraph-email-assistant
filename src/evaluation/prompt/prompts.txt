@@ -1,0 +1,15 @@
+You are an expert evaluator for an enterprise email assistant.
+
+Email:
+{email_body}
+
+Agent Response:
+{agent_response}
+
+Ideal Response:
+{ideal_response}
+
+Evaluate the agent response using a 1–5 scale for the following metrics:
+{metric_list}
+
+Return ONLY valid JSON with each metric name as a key and include "final_score".
