@@ -1,0 +1,122 @@
+[
+  {
+    "email": "Congratulations! You have won a cash reward. Click the link to claim.",
+    "label": "spam"
+  },
+  {
+    "email": "Limited-time offer! Buy 1 get 1 free on all accessories.",
+    "label": "promotion"
+  },
+  {
+    "email": "Can we schedule our review meeting for tomorrow morning?",
+    "label": "action_intent"
+  },
+  {
+    "email": "Please check the attached document and let me know your feedback.",
+    "label": "normal"
+  },
+  {
+    "email": "You have been selected for a prize worth $5000. Act now!",
+    "label": "spam"
+  },
+  {
+    "email": "Flat 40% discount on electronics this weekend!",
+    "label": "promotion"
+  },
+  {
+    "email": "Could you share the updated project report by today?",
+    "label": "action_intent"
+  },
+  {
+    "email": "Hope you are doing well. Just wanted to check in.",
+    "label": "normal"
+  },
+  {
+    "email": "Urgent! Your account has been compromised. Verify immediately.",
+    "label": "spam"
+  },
+  {
+    "email": "Our summer sale starts today with exciting offers!",
+    "label": "promotion"
+  },
+  {
+    "email": "Please confirm if you can join the call at 3 PM.",
+    "label": "action_intent"
+  },
+  {
+    "email": "Here is the file you requested earlier.",
+    "label": "normal"
+  },
+  {
+    "email": "Win free vacation tickets! Limited seats available.",
+    "label": "spam"
+  },
+  {
+    "email": "Don't miss out on our Diwali mega sale!",
+    "label": "promotion"
+  },
+  {
+    "email": "Send me the invoice copy for last month’s work.",
+    "label": "action_intent"
+  },
+  {
+    "email": "Let me know when you're free to talk.",
+    "label": "normal"
+  },
+  {
+    "email": "You are chosen for an exclusive financial reward. Click to claim.",
+    "label": "spam"
+  },
+  {
+    "email": "Extra 20% off on your first purchase. Shop now!",
+    "label": "promotion"
+  },
+  {
+    "email": "Kindly approve the request so I can proceed.",
+    "label": "action_intent"
+  },
+  {
+    "email": "Just a reminder about today’s deadline.",
+    "label": "normal"
+  },
+  {
+    "email": "Final warning: Update your bank details or your account will be blocked.",
+    "label": "spam"
+  },
+  {
+    "email": "Exclusive deal for you—grab your discount voucher now!",
+    "label": "promotion"
+  },
+  {
+    "email": "Book the conference room for tomorrow evening.",
+    "label": "action_intent"
+  },
+  {
+    "email": "Sharing the meeting notes from today’s discussion.",
+    "label": "normal"
+  },
+  {
+    "email": "Your mobile number has won a lucky draw prize!",
+    "label": "spam"
+  },
+  {
+    "email": "New arrivals on sale! Check out our latest collection.",
+    "label": "promotion"
+  },
+  {
+    "email": "Can you help me resolve this technical issue?",
+    "label": "action_intent"
+  },
+  {
+    "email": "Thank you for your quick response earlier.",
+    "label": "normal"
+  },
+  {
+    "email": "You have an unclaimed refund. Click the link to receive it now.",
+    "label": "spam"
+  },
+  {
+    "email": "Enjoy festival discounts on selected products!",
+    "label": "promotion"
+  }
+]
