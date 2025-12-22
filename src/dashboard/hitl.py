@@ -1,5 +1,6 @@
 import streamlit as st
 import json
+import os
 from datetime import datetime
 
 st.set_page_config(page_title="HITL Review", layout="wide")
@@ -57,22 +58,61 @@ st.subheader("Decision")
 
 col1, col2 = st.columns(2)
 
+
+def append_json_record(file_path: str, record: dict):
+    try:
+        # If file doesn't exist or is empty, create a new array with the record
+        if not os.path.exists(file_path) or os.path.getsize(file_path) == 0:
+            with open(file_path, "w", encoding="utf-8") as f:
+                json.dump([record], f, ensure_ascii=False, indent=2)
+                f.write("\n")
+            return
+
+        with open(file_path, "r", encoding="utf-8") as f:
+            raw = f.read().strip()
+
+        parsed = None
+        try:
+            parsed = json.loads(raw) if raw else []
+            if isinstance(parsed, list):
+                parsed.append(record)
+            else:
+                # Single object -> convert to array
+                parsed = [parsed, record]
+        except json.JSONDecodeError:
+            lines = [line for line in raw.splitlines() if line.strip()]
+            objs = []
+            for line in lines:
+                objs.append(json.loads(line))
+            parsed = objs + [record]
+
+        # Write back as a proper JSON array (pretty-printed)
+        with open(file_path, "w", encoding="utf-8") as f:
+            json.dump(parsed, f, ensure_ascii=False, indent=2)
+            f.write("\n")
+    except Exception as e:
+        st.error(f"Failed to write JSON report: {e}")
+
 with col1:
     if st.button("✅ Approve Action"):
         st.success("Action Approved!")
-        with open("approved_actions.json", "a") as f:
-            f.write(json.dumps({
+        append_json_record(
+            "src/reports/approved_actions.json",
+            {
                 "timestamp": str(datetime.now()),
                 "decision": "approved",
-                "data": data
-            }) + "\n")
+                "data": data,
+            },
+        )
 
 with col2:
     if st.button("⚠️ Escalate to Human"):
         st.warning("Escalated for human review.")
-        with open("escalated_actions.json", "a") as f:
-            f.write(json.dumps({
+        append_json_record(
+            "src/reports/escalated_actions.json",
+            {
                 "timestamp": str(datetime.now()),
                 "decision": "escalated",
-                "data": data
-            }) + "\n")
+                "data": data,
+            },
+        )
