@@ -1,4 +1,6 @@
-You are an expert evaluator for an enterprise email assistant.
+You are an automated evaluation system.
+
+Your task is to evaluate an email assistant's response.
 
 Email:
 {email_body}
@@ -9,7 +11,22 @@ Agent Response:
 Ideal Response:
 {ideal_response}
 
-Evaluate the agent response using a 1–5 scale for the following metrics:
+Score the agent response on the following metrics from 1 to 5:
 {metric_list}
 
-Return ONLY valid JSON with each metric name as a key and include "final_score".
+CRITICAL INSTRUCTIONS:
+- You MUST return ONLY valid JSON.
+- Do NOT include explanations, comments, or markdown.
+- Do NOT include any text outside the JSON.
+- The JSON MUST contain every metric name as a key.
+- The JSON MUST contain a key called "final_score".
+
+JSON FORMAT (EXAMPLE):
+{{
+  "accuracy": 4,
+  "helpfulness": 4,
+  "tone": 5,
+  "safety": 5,
+  "completeness": 4,
+  "final_score": 4.4
+}}

@@ -1,9 +1,14 @@
 import json
 import time
+import os
 from langsmith.evaluation import RunEvaluator
 from langchain_openai import ChatOpenAI
 import openai
 from openai import RateLimitError, APIError as OpenAIError
+from dotenv import load_dotenv
+
+# Ensure environment variables from .env are loaded when running from nested paths
+load_dotenv()
 
 # Load Intern 2 metrics
 with open("src/evaluation/Metrics/agent_quality_metrics.json") as f:
@@ -11,10 +16,17 @@ with open("src/evaluation/Metrics/agent_quality_metrics.json") as f:
 
 METRIC_NAMES = [m["name"] for m in METRICS]
 
-# Initialize Judge LLM
+# Initialize Judge LLM with explicit API key for reliability
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+if not OPENAI_API_KEY:
+    raise EnvironmentError(
+        "OPENAI_API_KEY is not set. Create a .env file or set the variable in your environment."
+    )
+
 judge_llm = ChatOpenAI(
     model="gpt-4o-mini",
-    temperature=0
+    temperature=0,
+    api_key=OPENAI_API_KEY,
 )
 
 def call_judge_with_retry(prompt, max_retries=5, wait_base=10):
@@ -53,18 +65,17 @@ class EmailJudgeEvaluator(RunEvaluator):
         metric_list = "\n".join([f"- {name} (1–5)" for name in METRIC_NAMES])
 
         # Load prompt template
-        with open("evaluation/judge_prompts/email_judge_prompt.txt") as f:
+        with open("src/evaluation/prompt/prompts.txt") as f:
             prompt_template = f.read()
-
-        prompt = prompt_template.format(
-            email_body=email_body,
-            agent_response=agent_response,
-            ideal_response=ideal_response,
-            metric_list=metric_list
-        )
+            prompt = prompt_template.format(
+                email_body=email_body,
+                agent_response=agent_response,
+                ideal_response=ideal_response,
+                metric_list=metric_list
+                )
 
         # Call LLM with retry
-        judge_output = call_judge_with_retry(prompt)
+        judge_output = call_judge_with_retry(prompt).strip()
 
         # Ensure JSON parsing
         try:
