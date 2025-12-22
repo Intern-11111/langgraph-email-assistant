@@ -94,7 +94,6 @@ Observed during batch evaluation (automatic backoff):
 - Considered healthy/normal for this workload
 
 ## Attach Results (Images)
-Add your result screenshots to: `src/reports/Milestone2/images/`
 
 ```text
 src/
@@ -102,7 +101,7 @@ src/
     Milestone2/
       images/
         result1.png   # LangSmith trace or evaluation run
-        result2.png   # Aggregated metrics or dashboard view
+        result2.png   # Aggregated metrics (dashboard) view
 ```
 
 Embed them below once added:
