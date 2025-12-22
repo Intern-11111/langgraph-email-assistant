@@ -106,10 +106,10 @@ src/
 
 Embed them below once added:
 
-![LangSmith Trace – Case 1](images/Result(1).png)
+![LangSmith Trace – Case 1](images/Result(2).png)
 *Figure 1. LangSmith trace of a single evaluation run.*
 
-![Aggregate Metrics Dashboard](src\reports\Milestone2\images\Result(2).png)
+![Aggregate Metrics Dashboard](images/Result(1).png)
 *Figure 2. Aggregated evaluation metrics across runs.*
 
 > Note: Avoid attaching sensitive content (API keys, private emails, environment details).
