@@ -1,92 +1,127 @@
 import json
-import time
-import os
+from typing import Any, Dict
+
 from langsmith.evaluation import RunEvaluator
 from langchain_openai import ChatOpenAI
-import openai
-from openai import RateLimitError, APIError as OpenAIError
-from dotenv import load_dotenv
+from langchain_core.messages import HumanMessage, SystemMessage
 
-# Ensure environment variables from .env are loaded when running from nested paths
-load_dotenv()
-
-# Load Intern 2 metrics
-with open("src/evaluation/Metrics/agent_quality_metrics.json") as f:
-    METRICS = json.load(f)["metrics"]
-
-METRIC_NAMES = [m["name"] for m in METRICS]
-
-# Initialize Judge LLM with explicit API key for reliability
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-if not OPENAI_API_KEY:
-    raise EnvironmentError(
-        "OPENAI_API_KEY is not set. Create a .env file or set the variable in your environment."
-    )
-
-judge_llm = ChatOpenAI(
-    model="gpt-4o-mini",
-    temperature=0,
-    api_key=OPENAI_API_KEY,
-)
-
-def call_judge_with_retry(prompt, max_retries=5, wait_base=10):
-    """
-    Call LLM with automatic retry on rate limits or OpenAI errors.
-    Uses exponential backoff and returns LLM output.
-    """
-    for i in range(max_retries):
-        try:
-            response = judge_llm.invoke(prompt).content
-            if not response.strip():
-                raise ValueError("Empty response from LLM")
-            return response
-        except RateLimitError as e:
-            wait_time = wait_base * (i + 1)
-            print(f"[RateLimitError] Retry {i+1}/{max_retries} in {wait_time}s...")
-            time.sleep(wait_time)
-        except OpenAIError as e:
-            print(f"[OpenAIError] {e}, retrying {i+1}/{max_retries}...")
-            time.sleep(5)
-        except ValueError as e:
-            print(f"[Warning] {e}, retrying {i+1}/{max_retries}...")
-            time.sleep(5)
-    raise Exception("Max retries exceeded for judge LLM.")
 
 class EmailJudgeEvaluator(RunEvaluator):
-    def evaluate_run(self, run, example, **kwargs):
-        """
-        Evaluate a single agent run.
-        **kwargs: Accepts extra arguments from LangSmith (e.g., evaluator_run_id)
-        """
-        agent_response = run.outputs.get("response", "")
-        email_body = example.inputs.get("body", "")
-        ideal_response = example.outputs.get("ideal_response", "")
+    """
+    LLM-based evaluator for email agent responses.
+    Compares agent output vs reference (ideal) output.
+    """
 
-        metric_list = "\n".join([f"- {name} (1–5)" for name in METRIC_NAMES])
+    def __init__(self):
+        self.llm = ChatOpenAI(
+            model="gpt-4o-mini",
+            temperature=0,
+            max_tokens=300,
+        )
 
-        # Load prompt template
-        with open("src/evaluation/prompt/prompts.txt") as f:
-            prompt_template = f.read()
-            prompt = prompt_template.format(
-                email_body=email_body,
-                agent_response=agent_response,
-                ideal_response=ideal_response,
-                metric_list=metric_list
-                )
+    def evaluate_run(
+        self,
+        run,
+        example=None,
+        **kwargs,  
+    ) -> Dict[str, Any]:
 
-        # Call LLM with retry
-        judge_output = call_judge_with_retry(prompt).strip()
-
-        # Ensure JSON parsing
         try:
-            scores = json.loads(judge_output)
-        except json.JSONDecodeError:
-            print("[Warning] Judge returned invalid JSON, returning default 0 scores")
-            scores = {name: 0 for name in METRIC_NAMES}
-            scores["final_score"] = 0
+            # Extract inputs & outputs
+            email_body = run.inputs.get("email_body", "")
+            agent_response = run.outputs.get("response", "")
 
-        return {
-            "key": "milestone2_agent_quality_score",
-            "score": scores.get("final_score", 0),
-            "commentary": scores
-        }
+            ideal_response = ""
+            if example and example.outputs:
+                ideal_response = example.outputs.get("ideal_response", "")
+
+            # Build judge prompt
+            system_prompt = """
+You are a strict evaluation judge.
+
+You MUST return ONLY valid JSON.
+DO NOT include explanations, markdown, or text outside JSON.
+
+Schema:
+{
+  "accuracy": number (0-1),
+  "helpfulness": number (0-1),
+  "tone": number (0-1),
+  "overall": number (0-1)
+}
+"""
+
+            user_prompt = f"""
+Email:
+{email_body}
+
+Agent Response:
+{agent_response}
+
+Ideal Response:
+{ideal_response}
+
+Evaluate the agent response against the ideal response.
+Return JSON only.
+"""
+
+            messages = [
+                SystemMessage(content=system_prompt.strip()),
+                HumanMessage(content=user_prompt.strip()),
+            ]
+
+            result = self.llm.invoke(messages)
+            raw_output = result.content.strip()
+
+            # Safe JSON parsing
+            scores = self._safe_parse_json(raw_output)
+
+            # Return LangSmith-compatible format
+            return {
+                "key": "email_quality",
+                "score": scores.get("overall", 0.0),
+                "metrics": {
+                    "accuracy": scores.get("accuracy", 0.0),
+                    "helpfulness": scores.get("helpfulness", 0.0),
+                    "tone": scores.get("tone", 0.0),
+                },
+                "commentary": raw_output,
+            }
+
+        except Exception as e:
+
+            return {
+                "key": "email_quality",
+                "score": 0.0,
+                "metrics": {
+                    "accuracy": 0.0,
+                    "helpfulness": 0.0,
+                    "tone": 0.0,
+                },
+                "commentary": f"Evaluator error: {str(e)}",
+            }
+
+    def _safe_parse_json(self, text: str) -> Dict[str, float]:
+
+        try:
+            start = text.find("{")
+            end = text.rfind("}") + 1
+            if start == -1 or end == -1:
+                raise ValueError("No JSON found")
+
+            data = json.loads(text[start:end])
+
+            return {
+                "accuracy": float(data.get("accuracy", 0)),
+                "helpfulness": float(data.get("helpfulness", 0)),
+                "tone": float(data.get("tone", 0)),
+                "overall": float(data.get("overall", 0)),
+            }
+
+        except Exception:
+            return {
+                "accuracy": 0.0,
+                "helpfulness": 0.0,
+                "tone": 0.0,
+                "overall": 0.0,
+            }
