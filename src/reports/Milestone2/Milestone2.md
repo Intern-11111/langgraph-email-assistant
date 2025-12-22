@@ -67,7 +67,7 @@ Example – Case 2:
   "overall": 0.7
 }
 ```
-![Aggregate Metrics Dashboard](images\Data and Exp.png)
+![Aggregate Metrics Dashboard](images/Data%20and%20Exp.png)
 *Figure 1. Dataset used.*
 
 
