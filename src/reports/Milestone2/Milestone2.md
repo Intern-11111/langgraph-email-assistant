@@ -67,6 +67,9 @@ Example – Case 2:
   "overall": 0.7
 }
 ```
+![Aggregate Metrics Dashboard](images\Data and Exp.png)
+*Figure 1. Dataset used.*
+
 
 ## Result Interpretation
 - **Accuracy:** Varies with alignment to the ideal; lower scores suggest intent/wording mismatch.
@@ -107,10 +110,10 @@ src/
 Embed them below once added:
 
 ![LangSmith Trace – Case 1](images/Result(2).png)
-*Figure 1. LangSmith trace of a single evaluation run.*
+*Figure 2. LangSmith trace of a single evaluation run.*
 
-![Aggregate Metrics Dashboard](images/Result(1).png)
-*Figure 2. Aggregated evaluation metrics across runs.*
+![Aggregate Metrics Dashboard](images/Evaluation.png)
+*Figure 3. Aggregated evaluation metrics across runs.*
 
 > Note: Avoid attaching sensitive content (API keys, private emails, environment details).
 
