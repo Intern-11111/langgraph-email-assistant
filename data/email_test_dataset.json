@@ -1,0 +1,8 @@
+[
+  {
+    "id": 1,
+    "category": "Meeting Request",
+    "incoming_email": "Can we schedule a meeting tomorrow at 3 PM?",
+    "ideal_reply": "Sure, tomorrow at 3 PM works for me. Please share the meeting link."
+  }
+]
