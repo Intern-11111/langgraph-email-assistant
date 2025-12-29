@@ -19,21 +19,49 @@ class LLMFallbackTriage:
 
     def classify(self, subject: str, body: str) -> dict:
         prompt = ChatPromptTemplate.from_template("""
-Classify the email into one of these categories:
+You are an email triage assistant.
+
+Your task is to decide the ACTION required for the email.
+
+Choose EXACTLY ONE category:
 
 1. ignore
-2. notify_human
-3. reason_act
+   - spam
+   - promotions
+   - newsletters
+   - marketing emails
+   - fake rewards or scams
 
-Return JSON ONLY:
+2. notify_human
+   - personal messages
+   - job offers
+   - interview emails
+   - meetings or scheduling
+   - messages needing human judgment
+
+3. reason_act
+   - security alerts
+   - finance or payment issues
+   - transactional emails
+   - account actions
+   - anything requiring automated action
+
+IMPORTANT:
+- Choose ONLY from: ignore, notify_human, reason_act
+- Return JSON ONLY
+- No explanation text
+
+Return format:
 {{
   "label": "ignore | notify_human | reason_act",
   "confidence": 0.xx
 }}
 
+Email:
 Subject: {subject}
 Body: {body}
 """)
+
 
         chain = prompt | self.model
         response = chain.invoke({"subject": subject, "body": body})

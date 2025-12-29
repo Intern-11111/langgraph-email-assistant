@@ -1,34 +1,37 @@
 class RuleBasedTriage:
     """
-    Rule-based triage
-    Categories returned:
-      - ignore
-      - notify_human
-      - reason_act
+    Dataset-agnostic rule-based triage.
+    Rules detect intent, not specific email content.
     """
 
     def classify(self, subject: str, body: str, sender: str = "") -> dict:
-        """
-        Returns:
-            {
-                "label": "ignore/notify_human/reason_act",
-                "confidence": float
-            }
-        """
-
         text = f"{subject} {body}".lower()
 
-        # -------- IGNORE CATEGORY --------
-        if any(w in text for w in ["unsubscribe", "spam", "lottery", "promotion", "newsletter"]):
-            return {"label": "ignore", "confidence": 0.95}
+        # -------- IGNORE --------
+        if any(w in text for w in [
+            "unsubscribe", "promotion", "offer", "discount",
+            "free", "deal", "limited time", "win", "reward",
+            "click here", "act now"
+        ]):
+            return {"label": "ignore", "confidence": 0.90}
 
-        # -------- NOTIFY HUMAN CATEGORY --------
-        if any(w in text for w in ["urgent", "complaint", "angry", "issue", "problem", "fail", "refund"]):
-            return {"label": "notify_human", "confidence": 0.90}
+        # -------- REASON / ACT --------
+        if any(w in text for w in [
+            "verify", "confirm", "approve", "deny",
+            "login", "security", "otp", "password",
+            "payment", "billing", "invoice", "bank",
+            "interview", "job", "offer", "resume",
+            "request", "action required"
+        ]):
+            return {"label": "reason_act", "confidence": 0.88}
 
-        # -------- REASON/ACT CATEGORY --------
-        if any(w in text for w in ["meeting", "schedule", "call", "zoom", "availability", "contact", "email", "question"]):
-            return {"label": "reason_act", "confidence": 0.85}
+        # -------- NOTIFY HUMAN --------
+        if any(w in text for w in [
+            "update", "reminder", "notification",
+            "alert", "maintenance", "scheduled",
+            "delivered", "shipped", "completed"
+        ]):
+            return {"label": "notify_human", "confidence": 0.85}
 
-        # Default fallback
-        return {"label": "reason_act", "confidence": 0.60}
+        # Low-confidence fallback → let LLM decide
+        return {"label": "reason_act", "confidence": 0.55}

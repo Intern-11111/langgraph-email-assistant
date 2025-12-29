@@ -12,7 +12,7 @@ class TriageNode:
         - reason_act
     """
 
-    def __init__(self, threshold: float = 0.80):
+    def __init__(self, threshold: float = 0.85):
         self.threshold = threshold
         self.rules = RuleBasedTriage()
         self.llm = LLMFallbackTriage()

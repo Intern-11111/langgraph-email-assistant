@@ -13,7 +13,7 @@ def load_pending_email(path="src/data/emails.json"):
     with open(path, "r") as f:
         dataset = json.load(f)
 
-    # pick a random email from your dataset
+    # pick a random email from  dataset
     item = random.choice(dataset)
 
     subject = item.get("subject", "No Subject")

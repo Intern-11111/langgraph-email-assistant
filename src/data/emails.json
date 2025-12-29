@@ -3,180 +3,180 @@
     "id": 1,
     "subject": "Subscription Renewal Reminder",
     "body": "Your subscription to ProTools expires in 3 days. Renew now to avoid interruption.",
-    "human_label": "transactional"
+    "triage_label": "notify_human"
   },
   {
     "id": 2,
     "subject": "Free Webinar: Master AI in 2025",
     "body": "Join our free AI workshop this Friday. Register now to save your seat!",
-    "human_label": "promotion"
+    "triage_label": "ignore"
   },
   {
     "id": 3,
     "subject": "Job Offer for Junior Developer",
     "body": "We’re pleased to offer you the Junior Developer role. Attached is your offer letter.",
-    "human_label": "job_related"
+    "triage_label": "reason_act"
   },
   {
     "id": 4,
     "subject": "Unusual Login Attempt Detected",
     "body": "We detected a login attempt from an unknown device. Review the activity immediately.",
-    "human_label": "security"
+    "triage_label": "reason_act"
   },
   {
     "id": 5,
     "subject": "Meeting Rescheduled",
     "body": "The team meeting has been rescheduled to Wednesday at 4 PM.",
-    "human_label": "meeting"
+    "triage_label": "notify_human"
   },
   {
     "id": 6,
     "subject": "Congratulations! You Won a Mystery Prize!",
     "body": "Click here to claim your mystery prize worth $500!",
-    "human_label": "spam"
+    "triage_label": "ignore"
   },
   {
     "id": 7,
     "subject": "Family Trip This Weekend?",
     "body": "Hey, should we plan a family trip this weekend? Let me know.",
-    "human_label": "personal"
+    "triage_label": "notify_human"
   },
   {
     "id": 8,
     "subject": "Invoice for Your Recent Purchase",
     "body": "Attached is the invoice for your order #12388.",
-    "human_label": "finance"
+    "triage_label": "reason_act"
   },
   {
     "id": 9,
     "subject": "Your Resume Has Been Shortlisted",
     "body": "We are glad to inform you that your resume has been shortlisted for the next interview round.",
-    "human_label": "job_related"
+    "triage_label": "reason_act"
   },
   {
     "id": 10,
     "subject": "Flash Deal: 40% Off Only Today",
     "body": "This special discount applies only for the next 12 hours. Grab your deal now!",
-    "human_label": "promotion"
+    "triage_label": "ignore"
   },
   {
     "id": 11,
     "subject": "Payment Failure: Action Required",
     "body": "We could not process your recent payment. Please update your billing information.",
-    "human_label": "finance"
+    "triage_label": "reason_act"
   },
   {
     "id": 12,
     "subject": "Your Order Has Been Packed",
     "body": "Good news! Your order #99821 has been packed and will ship soon.",
-    "human_label": "transactional"
+    "triage_label": "notify_human"
   },
   {
     "id": 13,
     "subject": "Urgent: Claim Your Crypto Reward",
     "body": "Your wallet is eligible for a $1500 crypto reward. Claim immediately before expiration.",
-    "human_label": "spam"
+    "triage_label": "ignore"
   },
   {
     "id": 14,
     "subject": "Friend Request Confirmation",
     "body": "Someone recently sent you a friend request. Confirm now.",
-    "human_label": "automated"
+    "triage_label": "notify_human"
   },
   {
     "id": 15,
     "subject": "Security Patch Installed",
     "body": "A new security patch was successfully installed on your device.",
-    "human_label": "automated"
+    "triage_label": "notify_human"
   },
   {
     "id": 16,
     "subject": "Dinner Tonight?",
     "body": "Hey, are we still on for dinner tonight?",
-    "human_label": "personal"
+    "triage_label": "notify_human"
   },
   {
     "id": 17,
     "subject": "Request for Bank Verification",
     "body": "Please verify your bank account to continue receiving payments.",
-    "human_label": "finance"
+    "triage_label": "reason_act"
   },
   {
     "id": 18,
     "subject": "Scheduled Maintenance Alert",
     "body": "Our servers will undergo maintenance from 2 AM to 4 AM tonight.",
-    "human_label": "automated"
+    "triage_label": "notify_human"
   },
   {
     "id": 19,
     "subject": "Project Update Call Tomorrow",
     "body": "Can we schedule a quick call for tomorrow morning to discuss project progress?",
-    "human_label": "meeting"
+    "triage_label": "reason_act"
   },
   {
     "id": 20,
     "subject": "Exclusive Member Rewards Inside",
     "body": "Open your exclusive offers and rewards available only this month!",
-    "human_label": "promotion"
+    "triage_label": "ignore"
   },
   {
     "id": 21,
     "subject": "OTP for Account Login",
     "body": "Your one-time password for login is 928211. Do not share it with anyone.",
-    "human_label": "security"
+    "triage_label": "reason_act"
   },
   {
     "id": 22,
     "subject": "Your Shipment Is Out for Delivery",
     "body": "Your package is out for delivery and will arrive today.",
-    "human_label": "transactional"
+    "triage_label": "notify_human"
   },
   {
     "id": 23,
     "subject": "Class Reunion Reminder",
     "body": "Don't forget, the annual class reunion is happening this Sunday!",
-    "human_label": "personal"
+    "triage_label": "notify_human"
   },
   {
     "id": 24,
     "subject": "Device Access Request",
     "body": "A new device is requesting access to your account. Approve or deny the request.",
-    "human_label": "security"
+    "triage_label": "reason_act"
   },
   {
     "id": 25,
     "subject": "Interview Feedback",
     "body": "Thank you for interviewing with us. We will share feedback soon.",
-    "human_label": "job_related"
+    "triage_label": "notify_human"
   },
   {
     "id": 26,
     "subject": "Congratulations on Your Achievement!",
     "body": "Proud of your recent award! Wishing you more success ahead!",
-    "human_label": "personal"
+    "triage_label": "notify_human"
   },
   {
     "id": 27,
     "subject": "Final Call: Offer Expires Tonight!",
     "body": "Hurry, your exclusive offer will expire at midnight!",
-    "human_label": "promotion"
+    "triage_label": "ignore"
   },
   {
     "id": 28,
     "subject": "Action Needed: Card Verification Failed",
     "body": "We could not verify your card. Please update your payment details.",
-    "human_label": "finance"
+    "triage_label": "reason_act"
   },
   {
     "id": 29,
     "subject": "Meeting Agenda Attached",
     "body": "Find attached the agenda for tomorrow’s meeting.",
-    "human_label": "meeting"
+    "triage_label": "reason_act"
   },
   {
     "id": 30,
     "subject": "Win an iPhone 16 — Limited Slots!",
     "body": "Participate now and stand a chance to win a brand new iPhone!",
-    "human_label": "spam"
+    "triage_label": "ignore"
   }
 ]
