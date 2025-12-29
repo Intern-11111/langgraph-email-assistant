@@ -3,7 +3,7 @@
 <br>
 Intelligent ambient agent leveraging LangGraph to process, analyze, and automate email workflows with real-time assistance and proactive insights.
 <br>
-
+----- MILESTONE 1 -----
 ##Buiding The Triage Node.
 The goal is to automatically decide what to do with each email:
 1.ignore: bulk newsletters, promos, social updates, low‑value digests.
@@ -110,5 +110,20 @@ Run : python triage_node.py
 Output :
 {'id': 'test_001', 'triage': 'respond_act', 'confidence': 0.9322366118431091, 'reason': 'Email contains an explicit request for information, approval, or scheduling.'}
 
+---- MILESTONE 2 ----
+
+This milestone implements an LLM-as-a-Judge framework to evaluate AI Agents using custom metrics and structured grading rubrics. Instead of relying on generic benchmarks, this system uses a dedicated "Judge" model to provide granular feedback on agent performance. 
+
+Key Features
+-- Custom Quality Metrics: Automated scoring for Helpfulness, Tone, and Accuracy.
+-- Structured Grading: Uses Pydantic to ensure the Judge always returns valid JSON.
+-- Provider Agnostic: Easily switch between OpenAI (GPT-4o) and Google (Gemini).
+-- Reasoning-First: The judge doesn't just give a number; it provides an explanation for every score.
+
+Prerequisites:
+pip install langchain-openai langchain-google-genai python-dotenv pydantic
+
+Configuration:
+OPENAI_API_KEY=your_key_here  --> in env file
 
 
