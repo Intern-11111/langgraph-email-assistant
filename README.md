@@ -126,4 +126,12 @@ pip install langchain-openai langchain-google-genai python-dotenv pydantic
 Configuration:
 OPENAI_API_KEY=your_key_here  --> in env file
 
+Final output got in this milestone ::
 
+valuate.py
+--- OpenAI Quality Report ---
+Helpfulness: 5/5
+Tone:        5/5
+Accuracy:    5/5
+Result:      PASS
+Reasoning:   The response effectively addresses the user's request for a refund, provides a clear action taken (initiating the refund), and gives a reasonable timeframe for when the user can expect the refund. The tone is empathetic and professional, acknowledging the user's frustration without being dismissive. All criteria are met excellently, leading to a perfect score.
