@@ -32,13 +32,28 @@ from tools import read_calendar
 
 #     return "No action needed", thoughts
 
-def agent_node(state):
-    email = state["email"]
+# def agent_node(state):
+#     email = state["email"]
 
+#     thoughts = [
+#         "Read the email",
+#         "Understand user intent",
+#         "Prepare a polite professional reply"
+#     ]
+
+#     reply = "Sure, I’m available tomorrow afternoon."
+
+#     return {
+#         **state,
+#         "thoughts": thoughts,
+#         "reply": reply
+#     }
+
+def agent_node(state):
     thoughts = [
-        "Read the email",
-        "Understand user intent",
-        "Prepare a polite professional reply"
+        "Email requires a response",
+        "Understanding user intent",
+        "Drafting professional reply"
     ]
 
     reply = "Sure, I’m available tomorrow afternoon."
@@ -48,4 +63,3 @@ def agent_node(state):
         "thoughts": thoughts,
         "reply": reply
     }
-

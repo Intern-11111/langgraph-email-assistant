@@ -98,36 +98,76 @@
 
 from graph import app
 
-emails = [
-    """
-    Hi,
-    Can we schedule a meeting tomorrow afternoon?
-    Thanks
-    """,
-    """
-    Hello,
-    Please send me the updated report by end of day.
-    """,
-    """
-    Hey,
-    No urgent actions needed, just FYI.
-    """
-]
+# emails = [
+#     """
+#     Hi,
+#     Can we schedule a meeting tomorrow afternoon?
+#     Thanks
+#     """,
+#     """
+#     Hello,
+#     Please send me the updated report by end of day.
+#     """,
+#     """
+#     Hey,
+#     No urgent actions needed, just FYI.
+#     """
+# ]
 
-for idx, email in enumerate(emails, 1):
-    print(f"\n{'='*20}")
-    print(f"Email {idx}:")
-    print(email.strip())
-    print(f"{'='*20}")
+# for idx, email in enumerate(emails, 1):
+#     print(f"\n{'='*20}")
+#     print(f"Email {idx}:")
+#     print(email.strip())
+#     print(f"{'='*20}")
+
+#     result = app.invoke({
+#         "email": email,
+#         "category": "",
+#         "thoughts": [],
+#         "reply": ""
+#     })
+
+#     print("Triage Decision:", result["category"])
+
+#     if result["category"] == "respond":
+#         print("\nAgent Thoughts:")
+#         for t in result["thoughts"]:
+#             print("-", t)
+
+#         print("\nDraft Reply:")
+#         print(result["reply"])
+
+#     elif result["category"] == "notify_human":
+#         print("Human needs to review this email.")
+
+#     else:
+#         print("Email archived.")
+
+from graph import app
+from email_reader import fetch_unread_emails
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+EMAIL = os.getenv("EMAIL_ID")
+PASSWORD = os.getenv("EMAIL_APP_PASSWORD")
+
+emails = fetch_unread_emails(EMAIL, PASSWORD)
+
+for email_text in emails:
+    print("\n" + "=" * 50)
+    print("📧 New Email Received")
+    print("=" * 50)
 
     result = app.invoke({
-        "email": email,
+        "email": email_text,
         "category": "",
         "thoughts": [],
         "reply": ""
     })
 
-    print("Triage Decision:", result["category"])
+    print("Decision:", result["category"])
 
     if result["category"] == "respond":
         print("\nAgent Thoughts:")
@@ -138,7 +178,7 @@ for idx, email in enumerate(emails, 1):
         print(result["reply"])
 
     elif result["category"] == "notify_human":
-        print("Human needs to review this email.")
+        print("⚠️ Human review required.")
 
     else:
-        print("Email archived.")
+        print("🗑️ Email ignored.")
