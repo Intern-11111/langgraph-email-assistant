@@ -1,28 +1,22 @@
 import os
 import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
+from langchain_community.llms import HuggingFacePipeline
 
-def get_llm():
-    provider = os.getenv("LLM_PROVIDER", "huggingface")  # default = free local
+# ---------- GLOBAL MODEL CACHE (to avoid re-loading on every request) ----------
+LLM_MODEL = None
 
-    # ---------- Paid providers (optional, if you ever use them) ----------
-    if provider == "openai":
-        from langchain_openai import ChatOpenAI
-        return ChatOpenAI(model="gpt-4.1-mini", temperature=0.2)
 
-    if provider == "gemini":
-        from langchain_google_genai import ChatGoogleGenerativeAI
-        return ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0.2)
+def load_local_hf_model():
+    """Load the model once and reuse for all requests."""
+    global LLM_MODEL
+    if LLM_MODEL is not None:
+        return LLM_MODEL
 
-    # ------------------- FREE LOCAL HUGGINGFACE MODEL --------------------
-    # Choose a SMALL model suitable for 8GB RAM:
-    #   - TinyLlama/TinyLlama-1.1B-Chat-v1.0   (good)
-    #   - google/gemma-2-2b-it                 (ok, heavier)
     model_name = os.getenv("HF_MODEL", "TinyLlama/TinyLlama-1.1B-Chat-v1.0")
 
-    from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
-    from langchain_community.llms import HuggingFacePipeline
-
-    device = 0 if torch.cuda.is_available() else -1  # GPU if present, else CPU
+    print(f" Loading HuggingFace Model: {model_name}")
+    device = 0 if torch.cuda.is_available() else -1
 
     tokenizer = AutoTokenizer.from_pretrained(model_name)
     model = AutoModelForCausalLM.from_pretrained(
@@ -39,4 +33,11 @@ def get_llm():
         device=device
     )
 
-    return HuggingFacePipeline(pipeline=gen_pipe)
+    LLM_MODEL = HuggingFacePipeline(pipeline=gen_pipe)
+    print("Model loaded and ready!")
+    return LLM_MODEL
+
+
+def get_llm():
+    """Public accessor for the model"""
+    return load_local_hf_model()

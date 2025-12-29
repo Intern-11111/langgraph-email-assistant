@@ -9,12 +9,20 @@ load_dotenv()
 # Import routers (aliasing for safety)
 from src.api.router import router as triage_router
 from src.api.huggingface_router import router as hf_router
+from src.api.eval_router import router as eval_router
+
+
+
 
 app = FastAPI(
     title="Ambient Email Agent – Milestone 1",
     description="Email Triage using FREE Local HuggingFace Models",
     version="1.0.0",
 )
+
+# ----------------- APP INITIALIZATION -----------------
+app.include_router(eval_router, prefix="/eval", tags=["Evaluation"])
+
 
 # ----------------- CORS SETTINGS -----------------
 app.add_middleware(

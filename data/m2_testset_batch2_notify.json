@@ -1,0 +1,242 @@
+[
+  {
+    "email": "We received a dispute about the invoice you issued. Can you explain the charges in detail?",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["finance", "dispute", "business"]
+  },
+  {
+    "email": "Our legal team needs clarification regarding clause 4.3. Can you confirm if negotiations are still open?",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["legal", "contract"]
+  },
+  {
+    "email": "Hi, please review the attached contract changes and confirm if we should proceed.",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["contract", "sensitive"]
+  },
+  {
+    "email": "Why did the price increase on our last order? We did not approve changes.",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["complaint", "business"]
+  },
+  {
+    "email": "Please verify the reason for termination of account 2478. The customer is threatening legal action.",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["customer", "legal"]
+  },
+  {
+    "email": "We detected suspicious access to our database, and your name was listed. Please explain urgently.",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["security", "IT"]
+  },
+  {
+    "email": "Are we required to report last quarter’s data discrepancy to auditors?",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["finance", "audit"]
+  },
+  {
+    "email": "URGENT: Vendor claims we owe late fees for unpaid services. What should we do?",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["vendor", "finance"]
+  },
+  {
+    "email": "Can you provide the client personal data you collected last month?",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["privacy", "legal"]
+  },
+  {
+    "email": "Someone is pretending to be you and requesting access to restricted files.",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["security", "IT"]
+  },
+  {
+    "email": "We received a complaint regarding the tone of your last message. Can you clarify what happened?",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["HR", "complaint"]
+  },
+  {
+    "email": "This billing adjustment request seems incorrect. Please justify this request before approval.",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["billing", "approval"]
+  },
+  {
+    "email": "Can you confirm who authorized the shipment delay? Customer is escalating.",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["logistics", "escalation"]
+  },
+  {
+    "email": "Please provide reasoning why this reimbursement request is above policy limits.",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["policy", "finance"]
+  },
+  {
+    "email": "This looks like a phishing attempt. Can you validate the source before responding?",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["security", "awareness"]
+  },
+  {
+    "email": "Why is access to my employee portal revoked?",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["HR", "account"]
+  },
+  {
+    "email": "Client is requesting confidential data. Should we fulfill the request?",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["legal", "privacy"]
+  },
+  {
+    "email": "Refund was issued twice. How should we correct this?",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["finance", "error"]
+  },
+  {
+    "email": "A journalist is asking for comment on internal performance issues.",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["PR", "sensitive"]
+  },
+  {
+    "email": "Please confirm whether this employee is eligible for severance.",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["HR", "sensitive"]
+  },
+  {
+    "email": "Are we allowed to share this document externally?",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["compliance", "legal"]
+  },
+  {
+    "email": "Why were these changes made in the customer policy without informing us?",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["policy", "complaint"]
+  },
+  {
+    "email": "We received a report of harassment. Can you provide more context?",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["HR", "legal"]
+  },
+  {
+    "email": "Bank is asking for company registration data. Should we proceed?",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["finance", "compliance"]
+  },
+  {
+    "email": "Can you verify if this transaction is fraudulent?",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["fraud", "finance"]
+  },
+  {
+    "email": "There is a mismatch in the tax documents. How do we correct it?",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["tax", "finance"]
+  },
+  {
+    "email": "Do we have permission to delete this customer’s data?",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["privacy", "approval"]
+  },
+  {
+    "email": "Another vendor is claiming they own the project IP. What should we say?",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["legal", "dispute"]
+  },
+  {
+    "email": "Customer requests compensation for service outage this week.",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["customer", "finance"]
+  },
+  {
+    "email": "We have an unidentified invoice posted to our account. Did you approve this?",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["finance", "investigation"]
+  },
+  {
+    "email": "Account received unauthorized charges. What actions are required?",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["security", "finance"]
+  },
+  {
+    "email": "Please clarify who has access to our employee background checks.",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["HR", "privacy"]
+  },
+  {
+    "email": "A customer claims the support agent was rude. Can you review the conversation?",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["HR", "support"]
+  },
+  {
+    "email": "Investor is asking for financial projections. Should we provide?",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["finance", "sensitive"]
+  },
+  {
+    "email": "Data breach reported. How should we inform stakeholders?",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["security", "crisis"]
+  },
+  {
+    "email": "Someone submitted a GDPR deletion request. Please confirm required actions.",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["privacy", "legal"]
+  },
+  {
+    "email": "Is the employee eligible for overtime payout for holidays?",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["HR", "policy"]
+  },
+  {
+    "email": "This settlement agreement is missing signatures. How should we proceed?",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["legal", "approval"]
+  },
+  {
+    "email": "Customer is demanding a supervisor callback ASAP.",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["customer", "escalation"]
+  },
+  {
+    "email": "Police have requested access to internal transaction logs.",
+    "ideal_label": "notify_human",
+    "ideal_reply": "",
+    "tags": ["legal", "security"]
+  }
+]
