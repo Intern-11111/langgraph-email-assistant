@@ -1,0 +1,248 @@
+[
+  {
+    "email": "Congratulations! You’ve won a free iPhone. Claim your prize now before the offer expires!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["spam", "scam", "promotion"]
+  },
+  {
+    "email": "Boost your sex life with our new product! Only $4.99 per dose!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["spam", "adult"]
+  },
+  {
+    "email": "Earn money fast from home! Make $2000 per day guaranteed!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["scam", "spam"]
+  },
+  {
+    "email": "You have been selected for a limited time offer on weight loss pills!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["spam", "health"]
+  },
+  {
+    "email": "Final notice: Your lottery winnings are waiting. Send details now!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["lottery", "scam"]
+  },
+  {
+    "email": "Cheap software bundles available — activate Windows for only $9!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["promotion", "software"]
+  },
+  {
+    "email": "You’ve been selected for free vacation tickets! Click here!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["travel", "scam"]
+  },
+  {
+    "email": "Unlock your dream body with our unlimited gym access discount!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["promotion", "spam"]
+  },
+  {
+    "email": "Weight loss miracle! Lose 10kg in 7 days with no exercise!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["health", "spam"]
+  },
+  {
+    "email": "Immediate attention: Your package is on hold. Provide payment info.",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["phishing", "scam"]
+  },
+  {
+    "email": "Your antivirus subscription expired. Click to renew now!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["scam", "security"]
+  },
+  {
+    "email": "Low mortgage interest rates available now!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["promotion", "finance"]
+  },
+  {
+    "email": "You won a free cruise! Just pay shipping!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["travel", "scam"]
+  },
+  {
+    "email": "This is not spam, you actually won! Just reply with your bank account...",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["scam", "phishing"]
+  },
+  {
+    "email": "🔥 Mega Sale! Up to 90% off on electronics!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["promotion", "electronics"]
+  },
+  {
+    "email": "Unsubscribe now to stop receiving these notifications.",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["spam"]
+  },
+  {
+    "email": "Earn a degree in just 7 days! Accredited and legal!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["education", "scam"]
+  },
+  {
+    "email": "Exclusive crypto investment opportunity — guaranteed returns!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["crypto", "scam"]
+  },
+  {
+    "email": "Get your Canadian visa approved instantly!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["immigration", "scam"]
+  },
+  {
+    "email": "I saw you last night. Open attachment now.",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["phishing", "creepy"]
+  },
+  {
+    "email": "You have unpaid toll violations. Pay immediately to avoid penalty!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["fake-warning", "scam"]
+  },
+  {
+    "email": "Free trial for dating services in your city!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["spam", "adult"]
+  },
+  {
+    "email": "Hello dear, I am a widow with $3 million to donate...",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["Nigerian-scam", "fraud"]
+  },
+  {
+    "email": "Save 80% on insurance policies! Limited time!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["promotion", "finance"]
+  },
+  {
+    "email": "Check your reward points balance by logging in with your credentials!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["phishing", "scam"]
+  },
+  {
+    "email": "Special offer: Viagra only $1 per pill!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["adult", "health"]
+  },
+  {
+    "email": "Boost your income with our secret investing tool!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["finance", "spam"]
+  },
+  {
+    "email": "Final attempt: respond now to unlock your account.",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["scam", "phishing"]
+  },
+  {
+    "email": "Buy followers and get famous instantly!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["social", "spam"]
+  },
+  {
+    "email": "Limited time deal: Antivirus for 1 year only $6!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["security", "scam"]
+  },
+  {
+    "email": "Complete our survey to claim your Amazon gift card.",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["survey", "spam"]
+  },
+  {
+    "email": "Free access to premium live shows!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["adult", "spam"]
+  },
+  {
+    "email": "🎉 Surprise reward waiting for you! Open link now!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["promotion", "phishing"]
+  },
+  {
+    "email": "You have been chosen as our lucky customer today!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["promotion", "spam"]
+  },
+  {
+    "email": "Lose belly fat fast with this revolutionary secret!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["health", "spam"]
+  },
+  {
+    "email": "Forward this message to 10 people for good luck!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["social", "chain"]
+  },
+  {
+    "email": "100% guaranteed loan approval — no checks required!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["finance", "scam"]
+  },
+  {
+    "email": "Click here to update your bank login info immediately!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["phishing", "finance"]
+  },
+  {
+    "email": "You are eligible for a credit card upgrade! Apply now.",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["promotion", "finance"]
+  },
+  {
+    "email": "Your PayPal account has been restricted — log in to fix it!",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["security", "phishing"]
+  },
+  {
+    "email": "Urgent: Your bank account suspended. Validate details now.",
+    "ideal_label": "ignore",
+    "ideal_reply": "",
+    "tags": ["phishing", "scam"]
+  }
+]

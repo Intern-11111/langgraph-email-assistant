@@ -1,0 +1,242 @@
+[
+  {
+    "email": "Hi, could you please confirm our meeting scheduled for Friday at 3 PM?",
+    "ideal_label": "respond",
+    "ideal_reply": "Confirmed for Friday at 3 PM. Please let me know if there are any changes. Thanks!",
+    "tags": ["business", "meeting"]
+  },
+  {
+    "email": "Hey, are you free to grab lunch tomorrow around 1?",
+    "ideal_label": "respond",
+    "ideal_reply": "Sure! Tomorrow at 1 works great. Where should we meet?",
+    "tags": ["casual", "coordination"]
+  },
+  {
+    "email": "Can you resend the updated project timeline? I can’t find the attachment.",
+    "ideal_label": "respond",
+    "ideal_reply": "Certainly! I will resend the updated project timeline shortly.",
+    "tags": ["business", "project"]
+  },
+  {
+    "email": "Please confirm you received my payment for the invoice.",
+    "ideal_label": "respond",
+    "ideal_reply": "Yes, I confirm that your payment has been successfully received. Thank you!",
+    "tags": ["finance", "confirmation"]
+  },
+  {
+    "email": "Could you share the presentation slides with me?",
+    "ideal_label": "respond",
+    "ideal_reply": "Absolutely. I’ll send over the presentation slides shortly. Let me know if you need anything else.",
+    "tags": ["business", "request"]
+  },
+  {
+    "email": "Would you be available for a quick call later today?",
+    "ideal_label": "respond",
+    "ideal_reply": "Yes, I can make time today. What time works best for you?",
+    "tags": ["business", "schedule"]
+  },
+  {
+    "email": "Please approve the leave request I submitted this morning.",
+    "ideal_label": "respond",
+    "ideal_reply": "Thanks for your request. I approve your leave. Have a good break!",
+    "tags": ["business", "HR"]
+  },
+  {
+    "email": "Can we move our weekly sync to Monday instead?",
+    "ideal_label": "respond",
+    "ideal_reply": "Monday works for me. I’ll update the calendar invite.",
+    "tags": ["business", "meeting"]
+  },
+  {
+    "email": "Could you provide your feedback on the document I shared?",
+    "ideal_label": "respond",
+    "ideal_reply": "Sure, I will review the document and share my feedback shortly.",
+    "tags": ["business", "review"]
+  },
+  {
+    "email": "Hey! What’s your new address? I want to send something.",
+    "ideal_label": "respond",
+    "ideal_reply": "That’s so thoughtful! My new address is…",
+    "tags": ["casual", "personal"]
+  },
+  {
+    "email": "Are you attending the training workshop tomorrow?",
+    "ideal_label": "respond",
+    "ideal_reply": "Yes, I will be attending the workshop tomorrow.",
+    "tags": ["business", "event"]
+  },
+  {
+    "email": "Can you check if the server maintenance is completed?",
+    "ideal_label": "respond",
+    "ideal_reply": "Sure, I will verify the server status and update you shortly.",
+    "tags": ["IT", "status"]
+  },
+  {
+    "email": "Could you please review this pull request?",
+    "ideal_label": "respond",
+    "ideal_reply": "I’ll review the pull request and leave comments soon.",
+    "tags": ["development", "review"]
+  },
+  {
+    "email": "Please send me the file you mentioned earlier.",
+    "ideal_label": "respond",
+    "ideal_reply": "Yes, I’ll send the file shortly. Thanks for your patience!",
+    "tags": ["business", "file"]
+  },
+  {
+    "email": "Hey! Are we still on for the movie tonight?",
+    "ideal_label": "respond",
+    "ideal_reply": "Yes, still on! Looking forward to it.",
+    "tags": ["casual", "plans"]
+  },
+  {
+    "email": "Can you confirm your availability for the client call?",
+    "ideal_label": "respond",
+    "ideal_reply": "Yes, I am available for the client call. Thanks for checking!",
+    "tags": ["business", "meeting"]
+  },
+  {
+    "email": "We need a quick approval on the document. Can you help?",
+    "ideal_label": "respond",
+    "ideal_reply": "Approved. Thanks for sending it over!",
+    "tags": ["business", "approval"]
+  },
+  {
+    "email": "Could you remind me of the deadline again?",
+    "ideal_label": "respond",
+    "ideal_reply": "Sure — the deadline is this Friday end of day.",
+    "tags": ["business", "deadline"]
+  },
+  {
+    "email": "Are you available this weekend? We’re planning a hike.",
+    "ideal_label": "respond",
+    "ideal_reply": "That sounds fun! Yes, I should be free. Count me in!",
+    "tags": ["casual", "plans"]
+  },
+  {
+    "email": "Please confirm whether the shipment has been dispatched.",
+    "ideal_label": "respond",
+    "ideal_reply": "Yes, the shipment has been dispatched and is on its way.",
+    "tags": ["logistics", "status"]
+  },
+  {
+    "email": "Can you join us for a design review this afternoon?",
+    "ideal_label": "respond",
+    "ideal_reply": "Yes, I’ll join the design review this afternoon.",
+    "tags": ["business", "design"]
+  },
+  {
+    "email": "Could you help me reset my password?",
+    "ideal_label": "respond",
+    "ideal_reply": "Of course, I’ll assist you in resetting your password now.",
+    "tags": ["IT", "support"]
+  },
+  {
+    "email": "Hey, can I borrow your notes from yesterday’s lecture?",
+    "ideal_label": "respond",
+    "ideal_reply": "Sure, I’ll share my notes with you shortly.",
+    "tags": ["casual", "education"]
+  },
+  {
+    "email": "Can you please share the updated pricing sheet?",
+    "ideal_label": "respond",
+    "ideal_reply": "Yes, I’ll send the updated pricing sheet in a moment.",
+    "tags": ["business", "sales"]
+  },
+  {
+    "email": "We need your confirmation to finalize the booking.",
+    "ideal_label": "respond",
+    "ideal_reply": "Confirmed. Please proceed with the booking.",
+    "tags": ["travel", "confirmation"]
+  },
+  {
+    "email": "Hey! Can you pick me up at the airport tonight?",
+    "ideal_label": "respond",
+    "ideal_reply": "Sure, what time does your flight arrive?",
+    "tags": ["casual", "favor"]
+  },
+  {
+    "email": "Could you review the contract and approve it?",
+    "ideal_label": "respond",
+    "ideal_reply": "I’ve reviewed the contract and it’s approved. Thanks!",
+    "tags": ["business", "legal"]
+  },
+  {
+    "email": "Please share the meeting notes when you get a chance.",
+    "ideal_label": "respond",
+    "ideal_reply": "Sure, I’ll send you the meeting notes shortly.",
+    "tags": ["business", "notes"]
+  },
+  {
+    "email": "Are you attending the product launch event?",
+    "ideal_label": "respond",
+    "ideal_reply": "Yes, I’m planning to attend the product launch.",
+    "tags": ["business", "event"]
+  },
+  {
+    "email": "Could you reply-all confirming attendance?",
+    "ideal_label": "respond",
+    "ideal_reply": "Confirmed. I’ll be there!",
+    "tags": ["business", "attendance"]
+  },
+  {
+    "email": "Hey, is the assignment due tonight?",
+    "ideal_label": "respond",
+    "ideal_reply": "Yes, it is due tonight. Good luck finishing it!",
+    "tags": ["casual", "education"]
+  },
+  {
+    "email": "Can you please share the latest analytics report?",
+    "ideal_label": "respond",
+    "ideal_reply": "Yes, I’ll send the latest analytics report shortly.",
+    "tags": ["business", "analytics"]
+  },
+  {
+    "email": "Could you confirm your shirt size for the team merch?",
+    "ideal_label": "respond",
+    "ideal_reply": "Thanks for organizing! My shirt size is Medium.",
+    "tags": ["casual", "team"]
+  },
+  {
+    "email": "I forgot my laptop charger. Could you bring yours?",
+    "ideal_label": "respond",
+    "ideal_reply": "Sure, I’ll bring my charger along.",
+    "tags": ["casual", "favor"]
+  },
+  {
+    "email": "Can you join the brainstorming session tomorrow?",
+    "ideal_label": "respond",
+    "ideal_reply": "Yes, I’d be happy to join tomorrow’s brainstorming session.",
+    "tags": ["business", "creativity"]
+  },
+  {
+    "email": "Hey, can we talk later? Something came up.",
+    "ideal_label": "respond",
+    "ideal_reply": "Of course. Let me know when you’re free.",
+    "tags": ["casual", "support"]
+  },
+  {
+    "email": "Please confirm that you completed the task assigned yesterday.",
+    "ideal_label": "respond",
+    "ideal_reply": "Yes, the task is complete. Thanks for the follow-up!",
+    "tags": ["business", "task"]
+  },
+  {
+    "email": "Are you able to join for dinner tonight?",
+    "ideal_label": "respond",
+    "ideal_reply": "Yes! Dinner sounds great. What time?",
+    "tags": ["casual", "plans"]
+  },
+  {
+    "email": "Could you upload the updated code to GitHub?",
+    "ideal_label": "respond",
+    "ideal_reply": "Sure, I’ll upload the updated code now.",
+    "tags": ["development", "tasks"]
+  },
+  {
+    "email": "Can you confirm the delivery address again?",
+    "ideal_label": "respond",
+    "ideal_reply": "Sure — the correct delivery address is the one on file. I’ll resend it for clarity.",
+    "tags": ["logistics", "confirmation"]
+  }
+]
