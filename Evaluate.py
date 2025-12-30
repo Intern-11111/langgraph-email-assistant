@@ -17,7 +17,7 @@ class AgentQualityScore(BaseModel):
 # Setting up the OpenAI Judge LLM
 llm = ChatOpenAI(model="gpt-4o-mini", temperature=0)
 
-# 4. Defining the Rubric
+# Defining the Rubric
 JUDGE_PROMPT = """
 You are an AI Quality Judge. Grade the following Agent response based on the rubric.
 
@@ -58,4 +58,5 @@ if __name__ == "__main__":
         print(f"Result:      {'PASS' if report.is_pass else 'FAIL'}")
         print(f"Reasoning:   {report.reasoning}")
     except Exception as e:
+
         print(f"Error during evaluation: {e}")
