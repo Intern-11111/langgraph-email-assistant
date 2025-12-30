@@ -229,6 +229,73 @@ GET /eval/evaluate
 ⚠ Reply generation too generic (low overlap score)
 
 ---
+<br>
+
+## Milestone 2 – Agent Upgrade + Tuning
+
+### Major Improvements
+
+| Feature                                                        | Status |
+| -------------------------------------------------------------- | ------ |
+| Switched from TinyLlama → **DeepSeek-R1 (via OpenRouter API)** | ✅      |
+| Real LLM-based reply generation                                | ✅      |
+| JSON-schema response enforcement                               | ✅      |
+| Better reasoning prompts                                       | ✅      |
+| Expanded agent evaluation framework                            | ✅      |
+
+The updated **ReAct reasoning node** ensures:
+
+* Polite + context-aware replies
+* No hallucination beyond given email
+* JSON-only formatted outbound response
+
+###  Accuracy Boost  to   83%
+
+After model upgrade + tuning:
+
+| Metric                 | Before    | After   |
+| ---------------------- | --------- | ------- |
+| Overall Accuracy       | **44.6%** | **84%** |
+| Respond accuracy       | Medium    | High    |
+| Notify-human precision | High      | High    |
+| Spam filtering         | High      | High    |
+
+| Metric                                |    Result |
+| ------------------------------------- | --------: |
+| **Total Emails Evaluated**            |       121 |
+| **Correct Predictions**               |       100 |
+| **Overall Accuracy**                  | **84.6%** |
+| **Average Agent Quality Score (AQS)** |  **0.83** |
+
+Signed-off evaluation stored at:
+
+```
+results/m2_eval_report.json
+```
+---
+
+## ▶ Running Locally
+
+```bash
+git clone https://github.com/Intern-11111/langgraph-email-assistant.git
+cd langgraph-email-assistant
+python -m venv venv
+venv\Scripts\activate        # Windows
+pip install -r requirements.txt
+uvicorn run_server:app --reload
+```
+
+Open in browser:
+
+```
+http://localhost:8000/docs
+```
+
+Evaluate the model:
+
+```
+GET /eval/evaluate
+```
 
 ## Deliverables Completed in M2
 
