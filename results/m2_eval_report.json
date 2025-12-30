@@ -1,22 +1,22 @@
 {
   "total": 121,
-  "correct_predictions": 54,
-  "accuracy": 0.446,
-  "avg_quality_score": 0.43,
+  "correct_predictions": 100,
+  "accuracy": 0.846,
+  "avg_quality_score": 0.83,
   "results": [
     {
       "email": "Hi, could you please confirm our meeting scheduled for Friday at 3 PM?...",
       "ideal": "respond",
       "predicted": "respond",
       "triage_score": 1.0,
-      "reply_score": 0.8125,
+      "reply_score": 0.5625,
       "tone_score": 1.0,
       "format_score": 1.0,
-      "latency_sec": 92.46,
+      "latency_sec": 20.3,
       "latency_score": 0.0,
       "hallucination_score": 0.5,
-      "agent_quality_score": 0.89,
-      "reason": "Heuristic: email looks like a normal coordination / meeting request."
+      "agent_quality_score": 0.84,
+      "reason": "Normal coordination / scheduling"
     },
     {
       "email": "Hey, are you free to grab lunch tomorrow around 1?...",
@@ -26,11 +26,11 @@
       "reply_score": 0.0,
       "tone_score": 0.0,
       "format_score": 1.0,
-      "latency_sec": 0.03,
+      "latency_sec": 0.0,
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Can you resend the updated project timeline? I can\u2019t find the attachment....",
@@ -44,7 +44,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Please confirm you received my payment for the invoice....",
@@ -58,7 +58,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic: email mentions sensitive business/finance/legal terms."
+      "reason": "Sensitive or business-critical"
     },
     {
       "email": "Could you share the presentation slides with me?...",
@@ -72,21 +72,21 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Would you be available for a quick call later today?...",
       "ideal": "respond",
       "predicted": "respond",
       "triage_score": 1.0,
-      "reply_score": 0.25,
+      "reply_score": 0.6666666666666666,
       "tone_score": 1.0,
       "format_score": 1.0,
-      "latency_sec": 182.68,
+      "latency_sec": 15.0,
       "latency_score": 0.0,
       "hallucination_score": 0.5,
-      "agent_quality_score": 0.78,
-      "reason": "Heuristic: email looks like a normal coordination / meeting request."
+      "agent_quality_score": 0.86,
+      "reason": "Normal coordination / scheduling"
     },
     {
       "email": "Please approve the leave request I submitted this morning....",
@@ -96,11 +96,11 @@
       "reply_score": 0.0,
       "tone_score": 0.0,
       "format_score": 1.0,
-      "latency_sec": 0.06,
+      "latency_sec": 0.0,
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic: email mentions sensitive business/finance/legal terms."
+      "reason": "Sensitive or business-critical"
     },
     {
       "email": "Can we move our weekly sync to Monday instead?...",
@@ -108,13 +108,13 @@
       "predicted": "respond",
       "triage_score": 1.0,
       "reply_score": 0.4444444444444444,
-      "tone_score": 1.0,
+      "tone_score": 0.0,
       "format_score": 1.0,
-      "latency_sec": 35.86,
+      "latency_sec": 36.69,
       "latency_score": 0.0,
       "hallucination_score": 0.5,
-      "agent_quality_score": 0.81,
-      "reason": "Heuristic: email looks like a normal coordination / meeting request."
+      "agent_quality_score": 0.71,
+      "reason": "Normal coordination / scheduling"
     },
     {
       "email": "Could you provide your feedback on the document I shared?...",
@@ -124,11 +124,11 @@
       "reply_score": 0.0,
       "tone_score": 0.0,
       "format_score": 1.0,
-      "latency_sec": 0.03,
+      "latency_sec": 0.0,
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Hey! What\u2019s your new address? I want to send something....",
@@ -142,7 +142,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Are you attending the training workshop tomorrow?...",
@@ -156,7 +156,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Can you check if the server maintenance is completed?...",
@@ -170,7 +170,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Could you please review this pull request?...",
@@ -184,7 +184,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Please send me the file you mentioned earlier....",
@@ -198,7 +198,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Hey! Are we still on for the movie tonight?...",
@@ -212,21 +212,21 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Can you confirm your availability for the client call?...",
       "ideal": "respond",
       "predicted": "respond",
       "triage_score": 1.0,
-      "reply_score": 0.5454545454545454,
+      "reply_score": 0.36363636363636365,
       "tone_score": 1.0,
       "format_score": 1.0,
-      "latency_sec": 114.33,
+      "latency_sec": 18.74,
       "latency_score": 0.0,
       "hallucination_score": 0.5,
-      "agent_quality_score": 0.83,
-      "reason": "Heuristic: email looks like a normal coordination / meeting request."
+      "agent_quality_score": 0.8,
+      "reason": "Normal coordination / scheduling"
     },
     {
       "email": "We need a quick approval on the document. Can you help?...",
@@ -236,11 +236,11 @@
       "reply_score": 0.0,
       "tone_score": 0.0,
       "format_score": 1.0,
-      "latency_sec": 0.04,
+      "latency_sec": 0.0,
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic: email mentions sensitive business/finance/legal terms."
+      "reason": "Sensitive or business-critical"
     },
     {
       "email": "Could you remind me of the deadline again?...",
@@ -254,7 +254,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Are you available this weekend? We\u2019re planning a hike....",
@@ -268,21 +268,21 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Please confirm whether the shipment has been dispatched....",
       "ideal": "respond",
       "predicted": "respond",
       "triage_score": 1.0,
-      "reply_score": 0.5454545454545454,
-      "tone_score": 1.0,
+      "reply_score": 0.0,
+      "tone_score": 0.0,
       "format_score": 1.0,
-      "latency_sec": 69.92,
+      "latency_sec": 62.37,
       "latency_score": 0.0,
-      "hallucination_score": 0.5,
-      "agent_quality_score": 0.83,
-      "reason": "Heuristic: email looks like a normal coordination / meeting request."
+      "hallucination_score": 1.0,
+      "agent_quality_score": 0.65,
+      "reason": "Normal coordination / scheduling"
     },
     {
       "email": "Can you join us for a design review this afternoon?...",
@@ -292,11 +292,11 @@
       "reply_score": 0.0,
       "tone_score": 0.0,
       "format_score": 1.0,
-      "latency_sec": 0.23,
+      "latency_sec": 0.0,
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Could you help me reset my password?...",
@@ -310,7 +310,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Hey, can I borrow your notes from yesterday\u2019s lecture?...",
@@ -324,7 +324,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Can you please share the updated pricing sheet?...",
@@ -338,7 +338,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "We need your confirmation to finalize the booking....",
@@ -352,7 +352,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Hey! Can you pick me up at the airport tonight?...",
@@ -366,7 +366,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Could you review the contract and approve it?...",
@@ -380,7 +380,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic: email mentions sensitive business/finance/legal terms."
+      "reason": "Sensitive or business-critical"
     },
     {
       "email": "Please share the meeting notes when you get a chance....",
@@ -390,11 +390,11 @@
       "reply_score": 0.625,
       "tone_score": 1.0,
       "format_score": 1.0,
-      "latency_sec": 35.01,
+      "latency_sec": 17.06,
       "latency_score": 0.0,
       "hallucination_score": 0.5,
       "agent_quality_score": 0.85,
-      "reason": "Heuristic: email looks like a normal coordination / meeting request."
+      "reason": "Normal coordination / scheduling"
     },
     {
       "email": "Are you attending the product launch event?...",
@@ -404,11 +404,11 @@
       "reply_score": 0.0,
       "tone_score": 0.0,
       "format_score": 1.0,
-      "latency_sec": 0.04,
+      "latency_sec": 0.0,
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Could you reply-all confirming attendance?...",
@@ -422,7 +422,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Hey, is the assignment due tonight?...",
@@ -436,7 +436,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Can you please share the latest analytics report?...",
@@ -450,7 +450,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Could you confirm your shirt size for the team merch?...",
@@ -464,7 +464,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "I forgot my laptop charger. Could you bring yours?...",
@@ -478,7 +478,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Can you join the brainstorming session tomorrow?...",
@@ -492,35 +492,35 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Hey, can we talk later? Something came up....",
       "ideal": "respond",
       "predicted": "respond",
       "triage_score": 1.0,
-      "reply_score": 0.125,
+      "reply_score": 0.375,
       "tone_score": 1.0,
       "format_score": 1.0,
-      "latency_sec": 87.62,
+      "latency_sec": 34.66,
       "latency_score": 0.0,
       "hallucination_score": 0.5,
-      "agent_quality_score": 0.75,
-      "reason": "Heuristic: email looks like a normal coordination / meeting request."
+      "agent_quality_score": 0.8,
+      "reason": "Normal coordination / scheduling"
     },
     {
       "email": "Please confirm that you completed the task assigned yesterday....",
       "ideal": "respond",
       "predicted": "respond",
       "triage_score": 1.0,
-      "reply_score": 0.4444444444444444,
-      "tone_score": 1.0,
+      "reply_score": 0.0,
+      "tone_score": 0.0,
       "format_score": 1.0,
-      "latency_sec": 129.98,
+      "latency_sec": 61.73,
       "latency_score": 0.0,
-      "hallucination_score": 0.5,
-      "agent_quality_score": 0.81,
-      "reason": "Heuristic: email looks like a normal coordination / meeting request."
+      "hallucination_score": 1.0,
+      "agent_quality_score": 0.65,
+      "reason": "Normal coordination / scheduling"
     },
     {
       "email": "Are you able to join for dinner tonight?...",
@@ -530,11 +530,11 @@
       "reply_score": 0.0,
       "tone_score": 0.0,
       "format_score": 1.0,
-      "latency_sec": 0.03,
+      "latency_sec": 0.0,
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Could you upload the updated code to GitHub?...",
@@ -548,7 +548,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Can you confirm the delivery address again?...",
@@ -562,7 +562,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "We received a dispute about the invoice you issued. Can you explain the charges in detail?...",
@@ -576,7 +576,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic: email mentions sensitive business/finance/legal terms."
+      "reason": "Sensitive or business-critical"
     },
     {
       "email": "Our legal team needs clarification regarding clause 4.3. Can you confirm if negotiations are still open?...",
@@ -590,7 +590,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic: email mentions sensitive business/finance/legal terms."
+      "reason": "Sensitive or business-critical"
     },
     {
       "email": "Hi, please review the attached contract changes and confirm if we should proceed....",
@@ -604,7 +604,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic: email mentions sensitive business/finance/legal terms."
+      "reason": "Sensitive or business-critical"
     },
     {
       "email": "Why did the price increase on our last order? We did not approve changes....",
@@ -618,7 +618,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic: email mentions sensitive business/finance/legal terms."
+      "reason": "Sensitive or business-critical"
     },
     {
       "email": "Please verify the reason for termination of account 2478. The customer is threatening legal action....",
@@ -632,7 +632,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic: email mentions sensitive business/finance/legal terms."
+      "reason": "Sensitive or business-critical"
     },
     {
       "email": "We detected suspicious access to our database, and your name was listed. Please explain urgently....",
@@ -646,7 +646,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic: email mentions sensitive business/finance/legal terms."
+      "reason": "Sensitive or business-critical"
     },
     {
       "email": "Are we required to report last quarter\u2019s data discrepancy to auditors?...",
@@ -660,7 +660,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic: email mentions sensitive business/finance/legal terms."
+      "reason": "Sensitive or business-critical"
     },
     {
       "email": "URGENT: Vendor claims we owe late fees for unpaid services. What should we do?...",
@@ -674,7 +674,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic: email mentions sensitive business/finance/legal terms."
+      "reason": "Sensitive or business-critical"
     },
     {
       "email": "Can you provide the client personal data you collected last month?...",
@@ -688,7 +688,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Someone is pretending to be you and requesting access to restricted files....",
@@ -702,7 +702,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "We received a complaint regarding the tone of your last message. Can you clarify what happened?...",
@@ -716,7 +716,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic: email mentions sensitive business/finance/legal terms."
+      "reason": "Sensitive or business-critical"
     },
     {
       "email": "This billing adjustment request seems incorrect. Please justify this request before approval....",
@@ -730,7 +730,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic: email mentions sensitive business/finance/legal terms."
+      "reason": "Sensitive or business-critical"
     },
     {
       "email": "Can you confirm who authorized the shipment delay? Customer is escalating....",
@@ -744,7 +744,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic: email mentions sensitive business/finance/legal terms."
+      "reason": "Sensitive or business-critical"
     },
     {
       "email": "Please provide reasoning why this reimbursement request is above policy limits....",
@@ -758,7 +758,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "This looks like a phishing attempt. Can you validate the source before responding?...",
@@ -772,7 +772,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Why is access to my employee portal revoked?...",
@@ -786,7 +786,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Client is requesting confidential data. Should we fulfill the request?...",
@@ -800,7 +800,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Refund was issued twice. How should we correct this?...",
@@ -814,7 +814,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "A journalist is asking for comment on internal performance issues....",
@@ -828,7 +828,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Please confirm whether this employee is eligible for severance....",
@@ -838,11 +838,11 @@
       "reply_score": 0.0,
       "tone_score": 1.0,
       "format_score": 1.0,
-      "latency_sec": 42.25,
+      "latency_sec": 22.94,
       "latency_score": 0.0,
       "hallucination_score": 0.5,
       "agent_quality_score": 0.23,
-      "reason": "Heuristic: email looks like a normal coordination / meeting request."
+      "reason": "Normal coordination / scheduling"
     },
     {
       "email": "Are we allowed to share this document externally?...",
@@ -852,11 +852,11 @@
       "reply_score": 0.0,
       "tone_score": 0.0,
       "format_score": 1.0,
-      "latency_sec": 0.02,
+      "latency_sec": 0.0,
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Why were these changes made in the customer policy without informing us?...",
@@ -870,7 +870,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "We received a report of harassment. Can you provide more context?...",
@@ -884,7 +884,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Bank is asking for company registration data. Should we proceed?...",
@@ -898,7 +898,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Can you verify if this transaction is fraudulent?...",
@@ -912,7 +912,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "There is a mismatch in the tax documents. How do we correct it?...",
@@ -926,7 +926,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Do we have permission to delete this customer\u2019s data?...",
@@ -940,7 +940,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Another vendor is claiming they own the project IP. What should we say?...",
@@ -954,7 +954,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic: email mentions sensitive business/finance/legal terms."
+      "reason": "Sensitive or business-critical"
     },
     {
       "email": "Customer requests compensation for service outage this week....",
@@ -968,7 +968,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "We have an unidentified invoice posted to our account. Did you approve this?...",
@@ -982,7 +982,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic: email mentions sensitive business/finance/legal terms."
+      "reason": "Sensitive or business-critical"
     },
     {
       "email": "Account received unauthorized charges. What actions are required?...",
@@ -996,7 +996,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Please clarify who has access to our employee background checks....",
@@ -1010,7 +1010,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "A customer claims the support agent was rude. Can you review the conversation?...",
@@ -1024,7 +1024,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Investor is asking for financial projections. Should we provide?...",
@@ -1038,7 +1038,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Data breach reported. How should we inform stakeholders?...",
@@ -1052,7 +1052,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic: email mentions sensitive business/finance/legal terms."
+      "reason": "Sensitive or business-critical"
     },
     {
       "email": "Someone submitted a GDPR deletion request. Please confirm required actions....",
@@ -1062,11 +1062,11 @@
       "reply_score": 0.0,
       "tone_score": 1.0,
       "format_score": 1.0,
-      "latency_sec": 79.04,
+      "latency_sec": 47.76,
       "latency_score": 0.0,
       "hallucination_score": 0.5,
       "agent_quality_score": 0.23,
-      "reason": "Heuristic: email looks like a normal coordination / meeting request."
+      "reason": "Normal coordination / scheduling"
     },
     {
       "email": "Is the employee eligible for overtime payout for holidays?...",
@@ -1076,11 +1076,11 @@
       "reply_score": 0.0,
       "tone_score": 0.0,
       "format_score": 1.0,
-      "latency_sec": 0.05,
+      "latency_sec": 0.0,
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "This settlement agreement is missing signatures. How should we proceed?...",
@@ -1094,7 +1094,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic: email mentions sensitive business/finance/legal terms."
+      "reason": "Sensitive or business-critical"
     },
     {
       "email": "Customer is demanding a supervisor callback ASAP....",
@@ -1102,13 +1102,13 @@
       "predicted": "respond",
       "triage_score": 0.0,
       "reply_score": 0.0,
-      "tone_score": 0.0,
+      "tone_score": 1.0,
       "format_score": 1.0,
-      "latency_sec": 54.76,
+      "latency_sec": 22.71,
       "latency_score": 0.0,
       "hallucination_score": 0.5,
-      "agent_quality_score": 0.12,
-      "reason": "Heuristic: email looks like a normal coordination / meeting request."
+      "agent_quality_score": 0.23,
+      "reason": "Normal coordination / scheduling"
     },
     {
       "email": "Police have requested access to internal transaction logs....",
@@ -1118,11 +1118,11 @@
       "reply_score": 0.0,
       "tone_score": 0.0,
       "format_score": 1.0,
-      "latency_sec": 0.04,
+      "latency_sec": 0.0,
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Congratulations! You\u2019ve won a free iPhone. Claim your prize now before the offer expires!...",
@@ -1136,7 +1136,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic: email matches spam/marketing patterns."
+      "reason": "Spam / marketing detected"
     },
     {
       "email": "Boost your sex life with our new product! Only $4.99 per dose!...",
@@ -1150,7 +1150,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic: email matches spam/marketing patterns."
+      "reason": "Spam / marketing detected"
     },
     {
       "email": "Earn money fast from home! Make $2000 per day guaranteed!...",
@@ -1164,7 +1164,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic: email matches spam/marketing patterns."
+      "reason": "Spam / marketing detected"
     },
     {
       "email": "You have been selected for a limited time offer on weight loss pills!...",
@@ -1178,7 +1178,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic: email matches spam/marketing patterns."
+      "reason": "Spam / marketing detected"
     },
     {
       "email": "Final notice: Your lottery winnings are waiting. Send details now!...",
@@ -1192,7 +1192,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic: email matches spam/marketing patterns."
+      "reason": "Spam / marketing detected"
     },
     {
       "email": "Cheap software bundles available \u2014 activate Windows for only $9!...",
@@ -1206,7 +1206,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic: email matches spam/marketing patterns."
+      "reason": "Spam / marketing detected"
     },
     {
       "email": "You\u2019ve been selected for free vacation tickets! Click here!...",
@@ -1220,7 +1220,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Unlock your dream body with our unlimited gym access discount!...",
@@ -1234,7 +1234,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Weight loss miracle! Lose 10kg in 7 days with no exercise!...",
@@ -1248,7 +1248,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic: email matches spam/marketing patterns."
+      "reason": "Spam / marketing detected"
     },
     {
       "email": "Immediate attention: Your package is on hold. Provide payment info....",
@@ -1262,7 +1262,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic: email mentions sensitive business/finance/legal terms."
+      "reason": "Sensitive or business-critical"
     },
     {
       "email": "Your antivirus subscription expired. Click to renew now!...",
@@ -1276,7 +1276,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Low mortgage interest rates available now!...",
@@ -1290,7 +1290,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "You won a free cruise! Just pay shipping!...",
@@ -1304,7 +1304,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "This is not spam, you actually won! Just reply with your bank account......",
@@ -1318,7 +1318,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "\ud83d\udd25 Mega Sale! Up to 90% off on electronics!...",
@@ -1332,7 +1332,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Unsubscribe now to stop receiving these notifications....",
@@ -1346,7 +1346,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic: email matches spam/marketing patterns."
+      "reason": "Spam / marketing detected"
     },
     {
       "email": "Earn a degree in just 7 days! Accredited and legal!...",
@@ -1360,7 +1360,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic: email mentions sensitive business/finance/legal terms."
+      "reason": "Sensitive or business-critical"
     },
     {
       "email": "Exclusive crypto investment opportunity \u2014 guaranteed returns!...",
@@ -1374,7 +1374,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Get your Canadian visa approved instantly!...",
@@ -1388,7 +1388,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic: email mentions sensitive business/finance/legal terms."
+      "reason": "Sensitive or business-critical"
     },
     {
       "email": "I saw you last night. Open attachment now....",
@@ -1402,7 +1402,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "You have unpaid toll violations. Pay immediately to avoid penalty!...",
@@ -1416,7 +1416,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Free trial for dating services in your city!...",
@@ -1430,7 +1430,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Hello dear, I am a widow with $3 million to donate......",
@@ -1444,7 +1444,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Save 80% on insurance policies! Limited time!...",
@@ -1458,7 +1458,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Check your reward points balance by logging in with your credentials!...",
@@ -1472,7 +1472,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Special offer: Viagra only $1 per pill!...",
@@ -1486,7 +1486,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.7,
-      "reason": "Heuristic: email matches spam/marketing patterns."
+      "reason": "Spam / marketing detected"
     },
     {
       "email": "Boost your income with our secret investing tool!...",
@@ -1500,7 +1500,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Final attempt: respond now to unlock your account....",
@@ -1514,7 +1514,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Buy followers and get famous instantly!...",
@@ -1528,7 +1528,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Limited time deal: Antivirus for 1 year only $6!...",
@@ -1542,7 +1542,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Complete our survey to claim your Amazon gift card....",
@@ -1556,7 +1556,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Free access to premium live shows!...",
@@ -1570,7 +1570,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "\ud83c\udf89 Surprise reward waiting for you! Open link now!...",
@@ -1580,11 +1580,11 @@
       "reply_score": 0.0,
       "tone_score": 0.0,
       "format_score": 1.0,
-      "latency_sec": 0.0,
+      "latency_sec": 0.01,
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "You have been chosen as our lucky customer today!...",
@@ -1598,7 +1598,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Lose belly fat fast with this revolutionary secret!...",
@@ -1612,7 +1612,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Forward this message to 10 people for good luck!...",
@@ -1626,7 +1626,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "100% guaranteed loan approval \u2014 no checks required!...",
@@ -1640,7 +1640,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic: email mentions sensitive business/finance/legal terms."
+      "reason": "Sensitive or business-critical"
     },
     {
       "email": "Click here to update your bank login info immediately!...",
@@ -1654,7 +1654,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "You are eligible for a credit card upgrade! Apply now....",
@@ -1668,7 +1668,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Your PayPal account has been restricted \u2014 log in to fix it!...",
@@ -1682,7 +1682,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic fallback: could not clearly classify; escalating to human."
+      "reason": "Unclear content \u2014 escalate to human"
     },
     {
       "email": "Urgent: Your bank account suspended. Validate details now....",
@@ -1696,7 +1696,7 @@
       "latency_score": 1.0,
       "hallucination_score": 1.0,
       "agent_quality_score": 0.2,
-      "reason": "Heuristic: email mentions sensitive business/finance/legal terms."
+      "reason": "Sensitive or business-critical"
     }
   ]
 }
