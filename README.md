@@ -249,7 +249,7 @@ The updated **ReAct reasoning node** ensures:
 * No hallucination beyond given email
 * JSON-only formatted outbound response
 
-###  Accuracy Boost  to   83%
+###  Accuracy Boost  to   84%
 
 After model upgrade + tuning:
 
