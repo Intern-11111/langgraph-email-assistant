@@ -1,1 +1,86 @@
-[]
+[
+  {
+    "tool": "create_event",
+    "timestamp": "2026-01-02T17:56:44.641504",
+    "event": {
+      "title": "Project Update Meeting",
+      "candidate_times": [
+        "2026-01-03T10:00",
+        "2026-01-03T11:00"
+      ],
+      "attendees": [
+        "manager@company.com"
+      ]
+    }
+  },
+  {
+    "tool": "create_event",
+    "timestamp": "2026-01-02T17:56:44.644315",
+    "event": {
+      "title": "Project Update Meeting",
+      "candidate_times": [
+        "2026-01-03T10:00",
+        "2026-01-03T11:00"
+      ],
+      "attendees": [
+        "manager@company.com"
+      ]
+    }
+  },
+  {
+    "tool": "create_event",
+    "timestamp": "2026-01-02T17:56:44.645440",
+    "event": {
+      "title": "Project Update Meeting",
+      "candidate_times": [
+        "2026-01-03T10:00",
+        "2026-01-03T11:00"
+      ],
+      "attendees": [
+        "manager@company.com"
+      ]
+    }
+  },
+  {
+    "tool": "create_event",
+    "timestamp": "2026-01-02T17:58:31.372813",
+    "event": {
+      "title": "Project Update Meeting",
+      "candidate_times": [
+        "2026-01-03T10:00",
+        "2026-01-03T11:00"
+      ],
+      "attendees": [
+        "manager@company.com"
+      ]
+    }
+  },
+  {
+    "tool": "create_event",
+    "timestamp": "2026-01-02T17:58:31.374323",
+    "event": {
+      "title": "Project Update Meeting",
+      "candidate_times": [
+        "2026-01-03T10:00",
+        "2026-01-03T11:00"
+      ],
+      "attendees": [
+        "manager@company.com"
+      ]
+    }
+  },
+  {
+    "tool": "create_event",
+    "timestamp": "2026-01-02T17:58:31.374323",
+    "event": {
+      "title": "Project Update Meeting",
+      "candidate_times": [
+        "2026-01-03T10:00",
+        "2026-01-03T11:00"
+      ],
+      "attendees": [
+        "manager@company.com"
+      ]
+    }
+  }
+]
