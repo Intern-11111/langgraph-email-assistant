@@ -196,9 +196,9 @@ def interactive_manage_contacts_and_events(
             if not q:
                 print("Empty query.")
                 continue
-            # 1) Mock lookup via tool
+            # Mock lookup via tool
             res = lookup_contact(q)
-            # 2) Local lookup over staged + loaded contacts
+            # Local lookup over staged + loaded contacts
             ql = q.lower()
             local_found = None
             for c in contacts:
