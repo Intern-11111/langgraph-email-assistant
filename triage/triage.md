@@ -90,4 +90,50 @@ The script outputs:
 
 Count of each predicted class
 
-Final accuracy score
+Final accuracy score 
+
+## Milestone 2: Test Dataset & Agent Quality Evaluation
+
+### 1. High-Quality Test Dataset Creation
+For Milestone 2, the dataset was expanded to **100+ high-quality email examples**.
+
+The dataset includes diverse and realistic scenarios such as:
+- Meeting requests
+- Urgent action emails
+- Promotional campaigns
+- Spam and phishing attempts
+- Informational and conversational messages
+
+Each record includes:
+- Email content
+- Ground-truth label
+- Ideal or perfect expected outcome
+
+---
+
+### 2. Data Formatting
+The dataset is formatted in **JSON / CSV** to support automated testing
+and integration with the evaluation framework.
+
+---
+
+### 3. Agent Quality Metrics
+To evaluate the agent beyond accuracy, an **Agent Quality Score** was defined.
+
+Key metrics include:
+- **Accuracy** – Correctness of classification
+- **Helpfulness** – Whether the output is useful for downstream actions
+- **Tone** – Appropriate and professional handling of emails
+
+---
+
+### 4. Judge LLM Evaluation Design
+A Judge LLM is conceptually defined with:
+- Specific evaluation questions
+- A clear scoring rubric
+
+Scoring approaches include:
+- Binary **Pass / Fail**
+- Scaled **1–5 rating**
+
+This allows structured and repeatable quality evaluation.

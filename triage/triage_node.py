@@ -1,19 +1,51 @@
 import re
+from typing import TypedDict
 from openai import OpenAI
 
+from langgraph.graph import StateGraph, END
+from langgraph.checkpoint.memory import MemorySaver
+
+# -------------------- LLM CLIENT --------------------
 client = OpenAI()
 
+# -------------------- LABELS --------------------
 LABELS = ["spam", "promotion", "normal", "action_intent", "unknown"]
 
-# expanded lexicons
-SPAM_WORDS = {"win", "prize", "reward", "cash", "compromised", "refund", "urgent", "congratulations", "lottery", "claim", "certificate"}
-PROMO_WORDS = {"discount", "offer", "sale", "deal", "free", "%", "voucher", "coupon", "buy", "save", "limited time", "subscribe", "unsubscribe", "newsletter"}
-ACTION_WORDS = {"schedule", "meeting", "call", "book", "approve", "send", "resolve", "review", "confirm", "sign", "assign", "complete", "follow up", "follow-up"}
-NORMAL_WORDS = {"hi", "hello", "regards", "thanks", "thank you", "best", "cheers", "team", "colleague", "attached"}
+# -------------------- LEXICONS --------------------
+SPAM_WORDS = {
+    "win", "prize", "reward", "cash", "compromised", "refund",
+    "urgent", "congratulations", "lottery", "claim", "certificate"
+}
 
-DATE_TIME_WORDS = {"today", "tomorrow", "next", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday", "am", "pm", "deadline", "urgent", "asap", "soon"}
-MODAL_REQUESTS = {"please", "could you", "can you", "would you", "let me know", "let us know", "would you please"}
+PROMO_WORDS = {
+    "discount", "offer", "sale", "deal", "free", "%", "voucher",
+    "coupon", "buy", "save", "limited time", "subscribe",
+    "unsubscribe", "newsletter"
+}
 
+ACTION_WORDS = {
+    "schedule", "meeting", "call", "book", "approve", "send",
+    "resolve", "review", "confirm", "sign", "assign", "complete",
+    "follow up", "follow-up"
+}
+
+NORMAL_WORDS = {
+    "hi", "hello", "regards", "thanks", "thank you",
+    "best", "cheers", "team", "colleague", "attached"
+}
+
+DATE_TIME_WORDS = {
+    "today", "tomorrow", "next", "monday", "tuesday", "wednesday",
+    "thursday", "friday", "saturday", "sunday",
+    "am", "pm", "deadline", "urgent", "asap", "soon"
+}
+
+MODAL_REQUESTS = {
+    "please", "could you", "can you", "would you",
+    "let me know", "let us know", "would you please"
+}
+
+# -------------------- HELPERS --------------------
 def _count_hits(text, words):
     return sum(1 for w in words if w in text)
 
@@ -30,11 +62,11 @@ def _uppercase_ratio(text):
     upper = sum(1 for c in letters if c.isupper())
     return upper / len(letters)
 
+# -------------------- RULE SCORING --------------------
 def rule_score(email_text):
     text = email_text.lower()
     scores = {k: 0.0 for k in LABELS}
 
-    # basic lexical hits
     spam_hits = _count_hits(text, SPAM_WORDS)
     promo_hits = _count_hits(text, PROMO_WORDS)
     action_hits = _count_hits(text, ACTION_WORDS)
@@ -48,7 +80,6 @@ def rule_score(email_text):
     exclaim = text.count("!")
     upper_ratio = _uppercase_ratio(email_text)
 
-    # spam scoring
     scores["spam"] += spam_hits * 2.0
     if url:
         scores["spam"] += 1.5
@@ -58,7 +89,6 @@ def rule_score(email_text):
         scores["spam"] += 1.5
     scores["spam"] += min(exclaim, 3) * 0.5
 
-    # promotion scoring
     scores["promotion"] += promo_hits * 2.0
     if pct:
         scores["promotion"] += 1.5
@@ -67,85 +97,113 @@ def rule_score(email_text):
     if "unsubscribe" in text or "newsletter" in text:
         scores["promotion"] += 2.0
 
-    # action intent scoring
     scores["action_intent"] += action_hits * 2.5
     scores["action_intent"] += modal_hits * 1.5
     scores["action_intent"] += date_hits * 1.0
-    # requests that include actions + dates/time strongly indicate action_intent
     if action_hits and (date_hits or modal_hits):
         scores["action_intent"] += 2.0
 
-    # normal scoring (conversational/personal)
     scores["normal"] += normal_hits * 1.5
-    # penalize normal if spam/promo signals present
     scores["normal"] -= (spam_hits + promo_hits) * 0.7
 
-    # ensure non-negative
     for k in scores:
-        if scores[k] < 0:
-            scores[k] = 0.0
+        scores[k] = max(scores[k], 0.0)
 
     return scores
 
+# -------------------- LABEL NORMALIZATION --------------------
 def canonicalize_label(label):
     if not label or not isinstance(label, str):
         return "unknown"
     s = label.lower()
     if "spam" in s:
         return "spam"
-    if "promotion" in s or "promo" in s or "advert" in s or "sale" in s or "offer" in s:
+    if "promo" in s or "sale" in s or "offer" in s:
         return "promotion"
-    if "action" in s or "intent" in s or "task" in s or "meeting" in s or "call" in s or "approve" in s:
+    if "action" in s or "meeting" in s or "call" in s:
         return "action_intent"
-    if "normal" in s or "inbox" in s or "personal" in s:
-        return "normal"
-    if "unknown" in s:
-        return "unknown"
-    # fallback attempts
-    if "yes" in s or "no" in s:
+    if "normal" in s or "personal" in s:
         return "normal"
     return "unknown"
 
+# -------------------- LLM FALLBACK --------------------
 def llm_fallback(email_text):
-    prompt = f"Classify this single-label into exactly one of: spam, promotion, normal, action_intent.\nEmail: {email_text}\nOnly return one label (spam|promotion|normal|action_intent)."
+    prompt = (
+        "Classify this email into exactly one label:\n"
+        "spam, promotion, normal, action_intent\n\n"
+        f"Email:\n{email_text}\n\n"
+        "Return only the label."
+    )
     try:
         res = client.chat.completions.create(
             model="gpt-4o-mini",
             messages=[{"role": "user", "content": prompt}],
             max_tokens=10
         )
-        raw = res.choices[0].message.content.strip().lower()
-        return canonicalize_label(raw)
+        return canonicalize_label(res.choices[0].message.content.strip())
     except Exception:
-        # on any LLM error, prefer "normal" as safe default
         return "normal"
 
+# -------------------- CORE TRIAGE LOGIC --------------------
 def triage_email(email_text):
     if not isinstance(email_text, str) or not email_text.strip():
         return "unknown"
 
     scores = rule_score(email_text)
-    # pick best and second-best
-    best_label = max(scores, key=scores.get)
-    best_score = scores[best_label]
-    second_score = max(v for k, v in scores.items() if k != best_label)
+    best = max(scores, key=scores.get)
+    best_score = scores[best]
+    second = max(v for k, v in scores.items() if k != best)
 
-    # heuristic thresholds
-    # if rules give strong signal, use it
-    if best_score >= 3.0 and (best_score - second_score) >= 1.5:
-        return best_label
+    if best_score >= 3.0 and (best_score - second) >= 1.5:
+        return best
 
-    # if there is any reasonable signal (>=2.0) prefer rule but still consult LLM if ambiguous
-    if best_score >= 2.0 and (best_score - second_score) >= 0.8:
-        return best_label
+    if best_score >= 2.0 and (best_score - second) >= 0.8:
+        return best
 
-    # otherwise ask the LLM (fallback) for difficult/ambiguous cases
-    llm_label = llm_fallback(email_text)
-    if llm_label in LABELS:
-        return llm_label
-    return "unknown"
+    return llm_fallback(email_text)
 
+# ==================== LANGGRAPH PART (MILESTONE 3) ====================
+
+class TriageState(TypedDict):
+    email_text: str
+    label: str
+
+def action_node(state: TriageState) -> TriageState:
+    email = state["email_text"]
+    label = triage_email(email)
+    return {
+        "email_text": email,
+        "label": label
+    }
+
+workflow = StateGraph(TriageState)
+workflow.add_node("action_node", action_node)
+workflow.set_entry_point("action_node")
+workflow.add_edge("action_node", END)
+
+checkpointer = MemorySaver()
+
+graph = workflow.compile(
+    checkpointer=checkpointer,
+    interrupt_before=["action_node"]
+)
+
+# -------------------- RUN + RESUME --------------------
 if __name__ == "__main__":
-    # demo / test code — must be indented under the if
-    test_email = "Hi team,\nCan we schedule a call tomorrow at 3pm to review the Q4 budget? Thanks!"
-    print(triage_email(test_email))
+    config = {
+        "configurable": {
+            "thread_id": "triage-hitl-1"
+        }
+    }
+
+    input_state = {
+        "email_text": "Hi team, can we schedule a call tomorrow at 3pm?"
+    }
+
+    print("⏸ First run (paused before action node)")
+    graph.invoke(input_state, config=config)
+
+    print("▶️ Resuming from checkpoint")
+    result = graph.invoke(None, config=config)
+    print(result)
+        
