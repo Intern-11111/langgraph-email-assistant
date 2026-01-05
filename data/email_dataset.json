@@ -1,0 +1,9 @@
+{
+  "email_id": "E001",
+  "subject": "Request for meeting",
+  "email_body": "Can we meet tomorrow at 3 PM?",
+  "triage_label": "respond",
+  "ideal_reply": "Sure, tomorrow at 3 PM works for me. Let me know if you want to add a calendar invite.",
+  "intent": "meeting",
+  "urgency": "medium"
+}
