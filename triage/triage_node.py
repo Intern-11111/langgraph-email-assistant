@@ -5,47 +5,53 @@ from openai import OpenAI
 from langgraph.graph import StateGraph, END
 from langgraph.checkpoint.memory import MemorySaver
 
-# -------------------- LLM CLIENT --------------------
 client = OpenAI()
 
-# -------------------- LABELS --------------------
 LABELS = ["spam", "promotion", "normal", "action_intent", "unknown"]
 
-# -------------------- LEXICONS --------------------
+# tools that can change real-world state
+DANGEROUS_TOOLS = {
+    "send_email": "sends an email to a real user",
+    "create_calendar_invite": "creates a calendar event",
+    "approve_payment": "approves or spends money",
+    "delete_file": "removes files permanently"
+}
+
 SPAM_WORDS = {
-    "win", "prize", "reward", "cash", "compromised", "refund",
-    "urgent", "congratulations", "lottery", "claim", "certificate"
+    "win", "prize", "reward", "cash", "compromised",
+    "refund", "urgent", "congratulations",
+    "lottery", "claim", "certificate"
 }
 
 PROMO_WORDS = {
-    "discount", "offer", "sale", "deal", "free", "%", "voucher",
-    "coupon", "buy", "save", "limited time", "subscribe",
-    "unsubscribe", "newsletter"
+    "discount", "offer", "sale", "deal", "free", "%",
+    "voucher", "coupon", "buy", "save",
+    "limited time", "subscribe", "unsubscribe", "newsletter"
 }
 
 ACTION_WORDS = {
-    "schedule", "meeting", "call", "book", "approve", "send",
-    "resolve", "review", "confirm", "sign", "assign", "complete",
-    "follow up", "follow-up"
+    "schedule", "meeting", "call", "book", "approve",
+    "send", "resolve", "review", "confirm",
+    "sign", "assign", "complete", "follow up", "follow-up"
 }
 
 NORMAL_WORDS = {
-    "hi", "hello", "regards", "thanks", "thank you",
-    "best", "cheers", "team", "colleague", "attached"
+    "hi", "hello", "regards", "thanks",
+    "thank you", "best", "cheers", "team",
+    "colleague", "attached"
 }
 
 DATE_TIME_WORDS = {
-    "today", "tomorrow", "next", "monday", "tuesday", "wednesday",
-    "thursday", "friday", "saturday", "sunday",
-    "am", "pm", "deadline", "urgent", "asap", "soon"
+    "today", "tomorrow", "next", "monday", "tuesday",
+    "wednesday", "thursday", "friday", "saturday",
+    "sunday", "am", "pm", "deadline", "asap", "soon"
 }
 
 MODAL_REQUESTS = {
-    "please", "could you", "can you", "would you",
-    "let me know", "let us know", "would you please"
+    "please", "could you", "can you",
+    "would you", "let me know", "let us know"
 }
 
-# -------------------- HELPERS --------------------
 def _count_hits(text, words):
     return sum(1 for w in words if w in text)
 
@@ -59,10 +65,8 @@ def _uppercase_ratio(text):
     letters = re.findall(r"[A-Za-z]", text)
     if not letters:
         return 0.0
-    upper = sum(1 for c in letters if c.isupper())
-    return upper / len(letters)
+    return sum(1 for c in letters if c.isupper()) / len(letters)
 
-# -------------------- RULE SCORING --------------------
 def rule_score(email_text):
     text = email_text.lower()
     scores = {k: 0.0 for k in LABELS}
@@ -74,46 +78,27 @@ def rule_score(email_text):
     date_hits = _count_hits(text, DATE_TIME_WORDS)
     modal_hits = _count_hits(text, MODAL_REQUESTS)
 
-    url = _has_url(text)
-    currency = _currency_signs(text)
-    pct = "%" in text or re.search(r"\b\d+%|\bpercent\b", text)
-    exclaim = text.count("!")
-    upper_ratio = _uppercase_ratio(email_text)
+    if _has_url(text):
+        scores["spam"] += 1.5
+        scores["promotion"] += 1.0
+
+    if _currency_signs(text):
+        scores["spam"] += 1.2
+
+    if _uppercase_ratio(email_text) > 0.5:
+        scores["spam"] += 1.5
 
     scores["spam"] += spam_hits * 2.0
-    if url:
-        scores["spam"] += 1.5
-    if currency:
-        scores["spam"] += 1.2
-    if upper_ratio > 0.5:
-        scores["spam"] += 1.5
-    scores["spam"] += min(exclaim, 3) * 0.5
-
     scores["promotion"] += promo_hits * 2.0
-    if pct:
-        scores["promotion"] += 1.5
-    if url:
-        scores["promotion"] += 1.0
-    if "unsubscribe" in text or "newsletter" in text:
-        scores["promotion"] += 2.0
-
     scores["action_intent"] += action_hits * 2.5
     scores["action_intent"] += modal_hits * 1.5
     scores["action_intent"] += date_hits * 1.0
-    if action_hits and (date_hits or modal_hits):
-        scores["action_intent"] += 2.0
-
     scores["normal"] += normal_hits * 1.5
-    scores["normal"] -= (spam_hits + promo_hits) * 0.7
-
-    for k in scores:
-        scores[k] = max(scores[k], 0.0)
 
     return scores
 
-# -------------------- LABEL NORMALIZATION --------------------
 def canonicalize_label(label):
-    if not label or not isinstance(label, str):
+    if not label:
         return "unknown"
     s = label.lower()
     if "spam" in s:
@@ -126,54 +111,43 @@ def canonicalize_label(label):
         return "normal"
     return "unknown"
 
-# -------------------- LLM FALLBACK --------------------
 def llm_fallback(email_text):
-    prompt = (
-        "Classify this email into exactly one label:\n"
-        "spam, promotion, normal, action_intent\n\n"
-        f"Email:\n{email_text}\n\n"
-        "Return only the label."
-    )
     try:
         res = client.chat.completions.create(
             model="gpt-4o-mini",
-            messages=[{"role": "user", "content": prompt}],
+            messages=[{
+                "role": "user",
+                "content": f"Classify this email as spam, promotion, normal, or action_intent:\n{email_text}"
+            }],
             max_tokens=10
         )
-        return canonicalize_label(res.choices[0].message.content.strip())
+        return canonicalize_label(res.choices[0].message.content)
     except Exception:
         return "normal"
 
-# -------------------- CORE TRIAGE LOGIC --------------------
 def triage_email(email_text):
-    if not isinstance(email_text, str) or not email_text.strip():
-        return "unknown"
-
     scores = rule_score(email_text)
     best = max(scores, key=scores.get)
-    best_score = scores[best]
-    second = max(v for k, v in scores.items() if k != best)
+    second = sorted(scores.values(), reverse=True)[1]
 
-    if best_score >= 3.0 and (best_score - second) >= 1.5:
-        return best
-
-    if best_score >= 2.0 and (best_score - second) >= 0.8:
+    if scores[best] >= 3.0 and (scores[best] - second) >= 1.5:
         return best
 
     return llm_fallback(email_text)
 
-# ==================== LANGGRAPH PART (MILESTONE 3) ====================
-
 class TriageState(TypedDict):
     email_text: str
     label: str
+    dangerous: bool
 
 def action_node(state: TriageState) -> TriageState:
     email = state["email_text"]
     label = triage_email(email)
+
     return {
         "email_text": email,
-        "label": label
+        "label": label,
+        "dangerous": label == "action_intent"
     }
 
 workflow = StateGraph(TriageState)
@@ -188,22 +162,16 @@ graph = workflow.compile(
     interrupt_before=["action_node"]
 )
 
-# -------------------- RUN + RESUME --------------------
 if __name__ == "__main__":
-    config = {
-        "configurable": {
-            "thread_id": "triage-hitl-1"
-        }
-    }
+    config = {"configurable": {"thread_id": "milestone3"}}
 
     input_state = {
         "email_text": "Hi team, can we schedule a call tomorrow at 3pm?"
     }
 
-    print("⏸ First run (paused before action node)")
+    print("Paused before action")
     graph.invoke(input_state, config=config)
 
-    print("▶️ Resuming from checkpoint")
+    print("Resuming after approval")
     result = graph.invoke(None, config=config)
     print(result)
-        

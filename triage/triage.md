@@ -1,7 +1,7 @@
-Email Triage Module – Milestone 1  
+## Email Triage Module – Milestone 1  
    Project: LangGraph Email Assistant
 
-## 1. Overview
+# 1. Overview
 This module implements the *triage logic* for an email assistant.
 The goal is to automatically classify incoming emails into meaningful categories
 so that later workflow steps can act on them.
@@ -13,9 +13,8 @@ This work corresponds to *Milestone 1* and focuses on:
 
 No frontend or live LLM API is used in this milestone.
 
----
 
-## 2. Triage Categories
+# 2. Triage Categories
 Each email is classified into one of the following labels:
 
 - *spam*  
@@ -31,26 +30,25 @@ Each email is classified into one of the following labels:
   Emails that require an action  
   (meetings, approvals, invoices, requests, scheduling)
 
----
 
-## 3. Rule-Based Triage Logic
+# 3. Rule-Based Triage Logic
 The triage logic is implemented using keyword-based rules:
 
-### Promotion Detection
+# Promotion Detection
 Keywords like:
 discount, offer, sale, deal, free, %
 
-### Spam Detection
+# Spam Detection
 Keywords like:
 
 win, prize, reward, urgent, claim, blocked, compromised
 
-### Action Intent Detection
+# Action Intent Detection
 Keywords like:
 
 schedule, meeting, approve, invoice, send, book, confirm
 
-### Normal Emails
+# Normal Emails
 If none of the above rules match, the email is marked as *normal*.
 
 This approach ensures:
@@ -58,7 +56,7 @@ This approach ensures:
 - Fast and deterministic classification
 - Easy debugging and evaluation
 
-## 4. Dataset (Golden Emails)
+# 4. Dataset (Golden Emails)
 A golden dataset was created in JSON format.
 
 Each record contains:
@@ -70,10 +68,10 @@ Each record contains:
 
 The dataset includes 30 labeled emails, covering all categories:
 
-Spam
-Promotion
-Normal
-Action Intent
+-Spam
+-Promotion
+-Normal
+-Action Intent
 
 This dataset is used only for evaluation.
 
@@ -82,9 +80,9 @@ This dataset is used only for evaluation.
 
 An evaluation script compares:
 
-Predicted label
+-Predicted label
 
-Actual (gold) label
+-Actual (gold) label
 
 The script outputs:
 
@@ -94,7 +92,7 @@ Final accuracy score
 
 ## Milestone 2: Test Dataset & Agent Quality Evaluation
 
-### 1. High-Quality Test Dataset Creation
+# 1. High-Quality Test Dataset Creation
 For Milestone 2, the dataset was expanded to **100+ high-quality email examples**.
 
 The dataset includes diverse and realistic scenarios such as:
@@ -109,15 +107,13 @@ Each record includes:
 - Ground-truth label
 - Ideal or perfect expected outcome
 
----
 
-### 2. Data Formatting
+# 2. Data Formatting
 The dataset is formatted in **JSON / CSV** to support automated testing
 and integration with the evaluation framework.
 
----
 
-### 3. Agent Quality Metrics
+# 3. Agent Quality Metrics
 To evaluate the agent beyond accuracy, an **Agent Quality Score** was defined.
 
 Key metrics include:
@@ -125,9 +121,8 @@ Key metrics include:
 - **Helpfulness** – Whether the output is useful for downstream actions
 - **Tone** – Appropriate and professional handling of emails
 
----
 
-### 4. Judge LLM Evaluation Design
+# 4. Judge LLM Evaluation Design
 A Judge LLM is conceptually defined with:
 - Specific evaluation questions
 - A clear scoring rubric
@@ -137,3 +132,54 @@ Scoring approaches include:
 - Scaled **1–5 rating**
 
 This allows structured and repeatable quality evaluation.
+
+## Milestone 3 – Human-in-the-Loop (HITL) Safety
+
+Project Title
+
+Email Triage Agent with Human-in-the-Loop Safety
+
+
+Objective
+
+The goal of Milestone 3 is to introduce safety and control mechanisms into the email triage agent by identifying dangerous actions, pausing execution before such actions occur, and resuming safely after human approval. This ensures the agent does not change real-world state without explicit consent.
+
+
+Understanding the Problem (Undo Test)
+
+   Any action that changes reality and cannot be easily undone is considered dangerous.
+
+# Dangerous Actions
+
+-Sending emails
+
+-Creating calendar invites
+
+-Spending money
+
+-Deleting files
+
+
+# Safe Actions
+
+-Reading emails
+
+-Classifying text
+
+-Checking or analyzing data
+
+   This rule is known as the Undo Test.
+
+
+# Dangerous Tool Identification
+
+In this milestone, actions such as sending emails or scheduling meetings are treated as dangerous tools. These actions are explicitly tagged so the agent knows when to stop and wait for human input.
+
+
+# Tagging Dangerous Actions
+
+Each triaged email is classified with:
+
+-A category label (spam, promotion, action_intent, etc.)
+
+-A dangerous: true/
