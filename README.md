@@ -135,3 +135,52 @@ Tone:        5/5
 Accuracy:    5/5
 Result:      PASS
 Reasoning:   The response effectively addresses the user's request for a refund, provides a clear action taken (initiating the refund), and gives a reasonable timeframe for when the user can expect the refund. The tone is empathetic and professional, acknowledging the user's frustration without being dismissive. All criteria are met excellently, leading to a perfect score.
+
+-- MILESTONE 3--
+This milestone focuses on modifying an autonomous email agent from a stateless execution model to a stateful, resilient system. By integrating a relational database (SQLite) for state persistence and implementing a Human-In-The-Loop (HITL) checkpoint.
+
+The files added in the folder are: state.py, node.py, graph.py and test_persistence.py
+-state.py define: The AgentState using TypedDict. It utilizes Annotated with the add_messages reducer to ensure that conversation history is preserved as a cumulative list rather than being overwritten.
+-node.py: Contains the functional units of the graph: 1)Triage Node: Categorizes incoming emails. 2)React Model Node: Generates draft responses. 3)Action Node: Executes the high-stakes side-effect (sending the email).
+-graph.py: The core logic where the workflow is compiled. It integrates the SqliteSaver checkpointer and enforces the interrupt_before protocol on the action_node.
+
+Persistence Layer
+It implemented SqliteSaver to serve as the checkpointer. This translates the ephemeral Python state into a binary format stored in checkpoints.sqlite.
+
+Thread Identification: Every session is tracked via a thread_id. This allows the agent to distinguish between multiple concurrent users and retrieve the correct memory from the database.
+
+Human-In-The-Loop (HITL) Checkpoint
+The graph is configured to halt execution immediately before the action_node.
+
+Safety Protocol: By using interrupt_before=["action_node"], the system ensures that no email is dispatched without explicit human verification.
+
+State Suspension: Upon interruption, the current state is serialized to the database, allowing the program to exit without data loss.
+
+Demonstration of Milestone (Fail/Recover Test):
+To prove the efficacy of the persistence layer, test_persistence.py) that executes the following lifecycle: 1)Stage 1 (State Injection): The agent processes an email and reaches the interrupt. The program "finishes" execution, but the state remains in the database. 2)Simulation of Latency: A simulated delay represents the time taken for human review. 3)Stage 2 (Re-hydration): The script is triggered again. It fetches the state from the checkpoints.sqlite using the thread_id, realizes it is at a checkpoint, and resumes to complete the action without needing the original input again.
+
+Dependencies & Installation: pip install langgraph-checkpoint-sqlite
+
+output acheived in this milestone :
+Checkpointer loaded successfully!
+---Stage 1: INITIAL PROCESSING ---
+--- TRIAGING EMAIL ---
+Current Node: triage_node
+--- AGENT IS THINKING ---
+Current Node: react_model
+Current Node: __interrupt__
+
+SYSTEM PAUSED: HITL Interrupt triggered.
+Verification: Check your folder for 'checkpoints.sqlite'.
+The agent is now 'asleep' in the database.
+Simulating system wait... 3
+Simulating system wait... 2
+Simulating system wait... 1
+
+--- STAGE 2: RECOVERING FROM DATABASE ---
+Resuming based on thread_id...
+--- EXECUTING TOOLS (ACTION) ---
+Resumed Node: react_tools
+--- AGENT IS THINKING ---
+Resumed Node: react_model
+Resumed Node: __interrupt__
