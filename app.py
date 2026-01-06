@@ -9,7 +9,6 @@ sys.path.append(os.path.abspath("src"))
 
 from agent import run_email_agent   # must return: respond / ignore / notify_human
 
-
 # -----------------------
 # Streamlit UI
 # -----------------------
@@ -17,7 +16,6 @@ st.set_page_config(
     page_title="LangGraph Email Assistant",
     layout="centered"
 )
-
 st.title("📧 LangGraph Email Assistant")
 st.write("Human-in-the-Loop UI for email triage (E1 Milestone)")
 
