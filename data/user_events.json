@@ -82,5 +82,47 @@
         "manager@company.com"
       ]
     }
+  },
+  {
+    "tool": "create_event",
+    "timestamp": "2026-01-06T09:26:19.085654",
+    "event": {
+      "title": "Project Update Meeting",
+      "candidate_times": [
+        "2026-01-03T10:00",
+        "2026-01-03T11:00"
+      ],
+      "attendees": [
+        "manager@company.com"
+      ]
+    }
+  },
+  {
+    "tool": "create_event",
+    "timestamp": "2026-01-06T09:26:19.107980",
+    "event": {
+      "title": "Project Update Meeting",
+      "candidate_times": [
+        "2026-01-03T10:00",
+        "2026-01-03T11:00"
+      ],
+      "attendees": [
+        "manager@company.com"
+      ]
+    }
+  },
+  {
+    "tool": "create_event",
+    "timestamp": "2026-01-06T09:26:19.109986",
+    "event": {
+      "title": "Project Update Meeting",
+      "candidate_times": [
+        "2026-01-03T10:00",
+        "2026-01-03T11:00"
+      ],
+      "attendees": [
+        "manager@company.com"
+      ]
+    }
   }
 ]

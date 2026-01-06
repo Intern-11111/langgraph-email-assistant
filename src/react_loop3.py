@@ -10,6 +10,31 @@ from tools.contact import lookup_contact
 SENSITIVE_ACTIONS = {"send_email", "spend_money", "create_event"}
 
 
+def is_sensitive_action(action: str) -> bool:
+    return action in SENSITIVE_ACTIONS
+
+
+def decide_action(subject: str, body: str) -> tuple[str, Any]:
+    email_text = f"{subject} {body}".lower()
+
+    if "schedule" in email_text or "meeting" in email_text:
+        return (
+            "create_event",
+            {
+                "title": "Project Update Meeting",
+                "candidate_times": [
+                    "2026-01-03T10:00",
+                    "2026-01-03T11:00",
+                ],
+                "attendees": ["manager@company.com"],
+            },
+        )
+    elif "contact" in email_text or "email" in email_text:
+        return "lookup_contact", "manager@company.com"
+    else:
+        return "reply", "Thanks for reaching out. I will get back to you shortly."
+
+
 class ReactAgent:
     def __init__(self, max_steps: int = 6):
         self.max_steps = max_steps
@@ -43,29 +68,10 @@ class ReactAgent:
 
             # REASONING STEP
             thought = "Analyzing email intent and deciding next action"
-
-            email_text = f"{subject} {body}".lower()
-
-            if "schedule" in email_text or "meeting" in email_text:
-                # For demo
-                action = "create_event"
-                action_input = {
-                    "title": "Project Update Meeting",
-                    "candidate_times": [
-                        "2026-01-03T10:00",
-                        "2026-01-03T11:00",
-                    ],
-                    "attendees": ["manager@company.com"],
-                }
-            elif "contact" in email_text or "email" in email_text:
-                action = "lookup_contact"
-                action_input = "manager@company.com"
-            else:
-                action = "reply"
-                action_input = "Thanks for reaching out. I will get back to you shortly."
+            action, action_input = decide_action(subject, body)
 
             # HITL CHECKPOINT (UNDO TEST)
-            if action in SENSITIVE_ACTIONS and human_decision is None:
+            if is_sensitive_action(action) and human_decision is None:
                 trace_steps.append({
                     "step": step,
                     "timestamp": time.time(),
