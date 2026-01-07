@@ -1,0 +1,7 @@
+{
+  "email": {
+    "subject": "Urgent approval needed",
+    "body": "Please approve the budget by EOD"
+  },
+  "triage_decision": "needs_human_review"
+}
