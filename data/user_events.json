@@ -124,5 +124,18 @@
         "manager@company.com"
       ]
     }
+  },
+  {
+    "tool": "email_status",
+    "timestamp": "2026-01-07T11:38:48.617972Z",
+    "input": {
+      "subject": "Team meeting request",
+      "body": "Can we schedule a meeting for the project update?"
+    },
+    "status": "DENIED",
+    "trace_id": "trace_1767785928",
+    "final": {
+      "status": "denied"
+    }
   }
 ]
