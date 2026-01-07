@@ -173,3 +173,116 @@ run_quality_eval.py-Executes Milestone 2
 python run_quality_eval.py
 
 ---------------------------------------------------------------------------------------------
+
+Milestone 3
+
+1. Task Description
+
+The task of Milestone 3 is to modify the agent’s workflow to include a Human-in-the-Loop (HITL) checkpoint.
+The agent must be able to pause execution, save its current state, and resume later without losing context.
+
+This milestone focuses on implementing the “Saving the Game” concept in an ambient agent.
+
+
+
+2. Implementation
+
+A LangGraph-based agent graph was created.
+
+A checkpoint node was added before the action execution step.
+
+The graph execution is interrupted using:
+
+interrupt_before = ["action_node"]
+
+
+The agent’s state (memory) is saved to persistent storage using a file-based database.
+
+On restart, the agent loads the saved state and resumes execution from the same point.
+
+
+
+
+3. Execution Process
+
+The agent starts with an initial email state.
+
+The triage node processes the email and produces a decision.
+
+Before taking any action, the HITL checkpoint is triggered.
+
+The agent’s current state is saved to persistent storage.
+
+The agent pauses execution and waits for human intervention.
+
+On re-execution, the agent resumes from the saved state.
+
+
+
+
+4. Purpose / Usage
+
+This milestone is used to:
+
+Allow human review and approval before critical actions
+
+Prevent loss of agent context during pauses
+
+Enable safe, long-running agent workflows
+
+Support real-world scenarios where decisions require confirmation
+
+
+
+
+5. Output Explanation
+
+The output shows that:
+
+The agent has successfully paused
+
+The triage decision is preserved
+
+The agent state is stored for later use
+
+Sample Output
+Agent execution paused.
+Current state:
+{
+  "email": {
+    "subject": "Urgent approval needed",
+    "body": "Please approve the budget by EOD"
+  },
+  "triage_decision": "needs_human_review",
+  "paused": true
+}
+
+
+This confirms that the HITL checkpoint and state persistence are working correctly.
+
+
+
+
+6. Files Used:
+File Name	Purpose
+memory.py	-------  Saves and loads agent state
+nodes.py---------	Defines agent workflow nodes
+graph.py--------	Builds LangGraph with HITL
+run_hitl_agent.py----	Executes the HITL agent
+
+
+
+7. How to Execute
+
+Run the following command from the project root:
+
+python run_hitl_agent.py
+
+
+
+
+8. Conclusion 
+
+Milestone 3 successfully implements a Human-in-the-Loop checkpoint using LangGraph.
+The agent can pause execution, persist its state, and resume later without losing information, fulfilling the “Saving the Game” requirement.
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
