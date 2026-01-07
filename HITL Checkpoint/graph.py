@@ -1,7 +1,6 @@
 import sqlite3
 import os
 
-# Try-except block to help you debug the exact import issue
 try:
     from langgraph.checkpoint.sqlite import SqliteSaver
     print("Checkpointer loaded successfully!")
@@ -20,8 +19,8 @@ from node import (
     react_tools_node,
 )
 
-# --- STEP 1: PERSISTENCE (Memory) ---
-# This satisfy: "must save the agent's state(memory) to a database"
+# --- PERSISTENCE (Memory) ---
+# must save the agent's state(memory) to a database
 db_path = "checkpoints.sqlite"
 conn = sqlite3.connect(db_path, check_same_thread=False)
 memory = SqliteSaver(conn)
@@ -29,14 +28,14 @@ memory = SqliteSaver(conn)
 def graph_create() -> StateGraph:
     graph = StateGraph(AgentState)
 
-    # --- STEP 2: NODES ---
+    # ---NODES ---
     graph.add_node("triage_node", triage_node)
     graph.add_node("ignore", ignore)
     graph.add_node("notify-human", notify_human)
     graph.add_node("react_model", react_model_node)
     graph.add_node("react_tools", react_tools_node) 
     
-    # --- STEP 3: EDGES ---
+    # ---EDGES ---
     graph.add_edge(START, "triage_node")
 
     graph.add_conditional_edges(
@@ -62,9 +61,7 @@ def graph_create() -> StateGraph:
     graph.add_edge("ignore", END)
     graph.add_edge("notify-human", END)
 
-    # --- STEP 4: COMPILE WITH HITL ---
-    # This satisfies: "use interrupt_before=['action_node']"
-    # Note: We use "react_tools" because that is your action node.
+    # --- COMPILE WITH --- #
     return graph.compile(
         checkpointer=memory,
         interrupt_before=["react_tools"] 
@@ -72,10 +69,10 @@ def graph_create() -> StateGraph:
 
 app = graph_create()
 
-# --- STEP 5: RUN FUNCTION ---
+# --- RUN FUNCTION ---
 def run_email_agent(subject: str, body: str, thread_id: str = "user_1"):
     config = {"configurable": {"thread_id": thread_id}}
     initial_state = {"mail": {"subject": subject, "body": body}}
     
-    # This runs until the HITL interrupt
     return app.invoke(initial_state, config=config)
+
