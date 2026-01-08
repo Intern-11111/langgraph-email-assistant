@@ -137,5 +137,124 @@
     "final": {
       "status": "denied"
     }
+  },
+  {
+    "tool": "create_event",
+    "timestamp": "2026-01-07T17:51:59.724958",
+    "event": {
+      "title": "Project Update Meeting",
+      "candidate_times": [
+        "2026-01-03T10:00",
+        "2026-01-03T11:00"
+      ],
+      "attendees": [
+        "manager@company.com"
+      ]
+    }
+  },
+  {
+    "tool": "create_event",
+    "timestamp": "2026-01-07T17:51:59.726993",
+    "event": {
+      "title": "Project Update Meeting",
+      "candidate_times": [
+        "2026-01-03T10:00",
+        "2026-01-03T11:00"
+      ],
+      "attendees": [
+        "manager@company.com"
+      ]
+    }
+  },
+  {
+    "tool": "create_event",
+    "timestamp": "2026-01-07T17:51:59.726993",
+    "event": {
+      "title": "Project Update Meeting",
+      "candidate_times": [
+        "2026-01-03T10:00",
+        "2026-01-03T11:00"
+      ],
+      "attendees": [
+        "manager@company.com"
+      ]
+    }
+  },
+  {
+    "tool": "email_status",
+    "timestamp": "2026-01-07T12:21:59.726993Z",
+    "input": {
+      "subject": "Team meeting request",
+      "body": "Can we schedule a meeting for the project update?"
+    },
+    "status": "RUNNING",
+    "trace_id": "trace_1767788519",
+    "final": {}
+  },
+  {
+    "tool": "email_status",
+    "timestamp": "2026-01-07T12:22:34.018641Z",
+    "input": {
+      "subject": "Team meeting request",
+      "body": "Can we schedule a meeting for the project update?"
+    },
+    "status": "DENIED",
+    "trace_id": "trace_1767788554",
+    "final": {
+      "status": "denied"
+    }
+  },
+  {
+    "tool": "create_event",
+    "timestamp": "2026-01-07T17:52:54.525622",
+    "event": {
+      "title": "Project Update Meeting",
+      "candidate_times": [
+        "2026-01-03T10:00",
+        "2026-01-03T11:00"
+      ],
+      "attendees": [
+        "manager@company.com"
+      ]
+    }
+  },
+  {
+    "tool": "create_event",
+    "timestamp": "2026-01-07T17:52:54.527998",
+    "event": {
+      "title": "Project Update Meeting (Edited)",
+      "candidate_times": [
+        "2026-01-03T10:00",
+        "2026-01-03T11:00"
+      ],
+      "attendees": [
+        "manager@company.com"
+      ]
+    }
+  },
+  {
+    "tool": "create_event",
+    "timestamp": "2026-01-07T17:52:54.527998",
+    "event": {
+      "title": "Project Update Meeting (Edited)",
+      "candidate_times": [
+        "2026-01-03T10:00",
+        "2026-01-03T11:00"
+      ],
+      "attendees": [
+        "manager@company.com"
+      ]
+    }
+  },
+  {
+    "tool": "email_status",
+    "timestamp": "2026-01-07T12:22:54.532287Z",
+    "input": {
+      "subject": "Team meeting request",
+      "body": "Can we schedule a meeting for the project update?"
+    },
+    "status": "RUNNING",
+    "trace_id": "trace_1767788574",
+    "final": {}
   }
 ]

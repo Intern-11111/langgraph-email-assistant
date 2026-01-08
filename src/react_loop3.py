@@ -170,6 +170,83 @@ class ReactAgent:
             raise ValueError("resume() requires a PAUSED trace")
 
         pending_input = paused_trace["final"]["pending_input"]
+        pending_action = paused_trace["final"].get("pending_action")
+
+        def _input_nonempty(prompt: str, default: str | None = None) -> str | None:
+            val = input(prompt).strip()
+            if not val and default is not None:
+                return default
+            return val if val else None
+
+        def _parse_csv_list(raw: str) -> List[str]:
+            return [x.strip() for x in raw.split(",") if x.strip()]
+
+        def _guided_edit(action: str, data: Any) -> Any:
+            #Just return original if guided edit isn't applicable
+            if action == "create_event" and isinstance(data, dict):
+                print("\nGuided editor: create_event")
+                print("Current event:")
+                try:
+                    print(json.dumps(data, indent=2))
+                except Exception:
+                    print(str(data))
+
+                # Title
+                current_title = data.get("title")
+                new_title = _input_nonempty(f"Title [{current_title}]: ", default=current_title)
+                if new_title is not None:
+                    data["title"] = new_title
+
+                # Candidate times
+                current_times = data.get("candidate_times")
+                if not isinstance(current_times, list):
+                    current_times = []
+                print("Current candidate_times:", current_times)
+                times_raw = _input_nonempty(
+                    "Candidate times (comma-separated ISO; blank to keep): ",
+                    default=None,
+                )
+                if times_raw is not None:
+                    data["candidate_times"] = _parse_csv_list(times_raw)
+
+                # Attendees
+                current_attendees = data.get("attendees")
+                if not isinstance(current_attendees, list):
+                    current_attendees = []
+                print("Current attendees:", current_attendees)
+                attendees_raw = _input_nonempty(
+                    "Attendees (comma-separated emails; blank to keep): ",
+                    default=None,
+                )
+                if attendees_raw is not None:
+                    data["attendees"] = _parse_csv_list(attendees_raw)
+
+                return data
+            elif action == "reply":
+                print("\nGuided editor: reply")
+                print("Current reply:")
+                try:
+                    print(json.dumps(data, indent=2))
+                except Exception:
+                    print(str(data))
+                new_reply = _input_nonempty("Reply text [leave blank to keep]: ", default=None)
+                if isinstance(data, dict):
+                    if new_reply is not None:
+                        data["reply"] = new_reply
+                    return data
+                # If reply is raw string
+                return new_reply if new_reply is not None else data
+            else:
+                # Generic JSON edit fallback
+                print("\nEnter updated input as JSON (blank to keep current):")
+                updated_raw = input("> ").strip()
+                if updated_raw:
+                    try:
+                        return json.loads(updated_raw)
+                    except Exception:
+                        print("Invalid JSON. Keeping current input.")
+                        return data
+                return data
 
         # If no decision provided, interactively prompt the user
         if human_decision is None:
@@ -185,21 +262,20 @@ class ReactAgent:
                 print("Invalid choice. Please type Approve, Deny, or Edit.")
 
             if decision == "edit":
-                print("Enter updated input as JSON (or blank to keep current):")
-                updated_raw = input("> ").strip()
-                if updated_raw:
-                    try:
-                        updated_input = json.loads(updated_raw)
-                    except Exception:
-                        print("Invalid JSON. Keeping current input.")
-                        updated_input = pending_input
-                else:
-                    updated_input = pending_input
+                # Guided editing flow
+                updated_input = _guided_edit(pending_action, pending_input)
                 human_decision = {"decision": "edit", "updated_input": updated_input}
             elif decision == "approve":
                 human_decision = {"decision": "approve"}
             else:
                 human_decision = {"decision": "deny"}
+        else:
+            if (
+                human_decision.get("decision") == "edit"
+                and "updated_input" not in human_decision
+            ):
+                updated_input = _guided_edit(pending_action, pending_input)
+                human_decision["updated_input"] = updated_input
 
         # Re-run with the chosen human decision
         return self.run(
@@ -252,6 +328,65 @@ if __name__ == "__main__":
         data.append(entry)
         with open(save_path, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
+
+    # update existing records in user_events.json after an edit
+    def _load_events(path: str) -> List[Dict[str, Any]]:
+        if not os.path.exists(path):
+            return []
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                data = json.load(f)
+            return data if isinstance(data, list) else []
+        except Exception:
+            return []
+
+    def _save_events(path: str, events: List[Dict[str, Any]]) -> None:
+        _ensure_dir(path)
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(events, f, indent=2, ensure_ascii=False)
+
+    def _update_last_record(store_path: str, tool: str, update: Dict[str, Any]) -> bool:
+        """
+        - For create_event: merge into record['event']
+        - For email_status: merge top-level keys and nested 'final' if provided
+
+        Returns True if an update was applied.
+        """
+        events = _load_events(store_path)
+        if not events:
+            return False
+        # find last index with matching tool
+        target_idx = None
+        for i in range(len(events) - 1, -1, -1):
+            if events[i].get("tool") == tool:
+                target_idx = i
+                break
+        if target_idx is None:
+            return False
+        rec = events[target_idx]
+        if tool == "create_event":
+            ev = rec.get("event", {})
+            if not isinstance(ev, dict):
+                ev = {}
+            ev.update(update or {})
+            rec["event"] = ev
+        elif tool == "email_status":
+            for k, v in (update or {}).items():
+                if k == "final" and isinstance(v, dict):
+                    final = rec.get("final", {})
+                    if not isinstance(final, dict):
+                        final = {}
+                    final.update(v)
+                    rec["final"] = final
+                else:
+                    rec[k] = v
+        else:
+            # fallback shallow merge
+            for k, v in (update or {}).items():
+                rec[k] = v
+        events[target_idx] = rec
+        _save_events(store_path, events)
+        return True
 
     # Build the CLI input entry and persist it
     cli_entry: Dict[str, Any] = {
@@ -320,8 +455,29 @@ if __name__ == "__main__":
         print(json.dumps(resumed, indent=2))
         # Save final output to user_events.json
         save_output_event(resumed)
+        # If this was an edit, update the relevant existing record in-place
+        if args.decision == "edit":
+            try:
+                pending_action = result.get("final", {}).get("pending_action")
+                store_path = os.path.join("data", "user_events.json")
+                # Prefer the actual action_input used during resumed run
+                last_action_input = None
+                if isinstance(resumed.get("trace"), list):
+                    for frame in reversed(resumed["trace"]):
+                        if frame.get("action") == pending_action:
+                            last_action_input = frame.get("action_input")
+                            break
+                if pending_action == "create_event" and isinstance(last_action_input, dict):
+                    applied = _update_last_record(store_path, "create_event", last_action_input)
+                    if applied:
+                        print("Updated last create_event record with edited input.")
+                elif pending_action == "reply" and isinstance(last_action_input, dict):
+                    applied = _update_last_record(store_path, "email_status", {"final": last_action_input})
+                    if applied:
+                        print("Updated last email_status record with edited reply.")
+            except Exception as _:
+                #  keep going even if update fails
+                pass
     else:
-        # Print full result so user can inspect when not paused
         print(json.dumps(result, indent=2))
-        # Save non-paused output to user_events.json
         save_output_event(result)
