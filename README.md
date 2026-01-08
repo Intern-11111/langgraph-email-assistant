@@ -319,6 +319,308 @@ data/m2_testset_batch2_notify.json
 data/m2_testset_batch3_ignore.json
 results/m2_eval_report.json (auto-generated)
 ```
+---
+
+# Milestone 3 – Human-in-the-Loop (HITL) Safety & Checkpointing
+
+## LangGraph Email Assistant
 
 ---
 
+## Objective of Milestone 3
+
+Milestone 3 focuses on **agent safety, control, and recoverability**.
+
+The goal is to ensure that the email assistant:
+
+* Can reason autonomously
+* **Never performs irreversible actions without human approval**
+* Can **pause safely** before such actions
+* Can **resume execution without losing memory**
+
+This milestone implements all **Intern-1 safety requirements** using **LangGraph checkpoints and Human-in-the-Loop (HITL) controls**.
+
+---
+
+Here’s the **clean, correctly formatted version** you can paste directly into your README (the `/n` was just line-break text leaking through):
+
+---
+
+## Key Features Implemented
+
+* ✔ **Dangerous tool identification**
+* ✔ **Undo Test enforcement**
+* ✔ **Human-in-the-Loop (HITL) checkpoint**
+* ✔ **Safe pause before irreversible actions**
+* ✔ **State preservation (“Saving the Game”)**
+* ✔ **Controlled resume after human decision**
+---
+
+## Core Concept: Undo Test
+
+> **Undo Test Rule**
+> If an action changes reality and cannot be undone, it is considered **dangerous**.
+
+### Examples
+
+| Action                | Undoable? | Classification |
+| --------------------- | --------- | -------------- |
+| Read email            | ✅ Yes     | Safe           |
+| Classify email        | ✅ Yes     | Safe           |
+| Draft reply           | ✅ Yes     | Safe           |
+| Send email            | ❌ No      | Dangerous      |
+| Create calendar event | ❌ No      | Dangerous      |
+| Delete data           | ❌ No      | Dangerous      |
+
+Only **dangerous actions** require human approval.
+
+---
+
+## Dangerous Tool Identification
+
+Dangerous tools are explicitly defined in the system.
+
+**File:** `src/config/tools.py`
+
+```python
+DANGEROUS_TOOLS = {
+    "send_email",
+    "create_calendar_invite",
+    "spend_money",
+    "delete_file",
+    "update_database",
+}
+
+def is_dangerous_tool(tool_name: str) -> bool:
+    return tool_name in DANGEROUS_TOOLS
+```
+
+This ensures:
+
+* The LLM cannot bypass safety rules
+* All irreversible actions are centrally controlled
+
+---
+
+## Agent Planning vs Execution (Critical Design)
+
+The agent **never executes actions directly**.
+
+Instead, it:
+
+1. **Plans** an action
+2. **Tags** it as dangerous if applicable
+3. **Pauses** execution
+4. **Waits** for human approval
+5. **Executes** only after approval
+
+---
+
+## ReAct Node – Planning & HITL Trigger
+
+**File:** `src/agents/react_loop.py`
+
+Key responsibilities:
+
+* Generate a draft reply
+* Plan the intended action
+* Tag dangerous tools
+* Trigger HITL pause
+
+```python
+state.selected_tool = "send_email"
+state.tool_payload = {"body": state.draft_reply}
+
+if is_dangerous_tool(state.selected_tool):
+    state.hitl_required = True
+```
+
+**Important safeguard**
+The LLM is executed **only once**. After HITL approval, the agent **does not re-run reasoning**.
+
+---
+
+## Human-in-the-Loop (HITL) Checkpoint
+
+The LangGraph is compiled with an interruption **before the action node**.
+
+**File:** `src/graph/email_graph.py`
+
+```python
+return graph.compile(
+    checkpointer=checkpointer,
+    interrupt_before=["action_node"]
+)
+```
+
+This guarantees:
+
+* No irreversible action runs automatically
+* Human approval is mandatory
+
+---
+
+## Saving the Game (Checkpointing)
+
+Milestone 3 uses **in-memory checkpointing** to demonstrate correct pause–resume behavior.
+
+**File:** `src/graph/checkpoint.py`
+
+```python
+from langgraph.checkpoint import MemorySaver
+
+checkpointer = MemorySaver()
+```
+
+### What is saved?
+
+* Drafted reply
+* Agent reasoning
+* Tool choice
+* HITL flag
+* Execution position
+
+The agent can pause **without forgetting anything**.
+
+> Persistence across restarts is intentionally deferred to Milestone 4.
+
+---
+
+## Action Node – Controlled Execution
+
+**File:** `src/graph/email_graph.py`
+
+The action node is the **only place** where real-world effects occur.
+
+```python
+def action_node(state: EmailState) -> EmailState:
+    if state.human_decision == "deny":
+        print("ACTION DENIED — no email sent")
+
+    elif state.human_decision == "edit":
+        print("EMAIL SENT (EDITED)")
+        print(state.edited_reply)
+
+    elif state.human_decision == "approve":
+        print("EMAIL SENT (APPROVED)")
+        print(state.draft_reply)
+
+    return state
+```
+
+This ensures:
+
+* Deny → nothing happens
+* Edit → edited reply is sent
+* Approve → auto-drafted reply is sent
+
+---
+
+## HITL API Flow
+
+### Process Email
+
+**Endpoint**
+
+```
+POST /triage/email
+```
+
+If a dangerous action is planned:
+
+* Graph pauses
+* Thread ID is returned
+* State is checkpointed
+
+---
+
+### Human Decision
+
+**Endpoint**
+
+```
+POST /triage/hitl/decision
+```
+
+Parameters:
+
+* `thread_id`
+* `decision` → approve | deny | edit
+* `edited_reply` (required for edit)
+
+The graph resumes safely from the checkpoint.
+
+---
+
+## Demonstration Scenarios
+
+### 🟢Safe Case (No HITL)
+
+* Newsletter
+* Informational email
+* Draft-only response
+
+Result:
+
+* No pause
+* No human intervention
+
+---
+
+### 🔴 Dangerous Case (HITL Triggered)
+
+* Meeting confirmation
+* Email reply that would be sent
+
+Result:
+
+```
+LLM GENERATED DRAFT
+HITL PAUSED, awaiting human decision...
+THREAD_ID: xxxx
+```
+
+After approval:
+
+```
+EMAIL SENT (APPROVED)
+```
+
+---
+
+## Task Completion Checklist
+
+| Requirement              | Status |
+| ------------------------ | ------ |
+| Identify dangerous tools | ✅      |
+| Apply Undo Test          | ✅      |
+| Tag dangerous actions    | ✅      |
+| Add HITL checkpoint      | ✅      |
+| Save agent state         | ✅      |
+| Pause without forgetting | ✅      |
+| Use interrupt_before     | ✅      |
+
+---
+## Key Takeaway
+
+> **The agent can think autonomously but acts only with human consent.
+> Safety, control, and recoverability are guaranteed by design.**
+
+---
+## Files Added / Updated (Milestone 3)
+
+| File                       | Type    | Purpose                                                            |
+| -------------------------- | ------- | ------------------------------------------------------------------ |
+| `src/agents/react_loop.py` | Updated | Drafts replies, plans actions, tags dangerous tools, triggers HITL |
+| `src/graph/email_graph.py` | Updated | Adds `action_node` and HITL interruption before execution          |
+| `src/graph/state.py`       | Updated | Adds HITL fields and action planning metadata                      |
+| `src/api/hitl_router.py`   | Added   | API endpoint for approve / deny / edit decisions                   |
+| `src/hitl/helpers.py`      | Added   | Handles graph pause–resume logic                                   |
+| `src/config/tools.py`      | Added   | Central registry for dangerous vs safe tools (Undo Test)           |
+| `src/graph/checkpoint.py`  | Added   | Configures LangGraph checkpointing (MemorySaver)                   |
+
+---
+
+**Milestone 3 is complete, functional, and demonstrable.**
+
+---
