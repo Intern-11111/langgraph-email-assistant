@@ -20,3 +20,12 @@ class EmailState(BaseModel):
 
     # Evaluation Quality Signals
     reply_quality: Optional[float] = None
+
+    # HITL fields
+    hitl_required: bool = False
+    human_decision: Optional[Literal["approve", "deny", "edit"]] = None
+    edited_reply: Optional[str] = None
+
+    # Planned action
+    selected_tool: Optional[str] = None
+    tool_payload: Optional[dict] = None

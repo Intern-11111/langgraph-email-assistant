@@ -1,4 +1,5 @@
 from langsmith import traceable
+from src.config.tools import is_dangerous_tool
 from src.graph.state import EmailState
 from src.api.llm_provider import get_llm
 from src.config.smith import get_project_name
@@ -24,7 +25,9 @@ def react_node(state: EmailState) -> EmailState:
     - Only executes if triage_decision == 'respond'
     - Uses LLM from provider to generate draft reply JSON
     """
-
+    if state.human_decision is not None:
+        return state
+    
     if state.triage_decision != "respond":
         return state  # Skip — no reply needed
 
@@ -49,5 +52,20 @@ def react_node(state: EmailState) -> EmailState:
         # Fallback if model returns malformed JSON
         state.agent_thoughts = "Model returned text not valid JSON."
         state.draft_reply = raw_text
+
+    print("LLM GENERATED DRAFT")
+    print("THOUGHTS:", state.agent_thoughts)
+    print("DRAFT REPLY:")
+    print(state.draft_reply)
+
+        # Planned irreversible action
+    state.selected_tool = "send_email"
+    state.tool_payload = {
+        "body": state.draft_reply
+    }
+
+    #  Tag dangerous tool → triggers HITL later in graph
+    if is_dangerous_tool(state.selected_tool):
+        state.hitl_required = True
 
     return state
