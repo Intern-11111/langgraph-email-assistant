@@ -1,5 +1,4 @@
-````md
-# 🛑 Milestone 3 Report  
+# 🛑 Milestone 3  
 ## Human-in-the-Loop (HITL) Safety with LangGraph & LangSmith
 
 ---
@@ -10,8 +9,9 @@ As AI agents become increasingly autonomous, it is critical to ensure that **uns
 
 Milestone 3 focuses on implementing a **Human-in-the-Loop (HITL) safety mechanism** for an AI-based Email Assistant.  
 This milestone ensures that **risky email actions trigger a pause**, allowing a human to review and approve before execution.
-*
+
 This implementation uses:
+
 
 - **LangGraph** for workflow orchestration  
 - **LangSmith** for tracing, observability, and safety validation  
