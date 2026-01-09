@@ -160,6 +160,3 @@ This milestone demonstrates:
 ---
 
 ✅ **Milestone 3 Completed Successfully**
-
-```
-
