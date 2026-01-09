@@ -8,6 +8,7 @@ from langsmith import traceable
 
 from tools.calendar import read_calendar, create_event
 from tools.contact import lookup_contact
+from triage.triage_rules import TriageRules
 
 
 SENSITIVE_ACTIONS = {"send_email", "spend_money", "create_event"}
@@ -38,6 +39,58 @@ def decide_action(subject: str, body: str) -> tuple[str, Any]:
         return "reply", "Thanks for reaching out. I will get back to you shortly."
 
 
+def is_malicious_email(subject: str, body: str, sender: str | None = None) -> dict | None:
+    """
+    Returns a dict with reason if the email looks malicious/spam/urgent-payment/scam; otherwise None.
+    Uses rule-based triage plus extra urgency/scam heuristics.
+    """
+    triage = TriageRules()
+    res = triage.classify(subject, body, sender or "")
+    label = res.get("label")
+    confidence = float(res.get("confidence", 0.0))
+
+    text = f"{subject} {body}".lower()
+
+    urgent_terms = [
+        "urgent", "immediately", "asap", "right away", "act now", "overdue",
+        "final notice", "last warning", "past due", "pay now",
+    ]
+    scam_terms = [
+        "gift card", "wire transfer", "crypto", "bitcoin", "ethereum",
+        "bank account details", "routing number", "verification code", "otp",
+        "click this link to verify", "reset your password now",
+    ]
+    payment_terms = [
+        "payment", "invoice", "bill", "fee", "transfer", "payable",
+    ]
+
+    has_urgent = any(t in text for t in urgent_terms)
+    has_scam = any(t in text for t in scam_terms)
+    has_payment = any(t in text for t in payment_terms)
+
+    # Primary rule-based deny
+    if label == "spam" and confidence >= 0.6:
+        return {"reason": "Detected spam email", "category": label, "confidence": confidence}
+
+    # Finance-related with urgency/scam signals
+    if label == "finance" and (has_urgent or has_scam) and confidence >= 0.6:
+        return {
+            "reason": "Urgent finance/payment request looks risky",
+            "category": label,
+            "confidence": confidence,
+        }
+
+    # Generic scam/urgency combination even if label uncertain
+    if has_scam or (has_payment and has_urgent):
+        return {
+            "reason": "Suspicious payment urgency or scam indicators",
+            "category": label or "heuristic",
+            "confidence": max(confidence, 0.6),
+        }
+
+    return None
+
+
 class ReactAgent:
     def __init__(self, max_steps: int = 6):
         self.max_steps = max_steps
@@ -66,6 +119,26 @@ class ReactAgent:
 
         # Assign a unique trace id for this run
         agent_trace["trace_id"] = f"trace_{int(time.time())}"
+
+        # spam/payment urgency/scam detection
+        mal = is_malicious_email(subject, body, (context or {}).get("sender"))
+        if mal is not None and human_decision is None:
+            trace_steps.append({
+                "step": 0,
+                "timestamp": time.time(),
+                "thought": "Pre-check for malicious/spam email",
+                "action": "auto_deny",
+                "action_input": {"subject": subject, "body": body},
+                "observation": mal,
+            })
+            agent_trace["status"] = "DENIED"
+            agent_trace["final"] = {
+                "status": "denied",
+                "reason": mal.get("reason"),
+                "category": mal.get("category"),
+                "confidence": mal.get("confidence"),
+            }
+            return agent_trace
 
         for step in range(1, self.max_steps + 1):
 
@@ -144,7 +217,7 @@ class ReactAgent:
 
             # TERMINATION
             if action == "reply":
-                agent_trace["status"] = "COMPLETED"
+                agent_trace["status"] = "Approved"
                 agent_trace["final"] = {
                     "reply": action_input,
                     "last_observation": observation,
