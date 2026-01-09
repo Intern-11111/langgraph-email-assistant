@@ -419,12 +419,7 @@ if __name__ == "__main__":
             json.dump(events, f, indent=2, ensure_ascii=False)
 
     def _update_last_record(store_path: str, tool: str, update: Dict[str, Any]) -> bool:
-        """
-        - For create_event: merge into record['event']
-        - For email_status: merge top-level keys and nested 'final' if provided
 
-        Returns True if an update was applied.
-        """
         events = _load_events(store_path)
         if not events:
             return False
