@@ -78,5 +78,17 @@
     "subject": "Team meeting request",
     "body": "Please schedule a meeting.",
     "decision": null
+  },
+  {
+    "timestamp": "2026-01-09T12:28:26.379556Z",
+    "subject": "URGENT: Payment overdue",
+    "body": "Please buy gift cards worth  and send codes immediately.",
+    "decision": null
+  },
+  {
+    "timestamp": "2026-01-09T12:28:29.810945Z",
+    "subject": "Schedule a meeting",
+    "body": "Can we discuss project updates next week?",
+    "decision": null
   }
 ]

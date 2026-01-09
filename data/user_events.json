@@ -256,5 +256,74 @@
     "status": "RUNNING",
     "trace_id": "trace_1767788574",
     "final": {}
+  },
+  {
+    "tool": "email_status",
+    "timestamp": "2026-01-09T12:28:26.382556Z",
+    "input": {
+      "subject": "URGENT: Payment overdue",
+      "body": "Please buy gift cards worth  and send codes immediately."
+    },
+    "status": "DENIED",
+    "trace_id": "trace_1767961706",
+    "final": {
+      "status": "denied",
+      "reason": "Detected spam email",
+      "category": "spam",
+      "confidence": 0.6
+    }
+  },
+  {
+    "tool": "create_event",
+    "timestamp": "2026-01-09T17:58:42.946398",
+    "event": {
+      "title": "Project Update Meet",
+      "candidate_times": [
+        "2026-01-03T10:00",
+        "2026-01-03T11:00"
+      ],
+      "attendees": [
+        "manager@company.com"
+      ]
+    }
+  },
+  {
+    "tool": "create_event",
+    "timestamp": "2026-01-09T17:58:42.950976",
+    "event": {
+      "title": "Project Update Meet",
+      "candidate_times": [
+        "2026-01-03T10:00",
+        "2026-01-03T11:00"
+      ],
+      "attendees": [
+        "manager@company.com"
+      ]
+    }
+  },
+  {
+    "tool": "create_event",
+    "timestamp": "2026-01-09T17:58:42.950976",
+    "event": {
+      "title": "Project Update Meet",
+      "candidate_times": [
+        "2026-01-03T10:00",
+        "2026-01-03T11:00"
+      ],
+      "attendees": [
+        "manager@company.com"
+      ]
+    }
+  },
+  {
+    "tool": "email_status",
+    "timestamp": "2026-01-09T12:28:42.950976Z",
+    "input": {
+      "subject": "Schedule a meeting",
+      "body": "Can we discuss project updates next week?"
+    },
+    "status": "RUNNING",
+    "trace_id": "trace_1767961722",
+    "final": {}
   }
 ]
