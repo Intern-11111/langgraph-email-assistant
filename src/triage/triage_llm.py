@@ -36,15 +36,16 @@ Choose EXACTLY ONE category:
    - personal messages
    - job offers
    - interview emails
-   - meetings or scheduling
    - messages needing human judgment
 
 3. reason_act
+   - meetings or scheduling
+   - calendar or time-related requests
+   - contact lookup or contact creation
    - security alerts
    - finance or payment issues
    - transactional emails
-   - account actions
-   - anything requiring automated action
+
 
 IMPORTANT:
 - Choose ONLY from: ignore, notify_human, reason_act

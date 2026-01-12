@@ -17,25 +17,27 @@ class TriageNode:
         self.rules = RuleBasedTriage()
         self.llm = LLMFallbackTriage()
 
-    def run(self, email: Dict[str, Any]):
+    def run(self, email):
         subject = email.get("subject", "")
         body = email.get("body", "")
         sender = email.get("sender", "")
 
-        rb = self.rules.classify(subject, body, sender)
+        rule_result = self.rules.classify(subject, body, sender)
 
-        if rb["confidence"] >= self.threshold:
+        # RULES WIN IF CONFIDENT
+        if rule_result["confidence"] >= self.threshold:
             return {
-                "final_label": rb["label"],
-                "final_confidence": rb["confidence"],
+                "final_label": rule_result["label"].strip().lower(),
+                "final_confidence": rule_result["confidence"],
                 "source": "rules"
             }
 
-        llm = self.llm.classify(subject, body)
+        # LLM FALLBACK
+        llm_result = self.llm.classify(subject, body)
 
         return {
-            "final_label": llm["label"],
-            "final_confidence": llm["confidence"],
+            "final_label": llm_result["label"].strip().lower(),
+            "final_confidence": llm_result["confidence"],
             "source": "llm"
         }
 

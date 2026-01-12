@@ -13,7 +13,7 @@ class ToolExecutorNode:
     def execute(self, state: dict) -> dict:
         decision = state.get("reasoning_output", {})
         action = decision.get("action")
-        action_input = decision.get("action_input")
+        action_input = decision.get("action_input") or {}
 
         if not action:
             state["tool_result"] = None
