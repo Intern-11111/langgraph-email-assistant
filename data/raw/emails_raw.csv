@@ -1,0 +1,6 @@
+email_id,sender,subject,body,label
+1,hr@company.com,Interview Schedule,Your interview is scheduled tomorrow.,reply_immediately
+2,offers@shopping.com,Big Sale,Get 90% discount now!,ignore
+3,manager@company.com,Project Update,Please review the attached document.,needs_human_review
+4,spam@random.com,You won Lottery,Claim your prize now!,spam
+5,client@business.com,Meeting Follow-up,Thanks for the meeting. Awaiting response.,reply_immediately
