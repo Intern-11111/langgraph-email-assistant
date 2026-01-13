@@ -208,3 +208,26 @@ Milestone 2 focuses on measuring agent quality using a structured evaluation pip
    * Agent response
    * Ideal response
 4. Scores are generated and logged automatically in LangSmith.
+
+## Milestone 3: Human-In-The-Loop Handling
+
+## Objective
+
+Milestone 3 focuses on adding **Human-in-the-Loop (HITL)** control to the email assistant so that **dangerous actions are never executed automatically**.  
+The system must pause, wait for human input, and resume safely.
+
+---
+
+## What Was Implemented
+
+### End-to-End HITL Workflow
+
+The agent now follows this flow:
+
+1. Email is received  
+2. Triage classifies the email  
+3. Reasoning node decides an action  
+4. Tool node checks if the action is dangerous  
+5. **Execution pauses if approval is required**  
+6. Human approves, edits, or denies  
+7. Graph resumes and completes  
