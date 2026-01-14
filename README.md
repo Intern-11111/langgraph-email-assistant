@@ -340,9 +340,8 @@ To ensure the project remains fully executable without external API dependencies
 ---
 
 #### Running the Demo
-```bash
-python mfour.py
+python mfour.py 
 
-output in this milestone :
+### output in this milestone :
 <img width="978" height="558" alt="image" src="https://github.com/user-attachments/assets/8f749483-13dc-47b1-ae5f-9e0c0c595870" />
 
