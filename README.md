@@ -297,3 +297,48 @@ Resumed Node: react_tools
 --- AGENT IS THINKING ---
 Resumed Node: react_model
 Resumed Node: __interrupt__
+
+# Milestone 4: Persistent Memory & Ambient Learning
+
+### 1. Overview
+Milestone 4 marks the final phase of the Email Assistant project. The focus shifts from a stateless reactive agent to a **Stateful Ambient Agent**. This implementation achieves "True Autonomy" by integrating a persistent SQLite database for session history and a Long-Term Store for user preference adaptation.
+
+
+
+---
+
+### 2. Milestone 4 Requirement Checklist
+This implementation satisfies the following mentor-specified requirements:
+
+- [x] **REQ 1: MemorySaver Implementation** – Integrated `SqliteSaver` to persist the graph state.
+- [x] **REQ 2: Thread Management** – Implemented `thread_id` logic to isolate and recall user sessions.
+- [x] **REQ 3: Compile with Checkpointer** – Graph is compiled with `checkpointer=sqlite`.
+- [x] **REQ 4: History Survival** – Messages and state are stored in `m4.db`, surviving script restarts.
+- [x] **REQ 5: Flag Unsafe Tools** – Automated routing to an interrupt node for "sensitive" actions (Email drafting).
+- [x] **REQ 6: Configure Interrupts** – Utilizes the LangGraph `interrupt()` function to pause execution.
+- [x] **REQ 7: Notify User** – Interactive console alerts notify the user when the agent requires input.
+- [x] **REQ 8: Learning & Deliverable** – The agent successfully adapts to human feedback (e.g., learning a name change) via the `BaseStore`.
+
+---
+
+### 3. System Architecture
+The agent utilizes a **Dual-Layer Memory Architecture** to achieve learning:
+
+1. **Short-Term Memory (Checkpointing):** Uses SQLite to store the current conversation thread. If the application crashes, the agent resumes exactly where it left off.
+2. **Long-Term Memory (The Store):** Uses an `InMemoryStore` to "distill" human feedback. This allows the agent to learn preferences that persist across different threads.
+
+
+
+---
+
+### 4. Technical Approach: "Persistent Simulation"
+To ensure the project remains fully executable without external API dependencies (OpenAI Rate Limits or Google Cloud Credentials), this version utilizes **Mock Reasoning Nodes**. 
+
+- **The Logic:** The nodes follow the exact LangGraph library standards for state management and HITL interrupts. 
+- **The Learning:** Instead of a live LLM call, the reasoning node queries the `BaseStore`. If it finds a stored correction (e.g., *"His name is Robert"*), it automatically overrides the default output to reflect the learned information.
+
+---
+
+#### Running the Demo
+```bash
+python mfour.py
