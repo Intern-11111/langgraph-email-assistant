@@ -471,7 +471,7 @@ This milestone demonstrates:
 
 ---
 
-✅ **Milestone 3 Completed Successfully**<hr><hr>
+✅ **Milestone 3 Completed Successfully**<hr>
 
 # Milestone 4 – Integration & Testing  
 
