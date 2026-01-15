@@ -1,4 +1,4 @@
-Milestone 1 – Triage Node & Dataset
+**Milestone 1 – Triage Node & Dataset**
 
 1. Task Description
 
@@ -88,8 +88,8 @@ python run_triage.py
 
 ---------------------------------------------------------------------------------------------
 
-Milestone 2 – Agent Quality Score Evaluation
-
+**Milestone 2 – Agent Quality Score Evaluation
+**
 
 1. Task Description
 
@@ -174,7 +174,7 @@ python run_quality_eval.py
 
 ---------------------------------------------------------------------------------------------
 
-Milestone 3
+**Milestone 3**
 
 1. Task Description
 
@@ -285,4 +285,135 @@ python run_hitl_agent.py
 
 Milestone 3 successfully implements a Human-in-the-Loop checkpoint using LangGraph.
 The agent can pause execution, persist its state, and resume later without losing information, fulfilling the “Saving the Game” requirement.
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+**Milestone 4 – Unsafe Tool Interruption (Human-in-the-Loop)**
+
+
+1. Task Description
+
+The objective of Milestone 4 is to ensure that unsafe or sensitive tools used by the agent are not executed automatically.
+Before performing such actions, the agent must pause execution and wait for human approval.
+
+This milestone focuses on enforcing safety and control in the agent workflow.
+
+
+
+
+2. Implementation
+
+A sensitive tool (send_email) was identified and treated as unsafe.
+
+The agent’s LangGraph workflow was modified to interrupt execution before tool execution.
+
+The graph compilation uses:
+
+interrupt_before = ["tools"]
+
+
+A clear alert message is printed to notify the user when execution is paused.
+
+The agent halts execution and waits for human input before proceeding.
+
+
+
+
+3. Execution Process
+
+The agent receives an email as input.
+
+The triage node determines that a response is required.
+
+The agent plans to use a sensitive tool (send_email).
+
+LangGraph interrupts execution before the tools node.
+
+The user is notified that approval is required.
+
+The agent pauses execution and waits for human input.
+
+
+
+
+4. Purpose / Usage
+
+This milestone is used to:
+
+Prevent unsafe automatic actions
+
+Ensure human oversight for sensitive operations
+
+Improve reliability and safety of the agent
+
+Support real-world use cases involving external side-effects
+
+
+
+
+5. Output Explanation
+
+The output confirms that:
+
+A sensitive tool was detected
+
+Execution was paused before tool usage
+
+The agent is awaiting human approval
+
+Sample Output
+⚠️ HUMAN APPROVAL REQUIRED ⚠️
+Sensitive tool detected: send_email
+Agent execution paused before tool execution.
+
+Agent paused.
+Current state:
+{
+  "email": {
+    "subject": "Send project update",
+    "body": "Please send the latest update to the client"
+  },
+  "triage_decision": "respond"
+}
+
+
+
+
+6. Files Used 
+File Name	Purpose
+nodes.py	Defines triage and unsafe tool logic
+graph.py	Configures LangGraph interruption
+run_hitl_tools_agent.py	Executes the unsafe-tool HITL workflow
+
+
+
+7. How to Execute 
+
+Run the following command from the project root directory:
+
+python run_hitl_tools_agent.py
+
+
+
+
+8. Workflow Summary
+
+The agent analyzes the email.
+
+A sensitive action is identified.
+
+Execution is interrupted before tool usage.
+
+The user is notified.
+
+The agent pauses until approval is provided.
+
+
+
+
+9. Conclusion 
+
+Milestone 4 successfully ensures that unsafe tools are never executed without human approval.
+By interrupting execution before tool usage, the agent enforces safety and human oversight, making it suitable for real-world applications.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------
