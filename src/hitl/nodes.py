@@ -1,16 +1,29 @@
 from src.hitl.memory import save_state
 
-def triage_node(state):
-    # Normally comes from Milestone-1
-    state["triage_decision"] = "needs_human_review"
+
+def triage_node(state: dict):
+    """
+    Decide what to do with the email.
+    """
+    state["triage_decision"] = "respond"
     return state
 
-def action_node(state):
-    state["final_action"] = f"Action taken for {state['triage_decision']}"
-    return state
 
-def checkpoint_node(state):
-    # HITL checkpoint: save state and pause
+def tool_node(state: dict):
+    """
+    Unsafe tool checkpoint.
+    Execution pauses BEFORE any sensitive action.
+    """
+
+    print("\n⚠️ HUMAN APPROVAL REQUIRED ⚠️")
+    print("Sensitive action detected: send_email")
+    print("Agent execution paused before tool execution.")
+
+    state["pending_tool"] = {
+        "tool": "send_email",
+        "status": "pending_approval"
+    }
+
     save_state(state)
     state["paused"] = True
     return state
