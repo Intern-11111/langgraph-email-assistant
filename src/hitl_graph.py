@@ -20,8 +20,17 @@ class EmailState(TypedDict):
 # Nodes
 # -----------------------------
 def triage_node(state: EmailState) -> EmailState:
-    decision = triage_email(state["email_body"])
+    email = state.get("email_body", "").strip()
+    raw_decision = triage_email(email)
+
+    # ✅ SAFETY GUARD: enforce valid routing keys
+    if raw_decision not in ("respond", "ignore", "notify_human"):
+        decision = "ignore"   # safest fallback
+    else:
+        decision = raw_decision
+
     return {**state, "decision": decision}
+
 
 
 def safe_action_node(state: EmailState) -> EmailState:
