@@ -183,3 +183,22 @@ Each triaged email is classified with:
 -A category label (spam, promotion, action_intent, etc.)
 
 -A dangerous: true/
+
+Milestone 4
+Step-by-Step Explanation
+Step 1: Implement MemorySaver
+First, a MemorySaver is added to the system to store conversation data. This step ensures that all messages and states are saved during the session so the system can remember previous interactions.
+Step 2: Manage Thread IDs
+Next, a unique Thread ID is assigned to each conversation. This helps the system track different conversations separately and avoids mixing messages from multiple sessions.
+Step 3: Compile the Graph with Memory Checkpoint
+After setting up memory and threads, the workflow graph is compiled using a memory-based checkpointer. This allows the system to save its current state and continue execution without losing data.
+Step 4: Ensure Session History is Maintained
+The system is configured to keep the conversation history active throughout the session. This helps in generating context-aware responses by referring to earlier messages.
+Step 5: Identify Unsafe Tools
+Sensitive actions are identified and marked as unsafe tools. These actions are not executed immediately and require approval, which helps prevent accidental or harmful operations.
+Step 6: Configure Interrupts
+Interrupts are configured to pause execution before any tool is triggered. This gives time to review and approve the action before allowing the system to continue.
+Output
+After completing all the above steps, the system can manage memory efficiently, handle multiple conversations safely, and control sensitive actions properly.
+Conclusion
+This step-by-step implementation ensures a secure, reliable, and well-controlled system with proper memory management and execution flow.
