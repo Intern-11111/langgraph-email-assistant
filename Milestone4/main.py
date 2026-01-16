@@ -19,19 +19,32 @@ def run_cli():
     content_body = (args.email_body or args.input or "")
     text = (content_subject + " " + content_body).lower()
 
-    spam_markers = [
-        "lottery", "prize", "winner", "free", "click here", "click on the link",
-        "click the link", "click link", "claim", "cash", "get cash", "bonus",
-        "limited time", "credit card", "viagra", "xxx", "crypto double",
-        "investment scheme", "rich quick", "congratulations"
+    # spam/sensitivity detection to align with dataset
+    cta_terms = [
+        "click here", "click on the link", "click the link", "click link",
+        "claim", "buy now", "act now", "claim now"
     ]
+    promo_terms = [
+        "free", "congratulations", "limited time", "offer", "sale", "discount", "bonus", "gift"
+    ]
+    prize_terms = ["lottery", "prize", "winner", "win money"]
+    strong_spam_terms = [
+        "viagra", "xxx", "crypto double", "investment scheme", "rich quick", "credit card"
+    ]
+
+    has_cta = any(t in text for t in cta_terms)
+    has_promo = any(t in text for t in promo_terms)
+    has_prize = any(t in text for t in prize_terms)
+    has_strong_spam = any(t in text for t in strong_spam_terms)
+
+    is_spam = has_strong_spam or ((has_cta) and (has_promo or has_prize)) or ("100% free" in text)
+
     sensitive_markers = [
         "approve", "approval", "urgent", "payment", "salary", "confidential",
         "escalate", "legal", "contract", "offer letter", "promotion",
-        "termination", "invoice", "wire"
+        "termination", "invoice", "wire", "receipt", "due", "bill",
+        "bank", "account", "security", "transaction"
     ]
-
-    is_spam = any(m in text for m in spam_markers)
     is_sensitive = any(m in text for m in sensitive_markers)
     auto_pause = (is_sensitive and not is_spam)
 
