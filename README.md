@@ -184,21 +184,54 @@ Each triaged email is classified with:
 
 -A dangerous: true/
 
-Milestone 4
-Step-by-Step Explanation
-Step 1: Implement MemorySaver
-First, a MemorySaver is added to the system to store conversation data. This step ensures that all messages and states are saved during the session so the system can remember previous interactions.
-Step 2: Manage Thread IDs
-Next, a unique Thread ID is assigned to each conversation. This helps the system track different conversations separately and avoids mixing messages from multiple sessions.
-Step 3: Compile the Graph with Memory Checkpoint
-After setting up memory and threads, the workflow graph is compiled using a memory-based checkpointer. This allows the system to save its current state and continue execution without losing data.
-Step 4: Ensure Session History is Maintained
-The system is configured to keep the conversation history active throughout the session. This helps in generating context-aware responses by referring to earlier messages.
-Step 5: Identify Unsafe Tools
-Sensitive actions are identified and marked as unsafe tools. These actions are not executed immediately and require approval, which helps prevent accidental or harmful operations.
-Step 6: Configure Interrupts
-Interrupts are configured to pause execution before any tool is triggered. This gives time to review and approve the action before allowing the system to continue.
-Output
-After completing all the above steps, the system can manage memory efficiently, handle multiple conversations safely, and control sensitive actions properly.
-Conclusion
-This step-by-step implementation ensures a secure, reliable, and well-controlled system with proper memory management and execution flow.
+## Milestone 4
+
+## Task Description
+The goal of this task is to design and configure an Email Assistant that can handle conversation memory, manage multiple threads, and safely execute sensitive actions using controlled interruptions.
+
+## Implementation Details
+
+### 1. MemorySaver Implementation
+MemorySaver is implemented to store and retrieve conversation data during the session.  
+This ensures that the assistant remembers previous messages and maintains continuity.
+
+
+### 2. Thread ID Management
+Each conversation is assigned a unique Thread ID.  
+This helps in tracking individual user conversations and prevents overlapping of messages between different sessions.
+
+
+### 3. Graph Compilation Using Memory Checkpoint
+The workflow graph is compiled using `checkpointer=memory`.  
+This allows the system to save the current state and restore it whenever required during execution.
+
+
+### 4. Session History Maintenance
+Conversation history is preserved throughout the session.  
+This enables the assistant to refer to earlier messages and generate accurate responses based on past context.
+
+
+### 5. Unsafe Tool Identification
+Sensitive tools such as email sending actions are identified as unsafe.  
+These tools require explicit approval before execution to avoid unintended operations.
+
+Examples of unsafe actions:
+- Sending emails
+- Performing irreversible actions
+
+
+### 6. Interrupt Configuration
+Interrupts are configured using the following setting:
+interrupt_before = ["tools"]
+
+This pauses the execution before any tool is called, allowing verification before continuing.
+
+
+## Output
+- Email Assistant maintains memory within the session  
+- Conversations are handled safely using Thread IDs  
+- Sensitive actions are executed only after approval  
+
+
+## Conclusion
+This task successfully implements a secure and memory-aware Email Assistant with controlled execution and session management.
