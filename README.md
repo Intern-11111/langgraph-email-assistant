@@ -1,5 +1,5 @@
-# 📄 README.md — Email Assistant using LangGraph, LangChain & Human-in-the-Loop Architecture
-## 📧 AI Email Assistant Project
+# 📧 AI Email Assistant Project — Email Assistant using LangGraph, LangChain & Human-in-the-Loop Architecture
+
 
 Infosys Springboard Internship Milestone Project
 
