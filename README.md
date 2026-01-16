@@ -184,7 +184,7 @@ Each triaged email is classified with:
 
 -A dangerous: true/
 
-## Milestone 4
+### Milestone 4
 
 ## Task Description
 The goal of this task is to design and configure an Email Assistant that can handle conversation memory, manage multiple threads, and safely execute sensitive actions using controlled interruptions.
