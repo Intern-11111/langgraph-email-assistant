@@ -130,7 +130,13 @@ project_root/
 |   ├── evaluation/
 │   │   ├── judge_evaluation.py
 │   │   └── metrics.py
-|── main.py
+|   ├──HITL/
+│   │   ├── db.py
+│   │   └── hitl_graph.py
+|   |   ├── hitl_app.py
+│   │   └── execute_tool.py
+|── main1.py
+|──main4.py
 ├── graph.py
 ├── run_evaluator.py
 ├──.gitignore
@@ -231,3 +237,45 @@ The agent now follows this flow:
 5. **Execution pauses if approval is required**  
 6. Human approves, edits, or denies  
 7. Graph resumes and completes  
+
+## Milestone 4: Resume Logic, Assembly, and Edge Case Handling
+
+### Objective of Milestone 4
+
+Milestone 4 focuses on enabling the agent to resume execution after Human-in-the-Loop (HITL) decisions, assembling the complete system into a single runnable flow, and validating correct behavior through edge case testing. The system must safely continue or stop execution based on human input.
+
+## hat Was Implemented
+
+### Resume-Capable HITL Execution
+
+Email is received
+
+Triage classifies the email
+
+Reasoning node decides an action
+
+Tool node detects a dangerous action
+
+* Execution pauses before tool execution
+
+* Human approves, edits, or denies the action
+
+* Agent state is restored from checkpoint
+
+* Graph resumes with updated human input
+
+* Tool executes (or stops if denied)
+
+* Final state is stored and returned
+
+### Final Assembly and Validation
+
+* All components assembled in main4.py
+
+* Resume logic implemented using checkpointing and thread_id
+
+* Agent drafts and human edits are persisted
+
+* Mock tools used for safe execution
+
+* Edge cases (deny, edit, duplicate execution) handled
