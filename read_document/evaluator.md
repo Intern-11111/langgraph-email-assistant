@@ -2,7 +2,7 @@
 
 ## 1. Overview
 
-This document explains how the **email assistant agent** developed is evaluated using **LangSmith**.
+This document explains how the **email assistant agent** developed in Milestone 1 is evaluated using **LangSmith**.
 
 The evaluation setup uses:
 

@@ -1,11 +1,5 @@
 # Email Assistant with Human-in-the-Loop (HITL)
 
-## Milestone 4
-
-This **Milestone 4** of an Email Assistant built using **LangGraph** with a **Human-in-the-Loop (HITL)** workflow. The system demonstrates safe AI execution by pausing for human approval before performing sensitive actions and resuming execution with updated information.
-
----
-
 ## Milestone 4 Objectives
 
 ### Resume Logic
