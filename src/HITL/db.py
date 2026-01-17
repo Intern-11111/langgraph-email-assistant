@@ -1,54 +1,83 @@
 import json
-from pathlib import Path
+import os
+from datetime import datetime
 
-DB_PATH = Path("emails.jsonl")
+DB_FILE = "emails.jsonl"
+
+
+def _now():
+    return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
 def read_all_emails():
-    if not DB_PATH.exists():
+    if not os.path.exists(DB_FILE):
         return []
 
     emails = []
-    with open(DB_PATH, "r", encoding="utf-8") as f:
+    with open(DB_FILE, "r", encoding="utf-8") as f:
         for line in f:
-            emails.append(json.loads(line))
+            line = line.strip()
+            if not line:
+                continue
+            emails.append(json.loads(line))  
     return emails
 
-
-def get_email(email_id: int):
-    for email in read_all_emails():
-        if email["id"] == email_id:
-            return email
-    return None
-
-
-def save_email(subject: str, body: str):
+def save_email(subject, body):
     emails = read_all_emails()
-    new_id = max([e["id"] for e in emails], default=0) + 1
+    email_id = len(emails) + 1
 
-    record = {
-        "id": new_id,
+    email = {
+        "id": email_id,
         "subject": subject,
         "body": body,
+        "agent_draft": None,
         "edited_body": None,
-        "status": "PENDING"
+        "status": "CREATED",
+        "created_at": _now(),
+        "updated_at": _now(),
+        "history": [
+            {"event": "EMAIL_CREATED"}
+        ],
     }
 
-    with open(DB_PATH, "a", encoding="utf-8") as f:
-        f.write(json.dumps(record) + "\n")
+    with open(DB_FILE, "a", encoding="utf-8") as f:
+        f.write(json.dumps(email) + "\n")
 
-    return new_id
+    return email_id
 
 
-def update_email(email_id: int, *, edited_body=None, status=None):
+def update_email(email_id, *, status=None, agent_draft=None,
+                 edited_body=None, tool_result=None, event=None):
+
     emails = read_all_emails()
 
-    with open(DB_PATH, "w", encoding="utf-8") as f:
-        for email in emails:
-            if email["id"] == email_id:
-                if edited_body is not None:
-                    email["edited_body"] = edited_body
-                if status is not None:
-                    email["status"] = status
+    for email in emails:
+        if email["id"] == email_id:
 
+            if status and email["status"] != status:
+                email["status"] = status
+                email["history"].append({
+                    "event": "STATUS_CHANGE",
+                    "value": status
+                })
+
+            if agent_draft is not None:
+                email["agent_draft"] = agent_draft
+
+            if edited_body is not None:
+                email["edited_body"] = edited_body
+
+            if tool_result is not None:
+                email["history"].append({
+                    "event": "TOOL_EXECUTED"
+                })
+
+            if event:
+                email["history"].append(event)
+
+            email["updated_at"] = _now()
+            break
+
+    with open(DB_FILE, "w", encoding="utf-8") as f:
+        for email in emails:
             f.write(json.dumps(email) + "\n")

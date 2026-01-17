@@ -1,7 +1,8 @@
-
 from typing import Dict, Any
 from .triage_llm import LLMFallbackTriage
 from .triage_rules import RuleBasedTriage
+from src.HITL.db import update_email   
+
 
 class TriageNode:
     """
@@ -43,7 +44,26 @@ class TriageNode:
 
     def triage_node(self, state: Dict[str, Any]) -> Dict[str, Any]:
         email = state.get("email_text", {})
-        state["triage_result"] = self.run(email)
+        result = self.run(email)
+
+        state["triage_result"] = result
+
+        label = result["final_label"]
+
+  
+        if label == "ignore":
+            update_email(
+                state["email_id"],
+                status="IGNORED"
+            )
+
+        elif label == "notify_human":
+            update_email(
+                state["email_id"],
+                status="Notify Human"
+            )
+
+
         return state
 
     def __call__(self, state: Dict[str, Any]) -> Dict[str, Any]:
