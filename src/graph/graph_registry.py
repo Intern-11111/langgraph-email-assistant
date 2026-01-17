@@ -1,11 +1,11 @@
+# src/graph/graph_registry.py
 from src.graph.email_graph import build_graph
+from src.graph.checkpoint import checkpointer
 
-# Build the LangGraph ONCE per process
-_graph = build_graph()
-
+_graph = None
 
 def get_graph():
-    """
-    Return the singleton LangGraph instance.
-    """
+    global _graph
+    if _graph is None:
+        _graph = build_graph(checkpointer=checkpointer)
     return _graph

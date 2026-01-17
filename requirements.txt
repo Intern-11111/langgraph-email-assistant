@@ -1,15 +1,13 @@
 # -------- Core Agent & LLM Stack --------
 langchain>=0.3.0
-langgraph>=0.1.0
+langgraph>=0.2.0
 langchain_openai>=0.1.0
-transformers 
-torch
-
-openai>=1.0.0
-google-generativeai>=0.7.0
-langchain-google-genai>=0.1.0
 langchain-community>=0.3.0
 
+transformers>=4.40.0,<5.0.0
+torch>=2.1.0
+
+openai>=1.0.0
 pydantic>=2.6.0
 python-dotenv>=1.0.1
 
@@ -26,6 +24,10 @@ google-api-python-client>=2.152.0
 google-auth>=2.34.0
 google-auth-oauthlib>=1.2.1
 google-auth-httplib2>=0.2.0
+
+# 🔒 CRITICAL: OAuth SSL stability
+requests>=2.31.0,<2.33.0
+urllib3>=1.26.18,<2.1.0
 
 # -------- Web App / API Server --------
 fastapi>=0.115.0

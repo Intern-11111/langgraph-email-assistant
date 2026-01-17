@@ -10,11 +10,6 @@ from src.api.hitl_router import router as hitl_router
 
 router = APIRouter()
 
-# ============================================================
-# Build LangGraph ONCE (critical for HITL + multiprocessing)
-# ============================================================
-
-
 # Register HITL routes
 router.include_router(hitl_router)
 
@@ -43,15 +38,21 @@ def triage_api(request: EmailRequest):
     # Unique thread_id is REQUIRED for HITL resume
     thread_id = str(uuid4())
 
-    # ✅ ALWAYS get graph from registry
+    # ALWAYS get graph from registry
     graph = get_graph()
 
-    state = EmailState(email_content=request.email)
+    state = EmailState(
+        email_content=request.email,
+        from_email=request.from_email,
+        subject=request.subject,
+    )
+
 
     result = graph.invoke(
         state,
         config={"thread_id": thread_id}
     )
+    
 
     # Helpful for manual testing
     print("THREAD_ID:", thread_id)
@@ -70,3 +71,4 @@ def triage_api(request: EmailRequest):
         confidence=result.get("triage_confidence", 0.0),
         reason=result.get("triage_reason", "no reason provided"),
     )
+    

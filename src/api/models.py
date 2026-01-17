@@ -3,13 +3,9 @@ from pydantic import BaseModel, Field
 
 
 class EmailRequest(BaseModel):
-    """
-    Request body for the /triage/email endpoint.
-    """
-    email: str = Field(
-        ...,
-        description="Raw email text that should be triaged."
-    )
+    email: str = Field(..., description="Raw email text")
+    from_email: str = Field(..., description="Sender email address")
+    subject: str = Field(..., description="Original email subject")
 
 
 class TriageResult(BaseModel):

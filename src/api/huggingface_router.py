@@ -1,13 +1,16 @@
 from fastapi import APIRouter, Query
 from datasets import load_dataset
 
-from src.graph.email_graph import build_graph
+
 from src.graph.state import EmailState
 
 router = APIRouter()
 
 # Build the LangGraph graph once at import time
-graph = build_graph()
+from src.graph.graph_registry import get_graph
+
+graph = get_graph()
+
 
 # ---------- Helper: load emails from Hugging Face ----------
 
@@ -96,7 +99,13 @@ def triage_hf_emails(limit: int = Query(10, ge=1, le=100)):
 
     for item in samples:
         state = EmailState(email_content=item["email"])
-        output = graph.invoke(state)  # LangGraph returns a dict-like state
+        thread_id = f"eval-{hash(item['email'])}"
+
+        output = graph.invoke(
+            state,
+            config={"configurable": {"thread_id": thread_id}}
+        )
+ # LangGraph returns a dict-like state
 
         predicted = output.get("triage_decision")
         gold = item["label"]

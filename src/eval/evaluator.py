@@ -2,11 +2,14 @@ import json
 import os
 import time
 from typing import List, Dict
-from src.graph.email_graph import build_graph
+
 from src.graph.state import EmailState
 
 # Load the LangGraph agent
-graph = build_graph()
+from src.graph.graph_registry import get_graph
+
+graph = get_graph()
+
 
 # Scoring weights for rubric
 WEIGHTS = {
@@ -76,7 +79,13 @@ def evaluate_dataset(dataset: List[Dict]):
         state = EmailState(email_content=item["email"])
 
         start_time = time.time()
-        output = graph.invoke(state)
+        thread_id = f"eval-{hash(item['email'])}"
+
+        output = graph.invoke(
+            state,
+            config={"configurable": {"thread_id": thread_id}}
+        )
+
         latency = time.time() - start_time
 
         predicted, reply, reason = extract_output_fields(output)
