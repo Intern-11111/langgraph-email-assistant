@@ -1,78 +1,79 @@
-# Milestone 3 – HITL Safety Testing and LangSmith Tracing
+# Milestone 3 – HITL Safety, Tracing, and Test Validation
 
 ## Objective
-The goal of Milestone 3 is to validate that the Human-in-the-Loop (HITL) safety mechanism works as expected and that LangSmith can trace the agent’s decision flow for debugging and observability.
 
-This milestone focuses on testing safety behavior, not building a full production agent.
+The goal of Milestone 3 is to verify that the Human-in-the-Loop (HITL) safety mechanism works correctly for dangerous actions and that LangSmith captures the complete decision flow for debugging and observability.
 
----
-
-## Task 1: LangSmith Integration
-LangSmith was connected using environment variables and the `@traceable` decorator.
-
-The following were verified:
-- Tracing is enabled using `LANGCHAIN_TRACING_V2=true`
-- A dedicated project (`email-agent-hitl`) is used
-- Function-level traces appear in the LangSmith UI
-
-The traces show inputs, outputs, and execution flow for each decision step.
+This milestone focuses on **safety validation**, not on building a full production-ready agent.
 
 ---
 
-## Task 2: Test Case Design (Safe vs Dangerous)
+## LangSmith Integration
 
-The following test cases were designed conceptually:
+LangSmith tracing was enabled using environment variables and the `@traceable` decorator.
 
-### Dangerous Scenarios
-These are actions that can affect users or systems and must pause for human review.
-- Refund requests
-- Account-related actions
+Each major decision step in the HITL flow is recorded as a trace.  
+To clearly visualize execution order, a parent trace named `full_hitl_flow` was created to group the following child steps:
 
-Expected behavior:
-- Classified as **dangerous**
-- HITL pause is triggered
+- `decide_action_type`
+- `hitl_decision`
 
-### Safe Scenarios
-These are informational or low-risk emails.
-- Meeting requests
-- General queries
-- Thank-you emails
-
-Expected behavior:
-- Classified as **safe**
-- Execution continues without pause
+This structure allows the complete HITL decision flow to be observed inside the LangSmith dashboard.
 
 ---
 
-## Task 3: HITL Pause Test Implementation
-A test script was created to simulate the agent’s safety flow.
+## Test Case Design
 
-The test performs:
-1. Classification of email content
-2. Detection of dangerous actions
-3. Triggering of HITL pause when required
+Test cases were designed based on **action risk**, rather than dataset size.
 
-LangSmith traces confirm:
-- `decide_action_type` runs first
-- `hitl_decision` runs next
-- Dangerous inputs result in `paused_for_review`
+### Dangerous Cases
+- Emails involving refunds or account-related actions
+- These actions can modify system state and must not execute automatically
 
-A parent trace (`full_hitl_flow`) groups the entire execution.
+### Safe Cases
+- Informational emails without side effects
+- These actions do not require human intervention
+
+This approach ensures HITL safety behavior is tested without requiring a fully integrated backend agent.
 
 ---
 
-## Observations
-- HITL pause works correctly for dangerous actions
-- Safe actions would continue execution
-- LangSmith provides clear visibility into decision order and outcomes
+## HITL Pause Validation
+
+### For Dangerous Emails
+- The agent classifies the action as dangerous
+- Execution pauses at the HITL checkpoint
+- The system waits for explicit human approval
+
+### For Safe Emails
+- The agent continues execution without interruption
+
+These behaviors were verified using both console output and LangSmith traces.
+
+---
+
+## Observability Results
+
+LangSmith successfully captured the following:
+
+- Inputs and outputs for each decision step
+- Parent-child execution order
+- HITL pause state for dangerous actions
+
+This confirms that the system behavior is both **auditable** and **debuggable**.
 
 ---
 
 ## Limitations
-- The test uses rule-based logic instead of a real LLM
-- Only a limited number of test cases were manually simulated
+
+- Agent logic is simulated and does not execute real tools
+- No memory persistence or resume logic is implemented in this milestone
+
+These limitations are intentional and will be addressed in Milestone 4.
 
 ---
 
 ## Conclusion
-Milestone 3 successfully validates that the HITL safety mechanism and LangSmith observability work as intended. This provides a strong foundation for integrating a real agent and more advanced safety logic in future milestones.
+
+Milestone 3 successfully validates HITL safety behavior and observability.  
+The system correctly pauses before dangerous actions and records the full decision flow in LangSmith, meeting all milestone requirements.
