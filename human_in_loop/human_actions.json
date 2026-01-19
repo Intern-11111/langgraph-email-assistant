@@ -1,0 +1,110 @@
+[
+  {
+    "email": "Please unsubscribe me from this promotion",
+    "ai_decision": "ignore",
+    "human_decision": "approve",
+    "timestamp": "2026-01-09 17:25:26"
+  },
+  {
+    "email": "Can we schedule a meeting tomorrow?",
+    "ai_decision": "respond",
+    "human_decision": "for next week",
+    "timestamp": "2026-01-09 17:25:39"
+  },
+  {
+    "email": "Urgent! Your bank account needs verification",
+    "ai_decision": "notify_human",
+    "human_decision": "deny",
+    "timestamp": "2026-01-09 17:25:41"
+  },
+  {
+    "email": "Please unsubscribe me from this promotion",
+    "ai_decision": "ignore",
+    "human_decision": "approve",
+    "timestamp": "2026-01-09 17:26:46"
+  },
+  {
+    "email": "Can we schedule a meeting tomorrow?",
+    "ai_decision": "respond",
+    "human_decision": "for nextweek",
+    "timestamp": "2026-01-09 17:26:54"
+  },
+  {
+    "email": "Urgent! Your bank account needs verification",
+    "ai_decision": "notify_human",
+    "human_decision": "approve",
+    "timestamp": "2026-01-09 17:26:56"
+  },
+  {
+    "email": "Please unsubscribe me from this promotion",
+    "ai_decision": "ignore",
+    "human_decision": "approve",
+    "timestamp": "2026-01-09 17:28:33"
+  },
+  {
+    "email": "Can we schedule a meeting tomorrow?",
+    "ai_decision": "respond",
+    "human_decision": "for next week",
+    "timestamp": "2026-01-09 17:28:41"
+  },
+  {
+    "email": "Urgent! Your bank account needs verification",
+    "ai_decision": "notify_human",
+    "human_decision": "deny",
+    "timestamp": "2026-01-09 17:28:43"
+  },
+  {
+    "email": "Please unsubscribe me from this promotion",
+    "ai_decision": "ignore",
+    "human_decision": "approve",
+    "timestamp": "2026-01-09 17:36:50"
+  },
+  {
+    "email": "Can we schedule a meeting tomorrow?",
+    "ai_decision": "respond",
+    "human_decision": "lets arrange the meeting for next week",
+    "timestamp": "2026-01-09 17:37:46"
+  },
+  {
+    "email": "Urgent! Your bank account needs verification",
+    "ai_decision": "notify_human",
+    "human_decision": "deny",
+    "timestamp": "2026-01-09 17:38:16"
+  },
+  {
+    "email": "Please unsubscribe me from this promotion",
+    "ai_decision": "ignore",
+    "human_decision": "approve",
+    "timestamp": "2026-01-16 10:45:06"
+  },
+  {
+    "email": "Can we schedule a meeting tomorrow?",
+    "ai_decision": "respond",
+    "human_decision": "Can we schedule it for next week at 10 AM?",
+    "timestamp": "2026-01-16 10:46:03"
+  },
+  {
+    "email": "Urgent! Your bank account needs verification",
+    "ai_decision": "notify_human",
+    "human_decision": "deny",
+    "timestamp": "2026-01-16 10:46:26"
+  },
+  {
+    "email": "Please unsubscribe me from this promotion",
+    "ai_decision": "ignore",
+    "human_decision": "approve",
+    "timestamp": "2026-01-16 10:46:41"
+  },
+  {
+    "email": "Can we schedule a meeting tomorrow?",
+    "ai_decision": "respond",
+    "human_decision": "",
+    "timestamp": "2026-01-16 10:52:00"
+  },
+  {
+    "email": "Urgent! Your bank account needs verification",
+    "ai_decision": "notify_human",
+    "human_decision": "deny",
+    "timestamp": "2026-01-16 10:52:01"
+  }
+]
