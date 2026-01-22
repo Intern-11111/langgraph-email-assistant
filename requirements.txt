@@ -4,15 +4,14 @@ langgraph>=0.2.0
 langchain_openai>=0.1.0
 langchain-community>=0.3.0
 
-transformers>=4.40.0,<5.0.0
-torch>=2.1.0
+
 
 openai>=1.0.0
 pydantic>=2.6.0
 python-dotenv>=1.0.1
 
 # -------- Optional Model / Vector Memory --------
-faiss-cpu>=1.7.4
+# faiss-cpu>=1.7.4
 sqlite-utils>=3.36.0
 
 # -------- Development, Tools & Evaluation --------
@@ -25,17 +24,17 @@ google-auth>=2.34.0
 google-auth-oauthlib>=1.2.1
 google-auth-httplib2>=0.2.0
 
-# 🔒 CRITICAL: OAuth SSL stability
+# CRITICAL: OAuth SSL stability
 requests>=2.31.0,<2.33.0
 urllib3>=1.26.18,<2.1.0
 
 # -------- Web App / API Server --------
 fastapi>=0.115.0
 uvicorn>=0.30.0
-streamlit>=1.38.0
+# streamlit>=1.38.0
 
-# -------- Testing & Code Quality --------
-pytest>=8.2.1
-black>=24.10.0
-ruff>=0.6.5
-pre-commit>=3.7.1
+# # -------- Testing & Code Quality --------
+# pytest>=8.2.1
+# black>=24.10.0
+# ruff>=0.6.5
+# pre-commit>=3.7.1

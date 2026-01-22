@@ -45,6 +45,6 @@ def health():
         "status": "online",
         "available_endpoints": {
             "triage_email": "/triage/email",
-            "gmail_webhook": "/gmail/webhook",  # ✅ NOW REAL
+            "gmail_webhook": "/gmail/webhook",  # NOW REAL
         },
     }
