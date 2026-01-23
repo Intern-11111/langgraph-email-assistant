@@ -1,0 +1,8 @@
+text,label
+"Buy now limited offer spam",ignore
+"Meeting tomorrow at 10am",respond
+"Your account suspended click here",ignore
+"Please review contract and approve",notify_human
+"Can you send the report",respond
+"Free lottery win money now",ignore
+"Legal complaint regarding invoice",notify_human
