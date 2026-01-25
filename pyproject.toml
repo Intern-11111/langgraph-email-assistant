@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=45", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "email_assistant"
+version = "0.1.0"
+dependencies = [
+    "langgraph",
+    "langchain",
+    # Add your other requirements here
+]
+
+[tool.setuptools]
+packages = ["backend", "backend.src", "backend.src.tools", "backend.src.nodes", "backend.src.hitl", "backend.src.memory", "backend.src.evaluation"]
+
+[tool.setuptools.package-dir]
+backend = "backend"

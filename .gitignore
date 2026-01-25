@@ -1,0 +1,41 @@
+# --- Python Environment ---
+venv/
+.venv/
+env/
+__pycache__/
+*.py[cod]
+*$py.class
+
+# --- Project Specific (State/Database) ---
+*.db
+
+# --- Environment Secrets (CRITICAL) ---
+.env
+.env.local
+.env.*
+secrets.json
+
+# --- VS Code / IDE Settings ---
+.vscode/
+.idea/
+.DS_Store
+
+# --- Data & Logs ---
+data/raw/
+logs/
+*.log
+
+# --- Jupyter Notebooks ---
+.ipynb_checkpoints
+notebooks/*.ipynb_checkpoints/
+
+
+# ----Gmail and Calendar API----
+credentials/
+*.json 
+
+
+# --- Packaging & Distribution --- 
+*.egg-info/
+dist/
+build/
