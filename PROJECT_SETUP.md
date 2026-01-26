@@ -48,7 +48,6 @@ python3 --version
 
 ```bash
 # If using git
-cd "d:\Aayush\College\Interships\Infosys-Building an Ambient Agent"
 cd A1-email-agent\final
 
 # Or navigate to the project folder if already downloaded
