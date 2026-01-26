@@ -21,7 +21,8 @@ def handle_hitl(
     state = app.get_state(config)
     data: AgentState = state.values  # type: ignore
     hitl = data.get("hitl") or {}
-    tool_name = hitl.get("tool")
+    # Support both 'tool' (old) and 'action' (new) keys
+    tool_name = hitl.get("tool") or hitl.get("action")
     tool_args = hitl.get("args") or {}
 
     if not tool_name:
@@ -30,14 +31,11 @@ def handle_hitl(
 
     if decision == "deny":
         #print("👤 HITL: DENY")
-        denial_msg = HumanMessage(
-            content="Human denied this action. Do not execute the tool."
-        )
+        # No message history to update in template mode
         app.update_state(
             config,
             {
                 "hitl_decision": "deny",
-                "messages": [denial_msg],
             },
         )
         return
@@ -47,12 +45,21 @@ def handle_hitl(
         edit_values = edit_values or {}
         new_args = {**tool_args, **edit_values}
         new_hitl = {**hitl, "args": new_args}
+        
+        # Determine updates to state
+        updates = {
+            "hitl_decision": "edit",
+            "hitl": new_hitl,
+            "action_args": new_args # Also update action_args
+        }
+        
+        # If body was edited, update final_reply so the correct text is sent
+        if "body" in edit_values:
+            updates["final_reply"] = edit_values["body"]
+            
         app.update_state(
             config,
-            {
-                "hitl_decision": "edit",
-                "hitl": new_hitl,
-            },
+            updates,
         )
         return
 

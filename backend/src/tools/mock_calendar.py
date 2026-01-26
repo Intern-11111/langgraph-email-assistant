@@ -1,10 +1,9 @@
-# Mock Calendar Tool - From Samruddhi Maslage (M1 Tools)
-from typing import Dict, List, Optional
+from typing import Dict, List
 
 def read_calendar() -> List[Dict]:
     """
-    Mock calendar function - returns hardcoded scheduled events.
-    No real Google Calendar API.
+    Get the list of scheduled calendar events.
+    This is a mock version that returns fake events for testing.
     """
     return [
         {
@@ -21,20 +20,17 @@ def read_calendar() -> List[Dict]:
 
 def check_availability(date: str, time: str) -> Dict[str, bool]:
     """
-    Mock function - checks if a time slot is available.
-    Always returns true for demonstration.
+    Check if a calendar time slot is free (simulated - always returns available).
     """
-    print(f"✅ [MOCK] Checking calendar for {date} at {time}")
+    print(f"[MOCK] Checking calendar for {date} at {time}")
     return {
         "available": True,
         "conflicts": []
     }
 
 def create_calendar_event(summary: str, start: str, end: str) -> bool:
-    """
-    Mock function - simulates creating a calendar event.
-    """
-    print(f"✅ [MOCK] Calendar event created:")
+    """Create a new calendar event (simulated - just logs the details)."""
+    print(f"[MOCK] Calendar event created:")
     print(f"  Summary: {summary}")
     print(f"  Start: {start}")
     print(f"  End: {end}")

@@ -1,22 +1,30 @@
-# Backend API - Simplified for Milestone 4 (HITL + Memory)
-# Using only read_calendar and send_mail tools
+"""
+Production-Ready FastAPI Backend
+Integrates LangGraph workflow with HTTP endpoints
+"""
 
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import Optional, Dict, Any
-import json
+import uuid
 
-# Import simplified tools
-from backend.src.tools.tools import read_calendar, send_mail, AVAILABLE_TOOLS
+# Import graph and HITL handler
+from backend.src.graph import create_graph
+from langgraph.checkpoint.memory import MemorySaver
+from backend.src.hitl_handler import handle_hitl
+
+# Initialize graph with memory
+memory_saver = MemorySaver()
+email_graph = create_graph(checkpointer=memory_saver)
 
 app = FastAPI(
-    title="Email Assistant - HITL Backend",
-    description="Milestone 4: HITL Workflow with Persistent Memory",
-    version="1.0.0"
+    title="Email Assistant - Template Based",
+    description="Email Agent with Keyword Categorization and Template Responses (No LLM)",
+    version="3.0.0"
 )
 
-# CORS
+# CORS middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -25,188 +33,185 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Pydantic Models
+
 class EmailRequest(BaseModel):
+    sender: str
     subject: str
     body: str
-    thread_id: str = "email-thread"
+    thread_id: Optional[str] = None
+
 
 class HITLDecision(BaseModel):
     thread_id: str
-    decision: str  # "approve", "edit", "deny"
+    decision: str  # "approve", "deny", or "edit"
     edited_args: Optional[Dict] = None
 
-# In-memory state storage (Milestone 4: Memory)
-SESSIONS = {}
 
 @app.get("/")
 def read_root():
+    """API health check and info."""
     return {
-        "message": "Email Assistant - HITL Backend",
-        "mode": "Milestone 4",
-        "tools": ["read_calendar", "send_mail"],
-        "team": ["Payal (HITL/Memory)", "Samruddhi (Tools)", "Ganesh (Triage)"]
-    }
-
-@app.post("/v1/process-email")
-async def process_email(request: EmailRequest):
-    """
-    Process email through triage and agent workflow.
-    Returns HITL checkpoint if dangerous action detected.
-    """
-    try:
-        thread_id = request.thread_id
-        
-        # Simple triage logic (Ganesh M1)
-        body_lower = request.body.lower()
-        
-        # Ignore spam/newsletters
-        if any(word in body_lower for word in ["unsubscribe", "newsletter", "promotion"]):
-            return {
-                "status": "ignored",
-                "hitl_required": False,
-                "message": "Email ignored (spam/newsletter)"
-            }
-        
-        # Check if meeting-related (needs calendar tool)
-        if any(word in body_lower for word in ["meet", "schedule", "calendar", "appointment"]):
-            # Read calendar first
-            events = read_calendar()
-            
-            # Format events as human-readable text
-            events_text = "\n".join([
-                f"• {event['title']} at {event['time']}"
-                for event in events[:2]
-            ])
-            
-            # Propose sending meeting confirmation
-            proposed_action = {
-                "tool": "send_mail",
-                "args": {
-                    "to": "sender@example.com",  # In real system, extract from email
-                    "subject": f"Re: {request.subject}",
-                    "body": f"Thanks for your email about '{request.subject}'.\n\n"
-                            f"I have the following on my calendar:\n{events_text}\n\n"
-                            f"Let me know what works best for you."
-                }
-            }
-            
-            # HITL Checkpoint (Payal M3)
-            SESSIONS[thread_id] = {
-                "email": {"subject": request.subject, "body": request.body},
-                "proposed_action": proposed_action,
-                "calendar_events": events
-            }
-            
-            return {
-                "status": "pending_approval",
-                "hitl_required": True,
-                "proposed_action": proposed_action,
-                "calendar_events": events
-            }
-        
-        # Simple acknowledgment
-        else:
-            # Auto-approve for simple replies
-            return {
-                "status": "completed",
-                "hitl_required": False,
-                "final_reply": f"Thank you for your email regarding '{request.subject}'. I've received it and will respond shortly.",
-                "tool_result": None
-            }
-            
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error processing email: {str(e)}")
-
-@app.post("/v1/hitl-decision")
-async def hitl_decision(decision: HITLDecision):
-    """
-    Handle HITL decision (approve/edit/deny).
-    Payal M3: HITL workflow
-    """
-    try:
-        thread_id = decision.thread_id
-        
-        if thread_id not in SESSIONS:
-            raise HTTPException(status_code=404, detail="Session not found")
-        
-        session = SESSIONS[thread_id]
-        proposed_action = session["proposed_action"]
-        
-        # User Approved
-        if decision.decision == "approve":
-            tool_name = proposed_action["tool"]
-            tool_args = proposed_action["args"]
-            
-            # Execute tool
-            if tool_name in AVAILABLE_TOOLS:
-                result = AVAILABLE_TOOLS[tool_name](**tool_args)
-                
-                # Cleanup session (Milestone 4: Memory management)
-                del SESSIONS[thread_id]
-                
-                return {
-                    "status": "completed",
-                    "hitl_required": False,
-                    "tool_result": result,
-                    "message": f"{tool_name} executed successfully"
-                }
-            else:
-                raise HTTPException(status_code=400, detail=f"Unknown tool: {tool_name}")
-        
-        # User Edited
-        elif decision.decision == "edit":
-            tool_name = proposed_action["tool"]
-            tool_args = proposed_action["args"].copy()
-            
-            # Apply edits
-            if decision.edited_args:
-                tool_args.update(decision.edited_args)
-            
-            # Execute with edited args
-            if tool_name in AVAILABLE_TOOLS:
-                result = AVAILABLE_TOOLS[tool_name](**tool_args)
-                
-                # Cleanup session
-                del SESSIONS[thread_id]
-                
-                return {
-                    "status": "completed",
-                    "hitl_required": False,
-                    "tool_result": result,
-                    "message": f"{tool_name} executed with edits"
-                }
-        
-        # User Denied
-        elif decision.decision == "deny":
-            # Cleanup session
-            del SESSIONS[thread_id]
-            
-            return {
-                "status": "denied",
-                "hitl_required": False,
-                "message": "Action denied by user"
-            }
-        
-        else:
-            raise HTTPException(status_code=400, detail="Invalid decision")
-            
-    except KeyError as e:
-        raise HTTPException(status_code=404, detail=f"Session error: {str(e)}")
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=f"Error processing decision: {str(e)}")
-
-@app.get("/v1/tools")
-def get_available_tools():
-    """List available tools"""
-    return {
-        "tools": list(AVAILABLE_TOOLS.keys()),
-        "descriptions": {
-            "read_calendar": "View scheduled calendar events (Samruddhi M1)",
-            "send_mail": "Send email response (Payal M4 HITL)"
+        "message": "Email Assistant - Template Based (No LLM)",
+        "version": "3.0.0",
+        "status": "active",
+        "features": [
+            "Keyword-Based Email Triage",
+            "Template Response Generation",
+            "HITL Safety Checkpoints",
+            "Mock Tools (Gmail & Calendar)",
+            "No LLM - Runs Offline"
+        ],
+        "endpoints": {
+            "process_email": "POST /v1/process-email",
+            "hitl_decision": "POST /v1/hitl-decision",
+            "get_status": "GET /v1/status/{thread_id}"
         }
     }
 
+
+@app.post("/v1/process-email")
+def process_email(request: EmailRequest):
+    """
+    Process an email through the LangGraph workflow.
+    
+    Returns either a final result or HITL checkpoint data requiring human approval.
+    """
+    try:
+        # Generate thread ID if not provided
+        thread_id = request.thread_id or f"email-{uuid.uuid4().hex[:8]}"
+        
+        # Create initial state (simplified for template-based workflow)
+        state = {
+            "mail": {
+                "id": thread_id,
+                "sender": request.sender,
+                "subject": request.subject,
+                "body": request.body
+            },
+            "userid": "default_user",
+            "triage_category": None,
+            "action_type": None,
+            "action_args": None,
+            "final_reply": None,
+            "hitl": None,
+            "hitl_decision": None
+        }
+        
+        # Execute graph workflow
+        config = {"configurable": {"thread_id": thread_id}}
+        
+        try:
+            result = email_graph.invoke(state, config=config)
+        except Exception as graph_error:
+            # If graph execution fails, return error in expected format
+            return {
+                "status": "error",
+                "thread_id": thread_id,
+                "hitl_required": False,
+                "message": f"Graph execution error: {str(graph_error)}",
+                "error_type": type(graph_error).__name__
+            }
+        
+        # Check if workflow paused at HITL checkpoint
+        if result.get("hitl_decision") == "pending":
+            return {
+                "status": "pending_hitl",
+                "thread_id": thread_id,
+                "hitl_required": True,
+                "triage_category": result.get("triage_category"),
+                "proposed_action": result.get("hitl"),
+                "message": "Workflow paused - awaiting human approval"
+            }
+        
+        # Return completed workflow result
+        return {
+            "status": "completed",
+            "thread_id": thread_id,
+            "hitl_required": False,
+            "triage_category": result.get("triage_category"),
+            "final_reply": result.get("final_reply"),
+            "message": "Email processed successfully"
+        }
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, 
+            detail=f"Error processing email: {str(e)}"
+        )
+
+
+@app.post("/v1/hitl-decision")
+def hitl_decision(decision: HITLDecision):
+    """
+    Apply human decision and resume graph execution.
+    
+    Decisions: "approve", "deny", or "edit"
+    """
+    try:
+        config = {"configurable": {"thread_id": decision.thread_id}}
+        
+        # Apply human decision to graph state
+        handle_hitl(
+            app=email_graph,
+            config=config,
+            decision=decision.decision,
+            edit_values=decision.edited_args
+        )
+        
+        # Resume workflow execution
+        result = email_graph.invoke(None, config=config)
+        
+        return {
+            "status": "completed",
+            "thread_id": decision.thread_id,
+            "decision_applied": decision.decision,
+            "final_reply": result.get("final_reply"),
+            "tool_result": result.get("tool_result"), # Pass tool result to frontend
+            "message": f"Action {decision.decision}d and executed successfully"
+        }
+        
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, 
+            detail=f"Error processing decision: {str(e)}"
+        )
+
+
+@app.get("/v1/status/{thread_id}")
+def get_status(thread_id: str):
+    """
+    Get current state of a workflow by thread ID.
+    
+    Useful for debugging and monitoring.
+    """
+    try:
+        config = {"configurable": {"thread_id": thread_id}}
+        state = email_graph.get_state(config)
+        
+        return {
+            "thread_id": thread_id,
+            "state": state.values,
+            "next_steps": state.next,
+            "metadata": {
+                "checkpoint_id": str(state.config.get("configurable", {}).get("checkpoint_id", "N/A")),
+            }
+        }
+    except Exception as e:
+        raise HTTPException(
+            status_code=404, 
+            detail=f"Thread not found: {str(e)}"
+        )
+
+
+@app.get("/v1/health")
+def health_check():
+    """System health check."""
+    return {
+        "status": "healthy",
+        "graph_compiled": email_graph is not None,
+        "memory_enabled": memory_saver is not None
+    }
+
+
 if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    print("\nStarting Email Assistant API Server...")

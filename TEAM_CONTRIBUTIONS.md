@@ -269,7 +269,7 @@ For detailed technical contributions and code examples, refer to individual READ
 ## Project Resources
 
 - 📘 [Complete Project README](README.md)
-- 📗 [Developer Onboarding Guide](PROJECT_GUIDE.md)
+- 📗 [Project Setup Guide](PROJECT_SETUP.md)
 - 📕 [Final Project Report](FINAL_REPORT.md)
 
 ---

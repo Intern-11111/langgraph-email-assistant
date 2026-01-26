@@ -1,7 +1,10 @@
-# Mock Gmail tool (no real API)
 from typing import Dict, List
+
 def fetch_emails() -> List[Dict]:
-    """Mock function - returns sample emails"""
+    """
+    Get a list of emails from the inbox.
+    This is a mock version that returns sample emails for testing.
+    """
     return [
         {
             "id": "mock_001",
@@ -18,13 +21,15 @@ def fetch_emails() -> List[Dict]:
             "date": "2026-01-23"
         }
     ]
+
 def send_reply(to: str, subject: str, body: str) -> bool:
-    """Mock function - simulates sending email"""
-    print(f"✅ [MOCK] Email sent to {to}")
+    """Send an email reply (simulated - just logs the message)."""
+    print(f"[MOCK] Email sent to {to}")
     print(f"Subject: {subject}")
     print(f"Body: {body}")
     return True
+
 def mark_as_processed(email_id: str) -> bool:
-    """Mock function - marks email as read"""
-    print(f"✅ [MOCK] Marked email {email_id} as read")
+    """Mark an email as read and processed (simulated)."""
+    print(f"[MOCK] Marked email {email_id} as read")
     return True

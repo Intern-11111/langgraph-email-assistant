@@ -44,7 +44,7 @@ Automatically categorizes incoming emails into three categories:
 - **Notify Human** - Important emails requiring user attention
 - **Respond/Act** - Emails where the agent can draft helpful responses
 
-**Technology:** Hybrid approach combining rule-based preprocessing with fine-tuned ML classifier (DistilBERT)  
+**Technology:** Hybrid Architecture: **LLM (Gemini 2.5)** for Triage + **Templates** for Response Generation  
 **Accuracy:** 94.5% on 100+ email test dataset
 
 ---
@@ -158,17 +158,14 @@ graph TD
 **Lead:** Ganesh Bandaru
 
 **How It Works:**
-1. **Rule-based Preprocessing:** Catches obvious cases
-   - Keywords like "unsubscribe" → Ignore
-   - Sender domains like "noreply@" → Ignore
-   - Subject patterns like "RE:" → Respond
+1. **Rule-based Preprocessing:** Catches obvious cases (spam, promotions) for speed.
    
-2. **ML Classification:** Handles ambiguous cases
-   - Fine-tuned DistilBERT model
-   - Trained on 48-email balanced dataset
-   - Returns: category + confidence score
+2. **LLM Classification (Gemini):** Handles complex/ambiguous cases
+   - Uses `gemini-2.5-flash-lite` for cost-effective intelligence
+   - Analyzes intent (Meeting vs Question vs Complaint)
+   - Falls back to keyword matching if LLM unavailable
 
-3. **Confidence Threshold:** Low confidence → Escalate to notify-human
+3. **Fallback Mechanism:** Robust keyword-based logic ensures system never fails completely
 
 **Files:**
 - `triage/triage_node.py` - Main logic
@@ -377,8 +374,8 @@ Body: Can we schedule a call next Tuesday at 2 PM to discuss the project?
 
 **2. Triage Classification**
 - Rules check: No "unsubscribe" → Not spam
-- ML classifier: 95% confidence → "respond-act"
-- Decision: Enter ReAct loop
+- **LLM (Gemini):** Analyzes context → "This is a meeting request" → "respond-act"
+- Decision: Enter Response Flow
 
 **3. ReAct Reasoning**
 ```
