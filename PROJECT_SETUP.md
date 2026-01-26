@@ -218,50 +218,6 @@ DEBUG=true
 
 ---
 
-#### Step 3: Create OAuth 2.0 Credentials
-
-1. Go to **"APIs & Services"** → **"Credentials"**
-2. Click **"+ CREATE CREDENTIALS"** → **"OAuth client ID"**
-
-**If prompted to configure consent screen:**
-- User Type: **External**
-- App name: `Email Agent`
-- User support email: Your email
-- Developer contact: Your email
-- Click **"Save and Continue"** through all steps
-
-**Back to creating OAuth client:**
-3. Application type: **Web application**
-4. Name: `Email Agent OAuth Client`
-5. **Authorized redirect URIs:**
-   ```
-   http://localhost:8000/auth/callback
-   ```
-6. Click **"Create"**
-
----
-
-#### Step 4: Download Credentials
-
-1. After creation, click **Download JSON** (download icon)
-2. Rename the downloaded file to `credentials.json`
-3. Place it in the project folder:
-   ```
-   final/
-   └── credentials/
-       └── credentials.json
-   ```
-
-**File Structure:**
-```
-final/
-├── backend/
-├── frontend/
-├── credentials/
-│   └── credentials.json  ← Place here
-├── .env
-└── ...
-```
 
 ---
 
@@ -411,22 +367,6 @@ Network URL: http://192.168.x.x:8501
 ```
 
 **Browser should auto-open!** If not, visit: http://localhost:8501
-
----
-
-### Step 3: First Login
-
-1. In the Streamlit interface, click **"Login with Google"**
-2. You'll be redirected to Google OAuth consent screen
-3. **Select your Google account**
-4. Review permissions:
-   - ✅ Read email messages
-   - ✅ Send email on your behalf
-   - ✅ View and manage calendar
-5. Click **"Allow"**
-6. You'll be redirected back to the application
-
-**First-time setup complete!** 🎉
 
 ---
 
