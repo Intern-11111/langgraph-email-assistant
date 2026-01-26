@@ -6,16 +6,6 @@
 
 ---
 
-## Task Allocation Overview
-
-This document provides a comprehensive summary of task assignments for each team member across all 4 milestones, based on the official project task allocation spreadsheet.
-
-![Task Assignments - Milestones 1-2](file:///C:/Users/DELL/.gemini/antigravity/brain/cd73de3c-b091-478f-a11f-645cddab339e/uploaded_media_0_1769342051733.png)
-
-![Task Assignments - Milestones 3-4](file:///C:/Users/DELL/.gemini/antigravity/brain/cd73de3c-b091-478f-a11f-645cddab339e/uploaded_media_1_1769342051733.png)
-
----
-
 ## 👨‍💻 Aayush J Shah - Environment & Infrastructure Lead
 
 ### Milestone 1: Environment & Infrastructure Setup
