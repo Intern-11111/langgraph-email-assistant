@@ -147,15 +147,6 @@ GOOGLE_API_KEY=your_gemini_api_key_here
 HUGGINGFACEHUB_API_TOKEN=your_hf_token_here  # Optional
 
 # ============================================
-# Database Configuration
-# ============================================
-# For Development (SQLite - no setup needed)
-DATABASE_URL=sqlite:///./email_agent.db
-
-# For Production (PostgreSQL)
-# DATABASE_URL=postgresql://username:password@localhost:5432/email_assistance_db
-
-# ============================================
 # LangSmith (Optional - for monitoring)
 # ============================================
 LANGCHAIN_TRACING_V2=true
