@@ -4,6 +4,7 @@ from uuid import uuid4
 from src.api.models import EmailRequest, TriageResult
 from src.graph.email_graph import build_graph
 from src.graph.state import EmailState
+from src.state.thread_registry import THREAD_REGISTRY
 
 # 🔹 HITL router
 from src.api.hitl_router import router as hitl_router
@@ -35,29 +36,42 @@ def triage_api(request: EmailRequest):
     May PAUSE if a dangerous action is planned.
     """
 
-    # Unique thread_id is REQUIRED for HITL resume
+    # --------------------------------------------------
+    # 1️⃣ Generate and REGISTER thread_id (CRITICAL)
+    # --------------------------------------------------
     thread_id = str(uuid4())
 
-    # ALWAYS get graph from registry
+    # 🔑 This is what makes the thread visible to /debug/hitl/threads
+    THREAD_REGISTRY.add(thread_id)
+
+    # --------------------------------------------------
+    # 2️⃣ Get graph (singleton)
+    # --------------------------------------------------
     graph = get_graph()
 
+    # --------------------------------------------------
+    # 3️⃣ Build initial graph state
+    # --------------------------------------------------
     state = EmailState(
         email_content=request.email,
         from_email=request.from_email,
         subject=request.subject,
     )
 
-
+    # --------------------------------------------------
+    # 4️⃣ Invoke graph with CORRECT config shape
+    # --------------------------------------------------
     result = graph.invoke(
         state,
-        config={"thread_id": thread_id}
+        config={"configurable": {"thread_id": thread_id}}
     )
-    
 
-    # Helpful for manual testing
+    # Helpful for manual testing / logs
     print("THREAD_ID:", thread_id)
 
-    #  HITL: graph paused before action_node
+    # --------------------------------------------------
+    # 5️⃣ HITL pause handling
+    # --------------------------------------------------
     if result.get("hitl_required"):
         print("HITL PAUSED, awaiting human decision...")
         return TriageResult(
@@ -66,9 +80,11 @@ def triage_api(request: EmailRequest):
             reason="Awaiting human approval (HITL)",
         )
 
+    # --------------------------------------------------
+    # 6️⃣ Normal completion
+    # --------------------------------------------------
     return TriageResult(
         decision=result.get("triage_decision", "notify_human"),
         confidence=result.get("triage_confidence", 0.0),
         reason=result.get("triage_reason", "no reason provided"),
     )
-    
