@@ -87,3 +87,31 @@ uvicorn.log
 .spyproject
 # Rope project settings
 .ropeproject
+# PyCharm
+.idea/
+# JetBrains IDEs
+*.iml
+*.iws
+*.ipr
+out/
+
+# -----------------------------
+# TeamD1 sensitive/generated
+# -----------------------------
+# OAuth tokens and client secrets
+TeamD1/token.json
+TeamD1/client_secret_*.json
+TeamD1/credentials.json
+
+# Local environment and editor junk (defensive duplicates)
+TeamD1/.env
+TeamD1/.DS_Store
+TeamD1/Thumbs.db
+
+# Python caches in TeamD1
+TeamD1/__pycache__/
+TeamD1/*.py[cod]
+TeamD1/*$py.class
+
+# Logs
+TeamD1/*.log
