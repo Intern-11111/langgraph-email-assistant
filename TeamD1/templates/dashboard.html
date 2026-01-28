@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Human Review Dashboard</title>
+  <style>
+    :root {
+      --bg: #0f172a;       /* slate-900 */
+      --panel: #111827;    /* gray-900 */
+      --muted: #9ca3af;    /* gray-400 */
+      --text: #e5e7eb;     /* gray-200 */
+      --accent: #3b82f6;   /* blue-500 */
+      --accent-2: #10b981; /* emerald-500 */
+      --danger: #ef4444;   /* red-500 */
+      --border: #1f2937;   /* gray-800 */
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif; }
+
+    .container { max-width: 1000px; margin: 40px auto; padding: 0 20px; }
+    .header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 20px; }
+    .title { font-size: 1.75rem; font-weight: 700; }
+    .muted { color: var(--muted); font-size: 0.9rem; }
+
+    .grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+    @media (min-width: 720px) { .grid { grid-template-columns: 1fr 1fr; } }
+
+    .card { background: var(--panel); border: 1px solid var(--border); border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 12px; }
+    .row { display: flex; gap: 12px; align-items: center; justify-content: space-between; }
+    .badge { display: inline-block; padding: 4px 8px; border-radius: 999px; font-size: 0.75rem; border: 1px solid var(--border); }
+    .badge.pending { color: var(--accent); border-color: var(--accent); }
+    .badge.approved { color: var(--accent-2); border-color: var(--accent-2); }
+
+    .meta { font-size: 0.85rem; color: var(--muted); }
+    textarea { width: 100%; min-height: 140px; resize: vertical; background: #0b1220; color: var(--text); border: 1px solid var(--border); border-radius: 8px; padding: 10px; }
+
+    .actions { display: flex; gap: 8px; justify-content: flex-end; }
+    button { appearance: none; border: 1px solid var(--border); background: #0b1220; color: var(--text); padding: 8px 12px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+    button.primary { border-color: var(--accent); color: var(--text); }
+    button.primary:hover { background: #0b1a33; }
+    button.danger { border-color: var(--danger); color: var(--text); }
+    button.danger:hover { background: #230d0d; }
+
+    .empty { text-align: center; color: var(--muted); padding: 40px 0; border: 1px dashed var(--border); border-radius: 12px; background: rgba(255,255,255,0.02); }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="title">Human Review Dashboard</div>
+      <div class="muted">Approve or delete queued emails (auto-refresh enabled)</div>
+    </div>
+    <script>
+      // Simple auto-refresh every 10 seconds to reflect new pending emails
+      setInterval(function () { location.reload(); }, 10000);
+    </script>
+
+    {% if emails and emails|length > 0 %}
+    <div class="grid">
+      {% for e in emails %}
+      <div class="card">
+        <div class="row">
+          <div class="meta">ID: <strong>{{ e.id }}</strong></div>
+          <span class="badge {{ (e.status or 'pending') | lower }}">{{ e.status or 'pending' }}</span>
+        </div>
+
+        {% if e.subject or e.sender %}
+        <div class="meta">
+          {% if e.subject %}<strong>Subject:</strong> {{ e.subject }}{% endif %}
+          {% if e.sender %} &nbsp; &middot; &nbsp; <strong>From:</strong> {{ e.sender }}{% endif %}
+        </div>
+        {% endif %}
+
+        <form method="post" action="{{ url_for('dashboard_approve') }}">
+          <input type="hidden" name="id" value="{{ e.id }}">
+          <label class="muted" for="content-{{ e.id }}">Body</label>
+          <textarea id="content-{{ e.id }}" name="content">{{ e.content }}</textarea>
+          <div class="actions">
+            <button type="submit" class="primary">Approve</button>
+          </div>
+        </form>
+
+        <form method="post" action="{{ url_for('dashboard_delete') }}">
+          <input type="hidden" name="id" value="{{ e.id }}">
+          <div class="actions">
+            <button type="submit" class="danger">Delete</button>
+          </div>
+        </form>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+      <div class="empty">No emails awaiting review.</div>
+    {% endif %}
+  </div>
+</body>
+</html>
