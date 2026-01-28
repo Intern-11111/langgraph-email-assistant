@@ -89,12 +89,6 @@ uvicorn.log
 .ropeproject
 # PyCharm
 .idea/
-# JetBrains IDEs
-*.iml
-*.iws
-*.ipr
-out/
-
 # -----------------------------
 # TeamD1 sensitive/generated
 # -----------------------------
@@ -115,3 +109,15 @@ TeamD1/*$py.class
 
 # Logs
 TeamD1/*.log
+
+# -----------------------------
+# Requested ignores
+# -----------------------------
+# Root token file
+token.json
+# Approved actions report
+reports/approved_actions.json
+# Ignore TeamD1 action engine implementation
+TeamD1/action_engine.py
+# Ignore TeamD1 config
+TeamD1/config.py
