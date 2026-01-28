@@ -1,215 +1,124 @@
-
-
-# Ambient Email Agent (Triage + ReAct + Evaluation)
-
-This project is an email assistant built with **LangGraph**, **LLMs** (Gemini / Hugging Face), and **LangSmith**.  
-It can:
-
-- Classify incoming emails into:
-  - `ignore`
-  - `notify-human`
-  - `respond-act`
-- For `respond-act`, run a small **ReAct loop**:
-  - Decide whether to call safe mock tools (like `read_calendar`)
-  - Draft a reply using the tool results
-
-Milestone 2 adds an automated **LLM-as-a-judge** evaluation framework in LangSmith that scores the quality of the agent’s replies (helpfulness, tone, instruction-following).[web:195][web:174]
-
-Milestone 3: Human-in-the-Loop (HITL) safety - pauses for dangerous actions (send_email)
-
-Milestone 4: Persistent Memory + Live Gmail/Calendar API integration
-
----
-
-## 1. Project structure
-
-
-
-## 1. Project Structure
-
-<img width="723" height="803" alt="image" src="https://github.com/user-attachments/assets/92cb68f0-0c83-44a8-9f89-c7b21e48c312" />
-
-
----
-
-## 2. LLM + LangSmith config (`config.py`)
-
-- Configures chat models:
-  - `gemini_ai_model()` → Google Gemini chat model.
-  - `hugging_face_model()` → optional Hugging Face chat model.
-- Loads API keys from `.env` (Gemini, Hugging Face, LangSmith).  
-- With `LANGCHAIN_TRACING_V2=true` and `LANGCHAIN_API_KEY` set, all LangGraph runs are traced into LangSmith for debugging and evaluation.[web:195][web:188]
-
----
-
-## 3. State definition (`state.py`)
-
-Shared state that flows through the graph:
-
-
-class AgentState(TypedDict):
-messages: list[BaseMessage] # conversation history
-mail: dict # {"subject": str, "body": str}
-triage_category: Literal["ignore", "notify-human", "respond-act"]
-tool_name: str | None # name of tool to call (inside ReAct)
-tool_args: dict | None # arguments for that tool
-final_reply: str | None # drafted reply for respond-act emails
-hitl: Optional[Dict[str, Any]]   # {"tool": str, "args": dict, "proposed_reply": str | None, ...}
-hitl_decision: Optional[Literal["pending", "approve", "deny", "edit"]]
-
-- `messages` – chat history the ReAct loop reasons over.  
-- `mail` – current email being processed.  
-- `triage_category` – output of the triage step.  
-- `tool_name` / `tool_args` – used only when a tool is called.  
-- `final_reply` – final drafted reply for `respond-act` emails.
-- `hitl_decision` - human's response to the pending HITL action.
-
----
-
-## 4. Triage node and ReAct loop nodes (`node.py` – `triage_node` -  `react_model_node` - `react_tools_node`)
-This system uses a Triage-ReAct architecture to process emails, ensuring high-risk actions are reviewed by a human before execution.
-
-State Management: Tracks email history, categorization, and a Human-in-the-Loop (HITL) status to pause for approvals.
-Triage Node: A Gemini-powered classifier that decides whether to ignore an email, notify a human, or trigger a task (86% accuracy).
-Safety Guardrails: All "dangerous" actions—like sending a reply or booking a calendar event—are automatically blocked until a human selects approve or edit.
-Memory & Live Integration: Uses SQLite to remember user preferences across sessions and connects to live Gmail/Calendar APIs via Docker.
-
-
-| From Node       | Triage Category | Tool Called      | HITL Status | Next Node           |
-| --------------- | --------------- | ---------------- | ----------- | ------------------- |
-| triage_node     | ignore          | None             | None        | ignore → END        |
-| triage_node     | notify-human    | None             | None        | notify_human → END  |
-| react_model     | respond-act     | read_calendar    | Safe        | react_tools         |
-| react_model     | respond-act     | send_gmail_reply | pending     | hitl_checkpoint     |
-| hitl_checkpoint | respond-act     | send_gmail_reply | approve     | Tool executes → END |
-
----
-## 6. Graph flow (`graph.py`) and `run_email_agent()`
-
-The system uses a StateGraph to orchestrate the email lifecycle through four key milestones:
-
-Triage & Routing: Filters mail into three paths. ignore and notify-human terminate immediately, while respond-act initiates the ReAct subgraph.
-ReAct Logic: A loop where the model reasons (react_model) and executes tasks (react_tools) such as checking calendars or drafting replies.
-HITL Safety: A mandatory hitl_checkpoint that pauses the graph whenever a "dangerous" tool (e.g., send_gmail_reply) is called, requiring human approval to resume.
-Persistent Memory: Integrated SQLite MemorySaver that checkpoints the state at every node, enabling cross-session learning and the ability to resume paused tasks.
-
-<img width="407" height="244" alt="image" src="https://github.com/user-attachments/assets/ecc13e52-e1bc-4a06-8e8e-88662c08937b" />
-
-
----
-
-## 7. Evaluation framework (Milestone 2)
-
-###  7.1 Golden evaluation dataset
-
-- File: `data/golden_set_emails.jsonl`  
-- Contains 100+ realistic emails with:
-  - `id`
-  - `subject`
-  - `body`
-  - `triage_label` (expected triage category)
-  - `ideal_response` (short description of the perfect reply / outcome)
-- Uploaded to LangSmith as a Dataset (e.g. `Golden_DataSet`), mapping:
-  - Inputs: `subject`, `body`
-  - References: `ideal_response`, `triage_label`.[web:195]
-
-###  7.2 LLM‑as‑a‑judge evaluator in LangSmith
-
-Custom evaluator (e.g. `email_judge`) whose prompt tells the judge to read:
-
-- Original email (subject + body)  
-- Ideal outcome (`ideal_response`)  
-- Assistant reply (`model_output`)
-
-The judge returns three numeric scores (1–5):
-
-- **helpfulness** – does the reply address the main request and move the task forward?  
-- **tone** – is the tone polite and professionally appropriate?  
-- **instruction_following** – how well does it match the ideal outcome (dates, confirmations, actions)?[web:174]
-
-These three criteria are configured in the UI as 1–5 score fields.
-
-###  7.3 Evaluation runner (`src/eval_runner.py`)
-
-Connects dataset, agent, and judge:
-
-from langsmith import Client
-from langsmith.evaluation import evaluate
-from graph import run_email_agent
-
-client = Client()
-
-def eval_wrapper(example):
-subject = example.inputs["subject"]
-body = example.inputs["body"]
-result = run_email_agent(subject=subject, body=body)
-return {
-"model_output": result["reply"], # graded by email_judge
-"triage_prediction": result["triage"] # optional extra field
-}
-
-results = evaluate(
-eval_wrapper,
-data="Golden_DataSet", # LangSmith dataset name
-evaluators=["email_judge"], # LLM-as-a-judge evaluator
-experiment_prefix="milestone-2",
-)
-
-
-Running this script:
-
-- Executes the agent on all 100+ emails.  
-- Calls the judge on each output.  
-- Logs an experiment in LangSmith with per‑example and aggregate scores.[web:198][web:268]
-
-You can inspect:
-
-- Average `helpfulness` / `tone` / `instruction_following` per experiment.  
-- Individual traces for low‑scoring cases.
-
-This fulfills Milestone 2’s requirement for a fully automated evaluation framework.[web:188]
-
----
-
-## 8. Notebooks
-
-###  8.1 Triage Accuracy `01_triage_evaluation.ipynb`
-
-This notebook evaluates the Milestone 1 classifier. It runs a test dataset through the graph and generates an accuracy score and a confusion matrix to visualize how well the agent distinguishes between ignore, notify-human, and respond-act.
-
-### 8.2 Agent Reasoning `02_react_agent.ipynb`
-
-Used to inspect the ReAct loop logic. It processes complex emails that require tool usage (like calendar checks) and prints the step-by-step reasoning process alongside the final drafted reply.
-
-###  8.3 LangSmith Evaluation `03_evaluation.ipynb`
-
-The interface for Milestone 2. It connects to the Golden Dataset and triggers automated "LLM-as-a-judge" scoring, providing metrics on helpfulness, tone, and instruction following.
-
-
-###  8.4 HITL Demonstration (04_hitl_demo.ipynb)
-
-A complete demonstration of Milestone 3 & 4. It shows the graph pausing for human approval on dangerous actions, handling manual edits to drafts, and utilizing persistent memory to resume sessions.
-
-## 9. How to run
-
-###  9.1 Install and set up
-
+# TeamD1 – Real‑Time Gmail Email Assistant
+
+This document describes the programs in TeamD1 and how they work together to deliver a real‑time, human‑in‑the‑loop email review workflow.
+
+## Overview
+- Real‑time Gmail watch triggers on new inbox messages via Google Pub/Sub.
+- A Flask webhook processes push events, fetches email data, classifies it, and queues dangerous items for human review.
+- A dashboard displays pending emails (subject, sender, full body) for approve/delete.
+
+## Architecture & Data Flow
+1. Gmail Watch
+   - [gmail_watch.py](gmail_watch.py) registers a Gmail watch on a Pub/Sub topic (`projects/$PROJECT_ID/topics/$PUBSUB_TOPIC`).
+2. Pub/Sub Push → Webhook
+   - Google Pub/Sub delivers push events to the Flask endpoint `/gmail-webhook` handled by [app.py](app.py).
+3. Fetch & Classify
+   - [email_fetcher.py](email_fetcher.py) retrieves `snippet`, `subject`, `sender`, `body`.
+   - [classifier.py](classifier.py) classifies: `dangerous` (phishing), `spam` (promotions), or `safe`.
+4. Actions
+   - [action_engine.py](action_engine.py) routes by class:
+     - `dangerous`: queue for review with full body, archive from inbox
+     - `spam`: archive
+     - `safe`: no action
+   - Queued items are stored via [review_queue.py](review_queue.py) in [data/pending_reviews.json](../data/pending_reviews.json).
+5. Human Review
+   - [templates/dashboard.html](templates/dashboard.html) renders the review queue.
+   - Approvals are saved to [reports/approved_actions.json](../reports/approved_actions.json).
+
+## Components
+- Web App: [app.py](app.py)
+  - Routes: `/gmail-webhook`, `/dashboard`, `/dashboard/approve`, `/dashboard/delete`, `/health`, `/`.
+  - Uses `render_template()` to serve the dashboard.
+- Gmail API:
+  - Auth: [gmail_auth.py](gmail_auth.py) (uses `client_secret_*.json` and `token.json`).
+  - Watch: [gmail_watch.py](gmail_watch.py).
+  - History fetcher: [gmail_listener.py](gmail_listener.py).
+- Processing:
+  - Classifier: [classifier.py](classifier.py) – keyword heuristics.
+  - Actions: [action_engine.py](action_engine.py) – archive & queue logic.
+  - Review queue: [review_queue.py](review_queue.py) – JSON persistence.
+- UI:
+  - Template: [templates/dashboard.html](templates/dashboard.html) – shows subject, sender, full body; auto‑refreshes every 10s.
+
+## Setup
+### Requirements
+- Python 3.11
+- Google Cloud project with Pub/Sub enabled
+- Gmail API enabled and OAuth client secret JSON
+- Environment variables:
+  - `PROJECT_ID` – GCP project ID
+  - `PUBSUB_TOPIC` – Pub/Sub topic name (without `projects/.../topics/` prefix)
+  - `FLASK_PORT` (optional, default 5000)
+
+### Credentials
+- Place `client_secret_*.json` in the [TeamD1](.) folder.
+- First run will create/update `token.json` after OAuth login.
+
+### Install deps (if needed)
+The repository includes a venv under `ai/`. Activate it or install requirements:
+
+```bash
+# Option A: Use existing venv
+./ai/Scripts/Activate.ps1
+
+# Option B: Create venv + install
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
+```
 
-Create `.env`:
+## Real‑Time Operation
+### 1) Run the Flask app
+```bash
+python TeamD1/app.py
+```
+Expose it publicly for Pub/Sub push (e.g., ngrok):
+```bash
+ngrok http 5000
+```
+Use the public HTTPS URL for the push subscription endpoint: `https://<your-public-url>/gmail-webhook`.
 
-- GOOGLE_API_KEY=your_gemini_key
-- LANGCHAIN_API_KEY=your_langsmith_key
-- LANGCHAIN_ENDPOINT=https://api.smith.langchain.com
-- LANGCHAIN_TRACING_V2=true
-- LANGCHAIN_PROJECT=ambient-email-agent
+### 2) Start Gmail watch
+```bash
+python TeamD1/gmail_watch.py
+```
+This registers a watch on `INBOX`. Gmail sends events to your Pub/Sub topic, which pushes to the webhook.
 
-### 9.3 Automated Evaluation
-python -m src.eval_runner
+### 3) Send a test email
+- Dangerous (will appear on dashboard for review):
+  - Subject: Urgent: Verify Your Bank Account
+  - Body: "Please click here to verify; enter the OTP; do not share your password."
+- Spam (will be archived):
+  - Subject: Exclusive Offer: 70% Discount On Gadgets!
+  - Body: "Use promo code FREE70; limited‑time deal and discount."
 
-### 9.2 Module Testing
+### 4) Review queue dashboard
+- Visit: `http://127.0.0.1:5000/dashboard`
+- Shows subject, sender, full body.
+- Approve → moves to [../reports/approved_actions.json](../reports/approved_actions.json) and removes from [../data/pending_reviews.json](../data/pending_reviews.json).
+- Delete → removes from pending reviews.
 
+## Health & Diagnostics
+- Health endpoint: `GET /health` uses Gmail API to verify connectivity.
+- Logs: Flask console output and your terminal.
 
-- python tests/test_gamil.py
-- python tests/test_calendar.py
-- python tests/test_hitl.py
+## Troubleshooting
+- Pub/Sub push not reaching webhook:
+  - Ensure the app is publicly reachable (HTTPS), not `127.0.0.1`.
+  - Push subscription must point to `/gmail-webhook`.
+- Gmail watch stops:
+  - Re‑run [gmail_watch.py](gmail_watch.py); Gmail watches expire.
+- Credentials errors:
+  - Ensure `client_secret_*.json` is present; re‑authenticate to refresh `token.json`.
+- No items on dashboard:
+  - Only `dangerous` emails are queued. Try the phishing sample above.
+
+## Notes on Storage & Security
+- Pending reviews: [../data/pending_reviews.json](../data/pending_reviews.json)
+- Approved actions: [../reports/approved_actions.json](../reports/approved_actions.json)
+- Secrets & tokens are ignored via `.gitignore` (e.g., `TeamD1/token.json`, `TeamD1/client_secret_*.json`).
+
+## Next Steps
+- Add real‑time UI updates via Server‑Sent Events/WebSockets.
+- Enhance classifier with ML model or rules.
+- Persist storage using a database instead of JSON files.
