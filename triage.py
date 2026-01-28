@@ -1,8 +1,9 @@
-# import os
-# from dotenv import load_dotenv
+
+import os
+from dotenv import load_dotenv
 # from langchain_google_genai import ChatGoogleGenerativeAI
 
-# load_dotenv()
+load_dotenv()
 
 # llm = ChatGoogleGenerativeAI(
 #     model="models/gemini-2.5-flash",
@@ -10,105 +11,47 @@
 #     api_key=os.getenv("GOOGLE_API_KEY")
 # )
 
-# def triage_node(state):
-#     email = state["email"]
+# triage.py
 
-#     prompt = f"""
-#     You are an email assistant.
-#     Classify the email into one category:
-#     - ignore
-#     - notify_human
-#     - respond
+SENSITIVE_KEYWORDS = [
+    "send",
+    "reply",
+    "forward",
+    "delete",
+    "resign",
+    "quit",
+    "urgent"
+]
 
-#     Email:
-#     {email}
-
-#     Return only one word.
-#     """
-
-#     try:
-#         response = llm.invoke(prompt)
-#         decision = response.content.strip().lower()
-
-#         if decision not in ["ignore", "notify_human", "respond"]:
-#             decision = "notify_human"
-
-#     except Exception:
-#         decision = "notify_human"
-
-#     return {
-#         **state,
-#         "category": decision
-#     }
-import os
-from dotenv import load_dotenv
-from langchain_google_genai import ChatGoogleGenerativeAI
-
-load_dotenv()
-
-llm = ChatGoogleGenerativeAI(
-    model="models/gemini-2.5-flash",
-    temperature=0,
-    api_key=os.getenv("GOOGLE_API_KEY")
-)
+IGNORE_KEYWORDS = ["newsletter", "promotion", "unsubscribe", "sale"]
+NOTIFY_KEYWORDS = ["invoice", "payment", "alert", "warning"]
+RESPOND_KEYWORDS = ["reply", "respond", "meeting", "schedule", "urgent", "send"]
 
 def triage_node(state):
-    email_text = state["email"].lower()
+    text = f"{state.get('subject', '')} {state.get('body', '')}".lower()
 
-    # ---------- RULE-BASED DECISIONS (FAST & CLEAR) ----------
+    for w in IGNORE_KEYWORDS:
+        if w in text:
+            state["category"] = "ignore"
+            state["intent"] = None
+            state["requires_approval"] = False
+            return state
 
-    IGNORE_KEYWORDS = [
-        "newsletter", "no action required", "promotion",
-        "weekly update", "terms and conditions", "welcome to"
-    ]
+    for w in NOTIFY_KEYWORDS:
+        if w in text:
+            state["category"] = "notify_human"
+            state["intent"] = None
+            state["requires_approval"] = False
+            return state
 
-    RESPOND_KEYWORDS = [
-        "can we", "please confirm", "schedule", "meeting",
-        "let me know", "kindly", "request"
-    ]
+    for w in RESPOND_KEYWORDS:
+        if w in text:
+            state["category"] = "respond"
+            state["intent"] = "send_email"
+            state["requires_approval"] = True
+            return state
 
-    NOTIFY_KEYWORDS = [
-        "urgent", "security", "account", "password",
-        "unauthorized", "alert", "suspicious"
-    ]
-
-    # Ignore rules
-    if any(word in email_text for word in IGNORE_KEYWORDS):
-        decision = "ignore"
-
-    # Notify human rules
-    elif any(word in email_text for word in NOTIFY_KEYWORDS):
-        decision = "notify_human"
-
-    # Respond rules
-    elif any(word in email_text for word in RESPOND_KEYWORDS):
-        decision = "respond"
-
-    # ---------- LLM FALLBACK (ONLY IF UNCLEAR) ----------
-    else:
-        prompt = f"""
-        Classify the email into one action:
-        - ignore
-        - notify_human
-        - respond
-
-        Email:
-        {state['email']}
-
-        Return only one word.
-        """
-
-        try:
-            response = llm.invoke(prompt)
-            decision = response.content.strip().lower()
-
-            if decision not in ["ignore", "notify_human", "respond"]:
-                decision = "notify_human"
-
-        except Exception:
-            decision = "notify_human"
-
-    return {
-        **state,
-        "category": decision
-    }
+    state["category"] = "ignore"
+    state["intent"] = None
+    state["requires_approval"] = False
+    return state

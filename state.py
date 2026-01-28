@@ -1,14 +1,13 @@
-# from typing import TypedDict, List
-
-# class AgentState(TypedDict):
-#     email: str
-#     decision: str
-#     thoughts: List[str]
-from typing import TypedDict, List
+from typing import TypedDict,List , Optional
 
 class EmailState(TypedDict):
-    email: str
-    category: str
-    thoughts: List[str]
-    reply: str
+    sender: str
+    subject: str
+    body: str
 
+    category: Optional[str]      # ignore | notify_human | respond
+    intent: Optional[str]
+
+    requires_approval: bool
+    approved: Optional[bool]
+    action_taken: Optional[str]

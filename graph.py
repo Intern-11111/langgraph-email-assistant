@@ -1,24 +1,36 @@
+# graph.py
 from langgraph.graph import StateGraph, END
+from langgraph.checkpoint.memory import MemorySaver
+
 from state import EmailState
 from triage import triage_node
 from agent import agent_node
 
-graph = StateGraph(EmailState)
+def build_graph():
 
-# Nodes
-graph.add_node("triage", triage_node)
-graph.add_node("agent", agent_node)
+    graph = StateGraph(EmailState)
 
-# Entry
-graph.set_entry_point("triage")
+    # Nodes
+    graph.add_node("triage", triage_node)
+    graph.add_node("agent", agent_node)
 
-# Routing logic
-def route_after_triage(state):
-    if state["category"] == "respond":
-        return "agent"
-    return END
+    # Entry point
+    graph.set_entry_point("triage")
 
-graph.add_conditional_edges("triage", route_after_triage)
-graph.add_edge("agent", END)
+    # Routing after triage
+    def route_after_triage(state):
+        if state["category"] == "respond":
+            return "agent"
+        return END
 
-app = graph.compile()
+    graph.add_conditional_edges("triage", route_after_triage)
+    graph.add_edge("agent", END)
+
+    # Checkpointing (LangSmith + HITL ready)
+    memory = MemorySaver()
+
+    app = graph.compile(
+        checkpointer=memory
+    )
+
+    return app

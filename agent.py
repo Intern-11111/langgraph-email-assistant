@@ -49,17 +49,26 @@ from tools import read_calendar
 #         "reply": reply
 #     }
 
+
 def agent_node(state):
-    thoughts = [
-        "Email requires a response",
-        "Understanding user intent",
-        "Drafting professional reply"
-    ]
+    """
+    Milestone 4:
+    Execute action after decision / approval
+    """
+    if state["category"] != "respond":
+        state["action_taken"] = "No action required"
+        return state
 
-    reply = "Sure, I’m available tomorrow afternoon."
+    state["action_taken"] = "Draft reply required"
+    if state.get("requires_approval") and not state.get("approved"):
+        return state  # Stop execution
 
-    return {
-        **state,
-        "thoughts": thoughts,
-        "reply": reply
-    }
+    intent = state.get("intent")
+
+    if intent == "send_email":
+        state["action_taken"] = "Email sent"
+    else:
+        state["action_taken"] = "No action required"
+
+    return state
+
